@@ -8,11 +8,11 @@ const MyComponent = () => {
       method: 'GET',
       headers: {
         accept: 'application/json',
-        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwOTJhZGJmMTBiZGYyOWRlZGNmNTIyOGMwZmViNWY3YiIsInN1YiI6IjY1NDI0YjdlNDFhNTYxMDBmZTZkY2M4ZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.NXFmWfjITHnStkPPRsgjVJlNINman2gOq02Gv18GBrk'
+        Authorization: import.meta.env.VITE_REACT_APP_AUTH_KEY
       }
     };
 
-    fetch('https://api.themoviedb.org/3/genre/movie/list?language=en', options)
+    fetch('https://api.themoviedb.org/3/movie/285?language=en-US', options)
       .then(response => response.json())
       .then(data => {
         setJsonData(data);
