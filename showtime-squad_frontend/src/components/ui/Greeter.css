@@ -1,0 +1,9 @@
+.greeter {
+    flex-basis: 100%;
+
+    text-align: center;
+
+    background-color: var(--greeter-bg, #333);
+
+    color: red;
+}
