@@ -1,0 +1,20 @@
+/* limits page width */
+.max-wrapper {
+    margin: auto;
+
+    max-width: 75rem;
+    min-width: 50rem;
+}
+
+.main {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.view-wrapper {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+}
+
