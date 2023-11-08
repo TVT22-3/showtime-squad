@@ -12,7 +12,7 @@ const MyComponent = () => {
       }
     };
 
-    fetch('https://api.themoviedb.org/3/movie/285?language=en-US', options)
+    fetch('https://api.themoviedb.org/3/movie/285/videos?language=en-US', options)
       .then(response => response.json())
       .then(data => {
         setJsonData(data);
