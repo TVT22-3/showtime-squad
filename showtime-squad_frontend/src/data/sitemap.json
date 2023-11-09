@@ -1,0 +1,68 @@
+{
+  "home": {
+    "title": "home",
+    "path": "/",
+    "guests": true
+  },
+  "movies": {
+    "title": "movies",
+    "path": "/movies",
+    "guests": true,
+    "subpages": {
+      "top-rated": {
+        "title": "top rated",
+        "path": "/top-rated",
+        "guests": true
+      },
+      "popular": {
+        "title": "",
+        "path": "",
+        "guests": true
+      },
+      "favorites": {
+        "title": "favorites",
+        "path": "/favorites",
+        "guests": false
+      }
+    }
+  },
+  "news": {
+    "title": "news",
+    "path": "/news",
+    "guests": true,
+    "subpages": {
+      "current": {
+        "title": "current",
+        "path": "/current",
+        "guests": true
+      },
+      "movies": {
+        "title": "movies",
+        "path": "/movies",
+        "guests": true
+      }
+    }
+  },
+  "profile": {
+    "title": "profile",
+    "path": "/profile",
+    "guests": false,
+    "subpages": {
+      "settings": {
+        "title": "settings",
+        "path": "/settings",
+        "guests": false
+      },
+      "signout": {
+        "title": "sign-out",
+        "path": "/logout",
+        "guests": false
+      }
+    }
+  },
+  "signin": {
+    "title": "sign-in",
+    "path": "/login",
+    "guests": true
+  }
+}
