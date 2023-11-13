@@ -1,5 +1,6 @@
 package com.showtimesquad.showtimesquad.controller;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,9 +16,11 @@ public class Controller {
         return "Hello, world!";
     }
 
+    @Value("${TMDB_API_KEY}")
+    private String apiKey;
     @GetMapping(value = "/movies")
-    private static String getMovies(){
-        final String uri = "https://api.themoviedb.org/3/movie/157336?api_key=201a468fc5076c340fc6f57c9440fe90";
+    private String getMovies(){
+        final String uri = "https://api.themoviedb.org/3/movie/157435?api_key=" + apiKey;
         RestTemplate restTemplate = new RestTemplate();
         String result = restTemplate.getForObject(uri, String.class);
         return result;
