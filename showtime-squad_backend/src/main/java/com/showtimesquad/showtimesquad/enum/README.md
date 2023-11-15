@@ -1,0 +1,1 @@
+A directory for possible enums needed for the project
