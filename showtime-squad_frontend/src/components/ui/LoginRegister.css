@@ -41,15 +41,17 @@
 }
 
 .input {
-    display: flex;
-    align-items: center;
     margin: auto;
     width: 240px;
+  }
+
+  .input-wrapper {
+    display: flex;
+    align-items: center;
     height: 40px;
     background: #eaeaea;
     border-radius: 10px;
-
-}
+  }
 
 i {
     margin: 0px 10px;
@@ -86,6 +88,7 @@ i {
     height: 60px;
     color: white;
     background: darkorange;
+    border: 0px;
     border-radius: 15px;
     font-size: 17px;
     font-weight: 700;
@@ -113,5 +116,10 @@ i {
     left: 0;
 }
 
+.error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px; /* Add margin to separate error messages from inputs */
+  }
 
 
