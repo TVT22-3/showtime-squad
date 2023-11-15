@@ -4,19 +4,31 @@ import './NavBar.css'
 import sitemap from '../../data/sitemap.json'
 
 const sitemapArray = Object.values(sitemap)
-console.log(sitemapArray)
+//console.log(sitemapArray)
+const guestStatus = true // placeholder
 
 function NavElement(sitemapKey) {
     // Used to create a nav element for the NavBar component
-    // const guest = sitemapKey.guests; (not yet implemented)
+    const guest = sitemapKey.guests; //(not yet properly implemented)
     const subpages = hasKey(sitemapKey, "subpages")
     console.log("component partly implemented")
-    return (
-        <li className={subpages ? "dropdown" : ""}>
-            <a href={sitemapKey.path}>{sitemapKey.title}</a>
-            
-        </li>
-    )
+    if ((sitemapKey.title=="profile"&&guestStatus==false)||(sitemapKey.title=="sign-in"&&guestStatus==true)){
+        return (
+            <li className={subpages ? "dropdown" : ""}>
+                <a href={sitemapKey.path}>{sitemapKey.title}</a>
+            </li>
+        )
+    } else if (sitemapKey.title=="sign-in"){
+        return null
+    } else if ((guest == guestStatus)||guest) {
+        return (
+            <li className={subpages ? "dropdown" : ""}>
+                <a href={sitemapKey.path}>{sitemapKey.title}</a>
+            </li>
+        )
+    } else {
+        return null
+    }
 }
 
 function hasKey(obj, key) {
@@ -28,16 +40,15 @@ function hasKey(obj, key) {
 function NavBar() {
     //TODO: Implement
     console.log("component might not be properly implemented yet")
-    console.log(sitemapArray)
+    //console.log(sitemapArray)
     return (
         <nav className='nav-bar'>
             <ul className='nav-items'>
                 {sitemapArray.map((key) => {
-                    NavElement(key)
                     const subpages = hasKey(key, "subpages");
                     return (
                         <>
-                            {NavElement(key)}
+                        {NavElement(key)}
                             {subpages ? (
                                 <ul className="dropdown-content">
                                     {Object.values(key.subpages).map((subKey) => NavElement(subKey))}
