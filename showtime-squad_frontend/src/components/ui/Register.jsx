@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import './LoginRegister.css';
 
-function Register() {
-
+function Register({ toggleForms }) {
+      
     const [formData, setFormData] = useState({
         username: '',
         email: '',
@@ -94,6 +94,7 @@ function Register() {
             // Handle network errors or other issues
           }
           */
+         console.log('Sending Request data:', registrationData);
     };
 
 
@@ -163,7 +164,7 @@ function Register() {
                 </div>
                 <div className="linkContainer">
                     <div>
-                        Already have an account? <span className="loginLink"> Login Here!</span>
+                        Already have an account? <span onClick={toggleForms}> Login Here!</span>
                     </div>
                 </div>
                 <button type="submit" className='submit'>

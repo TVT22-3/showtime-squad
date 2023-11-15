@@ -6,12 +6,14 @@ import ReactDOM from 'react-dom/client'
 //import Home from './pages/Home/Home.jsx'
 import Login from './components/ui/Login.jsx'
 import Register from './components/ui/Register.jsx'
+import LoginRegisterHandler from './components/ui/LoginRegisterHandler.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     {/* <App /> */}
     {/* <Home /> */}
-    <Login />,
-    <Register />
+    {/* <Login /> */}
+    {/* <Register /> */}
+  <LoginRegisterHandler />
   </React.StrictMode>,
 )
