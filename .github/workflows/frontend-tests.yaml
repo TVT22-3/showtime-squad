@@ -1,0 +1,35 @@
+# .github/workflows/frontend-tests.yml
+
+name: Frontend Tests
+
+on:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: showtime-squad_frontend
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: Install dependencies
+        run: |
+          pwd
+          ls -la
+          npm install
+
+      - name: run tests
+        run: |
+          pwd
+          ls -la
+          npm run test
