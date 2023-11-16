@@ -67,3 +67,18 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+
+
+/* showtime squad specific stuff below */
+
+/* limits page width */
+.max-wrapper {
+  margin: auto;
+  max-width: 75rem;
+}
+
+/* apply to a logo you want to highlight on hover */
+.hover-logo:hover {
+  filter: contrast(0.5);
+}
