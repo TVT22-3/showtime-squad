@@ -2,27 +2,32 @@
   "home": {
     "title": "home",
     "path": "/",
-    "guests": true
+    "guests": true,
+    "show": "both"
   },
   "movies": {
     "title": "movies",
     "path": "/movies",
     "guests": true,
+    "show": "both",
     "subpages": {
       "top-rated": {
         "title": "top rated",
         "path": "/top-rated",
-        "guests": true
+        "guests": true,
+        "show": "both"
       },
       "popular": {
         "title": "",
         "path": "",
-        "guests": true
+        "guests": true,
+        "show": "both"
       },
       "favorites": {
         "title": "favorites",
         "path": "/favorites",
-        "guests": false
+        "guests": false,
+        "show": "user"
       }
     }
   },
@@ -30,16 +35,19 @@
     "title": "news",
     "path": "/news",
     "guests": true,
+    "show": "both",
     "subpages": {
       "current": {
         "title": "current",
         "path": "/current",
-        "guests": true
+        "guests": true,
+        "show": "both"
       },
       "movies": {
         "title": "movies",
         "path": "/movies",
-        "guests": true
+        "guests": true,
+        "show": "both"
       }
     }
   },
@@ -47,22 +55,26 @@
     "title": "profile",
     "path": "/profile",
     "guests": false,
+    "show": "user",
     "subpages": {
       "settings": {
         "title": "settings",
         "path": "/settings",
-        "guests": false
+        "guests": false,
+        "show": "user"
       },
       "signout": {
         "title": "sign-out",
         "path": "/logout",
-        "guests": false
+        "guests": false,
+        "show": "user"
       }
     }
   },
   "signin": {
     "title": "sign-in",
     "path": "/login",
-    "guests": true
+    "guests": true,
+    "show": "guest"
   }
 }
