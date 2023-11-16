@@ -164,7 +164,7 @@ function Register({ toggleForms }) {
                 </div>
                 <div className="linkContainer">
                     <div>
-                        Already have an account? <span onClick={toggleForms}> Login Here!</span>
+                        Already have an account? <span onClick={() => toggleForms('login')}> Login Here!</span>
                     </div>
                 </div>
                 <button type="submit" className='submit'>

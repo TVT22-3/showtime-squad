@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './LoginRegister.css';
 
-function Login({ toggleForms }) {
+function Login({toggleForms}) {
 
   const [formData, setFormData] = useState({
     username: '',
@@ -85,6 +85,7 @@ function Login({ toggleForms }) {
                 placeholder="Username"
                 value={formData.username}
                 onChange={handleInputChange}
+                required
               />
             </div>
             <span id="usernameError" className="error-message">{usernameError}</span>
@@ -98,14 +99,15 @@ function Login({ toggleForms }) {
                 placeholder="Password"
                 value={formData.password}
                 onChange={handleInputChange}
+                required
               />
             </div>
             <span id="passwordError" className="error-message">{passwordError}</span>
           </div>
         </div>
         <div className="linkContainer">
-          <div>Forgot Password? <span>Click Here!</span></div>
-          <div>Don't have an account yet? <span onClick={toggleForms}>Register Here!</span></div>
+          <div>Forgot Password? <span onClick={() => toggleForms('forgotPassword')}>Click Here!</span></div>
+          <div>Don't have an account yet? <span onClick={() => toggleForms('register')}>Register Here!</span></div>
         </div>
         <button type="submit" className='submit'>
           Login
