@@ -13,7 +13,7 @@ function Home() {
 
             <Main />
 
-            <Footer sitemap={Sitemap} isGuest={false} />
+            <Footer sitemap={Sitemap} loggedIn={true} />
         </>
     )
 }
