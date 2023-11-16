@@ -11,8 +11,8 @@ test('render Footer without any props', () => {
     expect(footerElement).toHaveClass('footer')
 })
 
-test('render Footer with sitemap.json', () => {
-    render(<Footer sitemap={actualSitemap} />)
+test('render Footer with sitemap.json as guest', () => {
+    render(<Footer sitemap={actualSitemap} isGuest={true} />)
 
     const footerElement = screen.getByRole('contentinfo')
 
@@ -24,23 +24,48 @@ test('render Footer with sitemap.json', () => {
     expect(elementWithHomeText).toBeInTheDocument()
 
     //expect all pages available to guests to be visible
-    recursivelyIterateThroughPages(actualSitemap, (title) => {
-        const titleElement = screen.getByText(new RegExp(`${title}`, 'i'))
-        expect(titleElement).toBeInTheDocument()
+    recursivelyIterateThroughPages(actualSitemap, true, (title) => {
+        const titleElements = screen.getAllByText(new RegExp(`${title}`, 'i'))
+        expect(titleElements.length).toBeGreaterThan(0)
     })
 })
 
-function recursivelyIterateThroughPages(pages, assertions) {
+test('render Footer with sitemap.json as user', () => {
+    render(<Footer sitemap={actualSitemap} isGuest={false} />)
+
+    const footerElement = screen.getByRole('contentinfo')
+
+    expect(footerElement).toBeInTheDocument()
+    expect(footerElement).toHaveClass('footer')
+
+    //expect sitemap column to exist
+    const elementWithHomeText = screen.getByText(/sitemap/i)
+    expect(elementWithHomeText).toBeInTheDocument()
+
+    //expect all pages available to guests to be visible
+    recursivelyIterateThroughPages(actualSitemap, false, (title) => {
+        const titleElements = screen.getAllByText(new RegExp(`${title}`, 'i'))
+        expect(titleElements.length).toBeGreaterThan(0)
+    })
+})
+
+function recursivelyIterateThroughPages(pages, isGuest, assertions) {
     Object.entries(pages).forEach(([key, page]) => {
-        if (page && typeof page === 'object' && page.guests) {
-            console.log(`Key: ${key}, Guests: ${page.guests}`)
+        // guard clause to check if user is logged in
+        if (page.show &&
+            (isGuest && page.show === 'user') || (!isGuest && page.show === 'guest')) {
+            return
+        }
 
+        // check if page contains subpages
+        if (page.subpages) {
+            // recurse into subpages
+            return (
+                recursivelyIterateThroughPages(page.subpages, isGuest, assertions)
+            )
+        } else {
+            // recursion stops when no more subpages are met
             assertions(page.title)
-
-            if (page.subpages) {
-                console.log("contains subpages")
-                recursivelyIterateThroughPages(page.subpages)
-            }
         }
     })
 }
