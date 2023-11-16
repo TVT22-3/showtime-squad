@@ -18,8 +18,8 @@
         "show": "both"
       },
       "popular": {
-        "title": "",
-        "path": "",
+        "title": "popular",
+        "path": "/popular",
         "guests": true,
         "show": "both"
       },
