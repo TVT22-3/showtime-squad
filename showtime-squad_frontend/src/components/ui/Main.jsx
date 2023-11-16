@@ -16,6 +16,7 @@ function Main() {
                 <View />
 
                 <SideBar />
+                
             </div>
         </main>
     )
