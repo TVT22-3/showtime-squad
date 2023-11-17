@@ -3,25 +3,25 @@ package com.showtimesquad.showtimesquad.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import com.showtimesquad.showtimesquad.model.Users;
-import com.showtimesquad.showtimesquad.repository.UsersRepository;
+import com.showtimesquad.showtimesquad.model.User;
+import com.showtimesquad.showtimesquad.repository.UserRepository;
 
 @RestController
 @RequestMapping("/api/users")
-public class UsersController {
+public class UserController {
 
     @Autowired
-    private UsersRepository usersRepository;
+    private UserRepository usersRepository;
 
     // Endpoint to add a user
     @PostMapping
-    public Users addUser(@RequestBody Users user) {
+    public User addUser(@RequestBody User user) {
         return usersRepository.save(user);
     }
 
     // Endpoint to get user data by ID
     @GetMapping("/{id}")
-    public Users getUser(@PathVariable Long id) {
+    public User getUser(@PathVariable Long id) {
         return usersRepository.findById(id).orElse(null);
     }
 }

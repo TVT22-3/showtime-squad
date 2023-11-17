@@ -5,7 +5,7 @@ import jakarta.persistence.*; // for Spring Boot 3
 
 @Entity
 @Table(name = "users")
-public class Users {
+public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
