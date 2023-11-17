@@ -11,17 +11,18 @@ import com.showtimesquad.showtimesquad.repository.UserRepository;
 public class UserController {
 
     @Autowired
-    private UserRepository usersRepository;
+    private UserRepository userRepository;
 
     // Endpoint to add a user
     @PostMapping
     public User addUser(@RequestBody User user) {
-        return usersRepository.save(user);
+        user.setPassword(user.getPassword()); // Use the setPassword method to encrypt the password
+        return userRepository.save(user);
     }
 
     // Endpoint to get user data by ID
     @GetMapping("/{id}")
     public User getUser(@PathVariable Long id) {
-        return usersRepository.findById(id).orElse(null);
+        return userRepository.findById(id).orElse(null);
     }
 }
