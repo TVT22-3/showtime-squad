@@ -1,0 +1,1 @@
+create folders like ui, modals, buttons and whatnot based on what components you are making

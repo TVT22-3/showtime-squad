@@ -1,0 +1,1 @@
+create folders like img, logo, video, text, and whatnot to store assets in

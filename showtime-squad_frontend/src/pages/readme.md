@@ -1,0 +1,1 @@
+pages folder will include all the pages and other components that are only directly useful for said pages in their own subfolders

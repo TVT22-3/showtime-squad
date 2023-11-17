@@ -1,0 +1,1 @@
+context folder is used to store react contexts

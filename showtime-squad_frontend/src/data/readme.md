@@ -1,0 +1,1 @@
+used to store, for example, json files or constant global variables for sitewide use
