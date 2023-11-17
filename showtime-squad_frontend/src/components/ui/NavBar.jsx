@@ -5,29 +5,39 @@ import sitemap from '../../data/sitemap.json'
 
 const sitemapArray = Object.values(sitemap)
 //console.log(sitemapArray)
-const guestStatus = true // placeholder
+const guestStatus = false // placeholder
 
 function NavElement(sitemapKey) {
     // Used to create a nav element for the NavBar component
-    const guest = sitemapKey.guests; //(not yet properly implemented)
+    const guest = sitemapKey.guests;
     const subpages = hasKey(sitemapKey, "subpages")
     console.log("component partly implemented")
-    if ((sitemapKey.title=="profile"&&guestStatus==false)||(sitemapKey.title=="sign-in"&&guestStatus==true)){
-        return (
-            <li className={subpages ? "dropdown" : ""}>
-                <a href={sitemapKey.path}>{sitemapKey.title}</a>
-            </li>
-        )
-    } else if (sitemapKey.title=="sign-in"){
+
+    if ((sitemapKey.title=="profile"&&guestStatus==true)||(sitemapKey.title=="sign-in"&&guestStatus==false)){
         return null
     } else if ((guest == guestStatus)||guest) {
         return (
             <li className={subpages ? "dropdown" : ""}>
                 <a href={sitemapKey.path}>{sitemapKey.title}</a>
+                {subpages ? 
+                <ul className='dropdown-content'>
+                    {(Object.values(sitemapKey.subpages).map((key) => {SubElement(key)}))}
+                </ul> : null}
             </li>
         )
     } else {
         return null
+    }
+}
+
+function SubElement(sitemapKey) {
+    const guest = sitemapKey.guests;
+    if (guest == guestStatus||guest) {
+        return (
+            <li>
+                <a href={sitemapKey.path}>{sitemapKey.title}</a>
+            </li>
+        )
     }
 }
 
@@ -41,19 +51,14 @@ function NavBar() {
     //TODO: Implement
     console.log("component might not be properly implemented yet")
     //console.log(sitemapArray)
+    
     return (
         <nav className='nav-bar'>
             <ul className='nav-items'>
                 {sitemapArray.map((key) => {
-                    const subpages = hasKey(key, "subpages");
                     return (
                         <>
                         {NavElement(key)}
-                            {subpages ? (
-                                <ul className="dropdown-content">
-                                    {Object.values(key.subpages).map((subKey) => NavElement(subKey))}
-                                </ul>
-                            ) : null}
                         </>
                     );
                 })}
