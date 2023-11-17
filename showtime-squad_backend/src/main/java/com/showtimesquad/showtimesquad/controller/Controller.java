@@ -17,7 +17,7 @@ public class Controller {
     public String hello() {
         return "Hello, world!";
     }
-
+    /*
     @Value("${TMDB_API_KEY}")
     private String apiKey;
     @GetMapping(value = "/movies", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -25,5 +25,5 @@ public class Controller {
         final String uri = "https://api.themoviedb.org/3/movie/157435?api_key=" + apiKey;
         RestTemplate restTemplate = new RestTemplate();
         return restTemplate.getForObject(uri, String.class);
-    }
+    }*/
 }
