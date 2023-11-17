@@ -1,18 +1,19 @@
 import Footer from "../../components/ui/Footer"
 import Header from "../../components/ui/Header"
 import Main from "../../components/ui/Main"
+import Sitemap from "../../data/sitemap.json"
 
 function Home() {
     //TODO: Implement
     console.log("component not properly implemented")
 
-    return (
+        return (
         <>
             <Header />
 
             <Main />
 
-            <Footer />
+            <Footer sitemap={Sitemap} loggedIn={true} />
         </>
     )
 }
