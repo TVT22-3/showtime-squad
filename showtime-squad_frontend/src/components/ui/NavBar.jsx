@@ -5,7 +5,7 @@ import sitemap from '../../data/sitemap.json'
 
 const sitemapArray = Object.values(sitemap)
 //console.log(sitemapArray)
-const loginStatus = false // placeholder for login status
+const loginStatus = true // placeholder for login status
 console.log("placeholder login status is set to: " + loginStatus)
 
 function NavElement(sitemapKey) {
@@ -30,6 +30,7 @@ function NavElement(sitemapKey) {
 }
 
 function SubElement(sitemapKey, show) {
+    console.log(sitemapKey)
     if ((show=="user"&&loginStatus==false)||(show=="guest"&&loginStatus==true)){
         return null
     }
