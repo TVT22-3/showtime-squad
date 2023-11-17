@@ -1,4 +1,4 @@
-import './Footer.css'
+import './Footer.scss'
 import gitHubLogo from '../../assets/logo/github-mark-white.svg'
 import discordLogo from '../../assets/logo/discord-clyde-white.svg'
 
@@ -7,7 +7,7 @@ function Footer({ sitemap, loggedIn }) {
     console.log("component not properly implemented")
 
     return (
-        <footer className='footer'>
+        <footer id="footer" className='footer'>
             <div className='max-wrapper footer-wrapper'>
 
                 <div className='footer-item _about'>
