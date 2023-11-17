@@ -5,40 +5,39 @@ import sitemap from '../../data/sitemap.json'
 
 const sitemapArray = Object.values(sitemap)
 //console.log(sitemapArray)
-const guestStatus = false // placeholder
+const loginStatus = false // placeholder for login status
+console.log("placeholder login status is set to: " + loginStatus)
 
 function NavElement(sitemapKey) {
     // Used to create a nav element for the NavBar component
-    const guest = sitemapKey.guests;
+    const show = sitemapKey.show;
     const subpages = hasKey(sitemapKey, "subpages")
     console.log("component partly implemented")
 
-    if ((sitemapKey.title=="profile"&&guestStatus==true)||(sitemapKey.title=="sign-in"&&guestStatus==false)){
-        return null
-    } else if ((guest == guestStatus)||guest) {
-        return (
-            <li className={subpages ? "dropdown" : ""}>
-                <a href={sitemapKey.path}>{sitemapKey.title}</a>
-                {subpages ? 
-                <ul className='dropdown-content'>
-                    {(Object.values(sitemapKey.subpages).map((key) => {SubElement(key)}))}
-                </ul> : null}
-            </li>
-        )
-    } else {
+    // guard clause to check if the user is logged in and if the element is for guests only
+    if ((show=="user"&&loginStatus==false)||(show=="guest"&&loginStatus==true)){
         return null
     }
+    return (
+        <li className={subpages ? "dropdown" : ""}>
+            <a href={sitemapKey.path}>{sitemapKey.title}</a>
+            {subpages ? 
+            <ul className='dropdown-content'>
+                {(Object.values(sitemapKey.subpages).map((key) => {SubElement(key, show)}))}
+            </ul> : null}
+        </li>
+    )
 }
 
-function SubElement(sitemapKey) {
-    const guest = sitemapKey.guests;
-    if (guest == guestStatus||guest) {
-        return (
-            <li>
-                <a href={sitemapKey.path}>{sitemapKey.title}</a>
-            </li>
-        )
+function SubElement(sitemapKey, show) {
+    if ((show=="user"&&loginStatus==false)||(show=="guest"&&loginStatus==true)){
+        return null
     }
+    return (
+        <li>
+            <a href={sitemapKey.path}>{sitemapKey.title}</a>
+        </li>
+    )
 }
 
 function hasKey(obj, key) {
@@ -49,7 +48,7 @@ function hasKey(obj, key) {
 
 function NavBar() {
     //TODO: Implement
-    console.log("component might not be properly implemented yet")
+    console.log("component might not be fully implemented yet")
     //console.log(sitemapArray)
     
     return (
