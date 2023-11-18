@@ -6,12 +6,12 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
-@SpringBootApplication(exclude = SecurityAutoConfiguration.class)
+@SpringBootApplication // (exclude = SecurityAutoConfiguration.class)
 public class ShowtimesquadApplication {
-	@Bean
-	public RestTemplate getRestTemplate() {
-		return new RestTemplate();
-	}
+	// @Bean
+	// public RestTemplate getRestTemplate() {
+	// 	return new RestTemplate();
+	// }
 
 	public static void main(String[] args) {
 		SpringApplication.run(ShowtimesquadApplication.class, args);
