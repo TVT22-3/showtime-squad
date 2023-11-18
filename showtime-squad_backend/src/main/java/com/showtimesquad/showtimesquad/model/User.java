@@ -11,8 +11,8 @@ import jakarta.persistence.*; // for Spring Boot 3
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(name = "username")
     private String username;
@@ -20,7 +20,6 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    @Transient
     private static final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     // getters and setters
@@ -47,5 +46,9 @@ public class User {
 
     public void setPassword(String password) {
         this.password = passwordEncoder.encode(password);
+    }
+
+    public boolean isPasswordValid(String rawPassword) {
+        return passwordEncoder.matches(rawPassword, this.password);
     }
 }
