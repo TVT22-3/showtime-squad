@@ -66,6 +66,9 @@ public class WebSecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+    @Value("${frontend.url}")
+    private String frontendUrl;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
@@ -81,7 +84,7 @@ public class WebSecurityConfig {
                         .anyRequest().authenticated())
                 .cors(customizer -> {
                     CorsConfiguration corsConfiguration = new CorsConfiguration();
-                    corsConfiguration.addAllowedOrigin("http://localhost:5173"); // Allow all origins (you can customize this)
+                    corsConfiguration.addAllowedOrigin(frontendUrl); // Allow all origins (you can customize this)
                     corsConfiguration.addAllowedMethod("*"); // Allow all HTTP methods
                     corsConfiguration.addAllowedHeader("*"); // Allow all headers
                     corsConfiguration.setAllowCredentials(true); // Allow credentials (cookies)
