@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -14,6 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
 
 import com.showtimesquad.showtimesquad.security.AuthEntryPointJwt;
 import com.showtimesquad.showtimesquad.security.AuthTokenFilter;
@@ -75,7 +77,17 @@ public class WebSecurityConfig {
                         .requestMatchers("/hel*").permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/test/**").permitAll()
-                        .anyRequest().authenticated());
+                        .requestMatchers("/profile/**").permitAll()
+                        .anyRequest().authenticated())
+                .cors(customizer -> {
+                    CorsConfiguration corsConfiguration = new CorsConfiguration();
+                    corsConfiguration.addAllowedOrigin("http://localhost:5173"); // Allow all origins (you can customize this)
+                    corsConfiguration.addAllowedMethod("*"); // Allow all HTTP methods
+                    corsConfiguration.addAllowedHeader("*"); // Allow all headers
+                    corsConfiguration.setAllowCredentials(true); // Allow credentials (cookies)
+                    corsConfiguration.setMaxAge(3600L); // 1 hour max age for preflight requests
+
+                    customizer.configurationSource(request -> corsConfiguration);}); // Enable CORS configuration
 
         // fix H2 database console: Refused to display ' in a frame because it set
         // 'X-Frame-Options' to 'deny'
