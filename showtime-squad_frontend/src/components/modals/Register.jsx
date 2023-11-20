@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './LoginRegister.css';
+import './LoginRegister.scss';
 
 function Register({ toggleForms }) {
       
@@ -99,7 +99,7 @@ function Register({ toggleForms }) {
 
 
     return (
-        <form onSubmit={handleRegister}>
+        <form id="form" onSubmit={handleRegister}>
             <div className="container">
                 <div className="header">
                     <div className="text">Register</div>

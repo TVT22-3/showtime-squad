@@ -1,11 +1,11 @@
-import './Hero.css'
+import './Hero.scss'
 
 function Hero() {
     //TODO: Implement
     console.log("component not properly implemented")
 
     return (
-        <header className='header'>
+        <header id="header" className='header'>
             <hgroup className='hero-title-group'>
                 <h1 className='hero-title'>
                     <span className='hero-title-subgroup'>

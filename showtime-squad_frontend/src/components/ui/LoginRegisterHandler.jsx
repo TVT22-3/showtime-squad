@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import Login from './Login.jsx';
-import Register from './Register.jsx';
-import ForgotPassword from './ForgotPassword.jsx';
+import Login from '../modals/Login.jsx';
+import Register from '../modals/Register.jsx';
+import ForgotPassword from '../modals/ForgotPassword.jsx';
 
 const loadFontAwesomeScript = () => {
   const script = document.createElement('script');

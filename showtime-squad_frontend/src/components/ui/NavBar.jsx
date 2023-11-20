@@ -5,7 +5,7 @@ import sitemap from '../../data/sitemap.json'
 
 const sitemapArray = Object.values(sitemap)
 //console.log(sitemapArray)
-const loginStatus = true // placeholder for login status
+const loginStatus = false // placeholder for login status
 console.log("placeholder login status is set to: " + loginStatus)
 
 function NavElement(sitemapKey) {

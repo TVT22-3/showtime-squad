@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './LoginRegister.css';
+import './LoginRegister.scss';
 
 function ForgotPassword( { toggleForms } ) {
   const [email, setEmail] = useState('');
@@ -48,7 +48,7 @@ function ForgotPassword( { toggleForms } ) {
   };
 
   return (
-    <form onSubmit={handleForgotPassword}>
+    <form id="form" onSubmit={handleForgotPassword}>
       <div className="container">
         <div className="header">
           <div className="text">Forgot Password?</div>
