@@ -59,7 +59,7 @@ public class WebSecurityConfig {
         return new BCryptPasswordEncoder(10); // time complexity is O(2^n) so think wisely of increasing str
     }
 
-    @Value("${frontend.url}")
+    @Value("${FRONTEND_URL}")
     private String frontendUrl;
 
     @Bean
