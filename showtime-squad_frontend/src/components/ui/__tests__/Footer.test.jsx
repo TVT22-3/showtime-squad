@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import Footer from '../Footer.jsx'
 import actualSitemap from '../../../data/sitemap.json'
+import { test, expect } from '@testing-library/jest-dom'
 
 test('render Footer without any props', () => {
     render(<Footer />)
