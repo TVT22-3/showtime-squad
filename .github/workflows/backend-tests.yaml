@@ -12,18 +12,18 @@ jobs:
     env:
       TMDB_API_KEY: ${{ secrets.TMDB_API_KEY }}
 
-      SPRING_DATASOURCE_URL: ${{ secrets.JDBC_URL }}
-      SPRING_DATASOURCE_USERNAME: ${{ secrets.DB_USERNAME }}
-      SPRING_DATASOURCE_PASSWORD: ${{ secrets.DB_PASSWORD }}
-      SPRING_JPA_HIBERNATE_DDL_AUTO: ${{ vars.SPRING_JPA_HIBERNATE_DDL_AUTO }}
-      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: ${{ vars.SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT }}
-      SPRING_DATASOURCE_DRIVER_CLASS_NAME: ${{ vars.SPRING_DATASOURCE_DRIVER_CLASS_NAME }}
+      spring.datasource.url: ${{ secrets.JDBC_URL }}
+      spring.datasource.username: ${{ secrets.DB_USERNAME }}
+      spring.datasource.password: ${{ secrets.DB_PASSWORD }}
+      spring.jpa.hibernate.ddl-auto: ${{ vars.SPRING_JPA_HIBERNATE_DDL_AUTO }}
+      spring.jpa.properties.hibernate.dialect: ${{ vars.SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT }}
+      spring.datasource.driver-class-name: ${{ vars.SPRING_DATASOURCE_DRIVER_CLASS_NAME }}
 
-      JWT_NAME: ${{ vars.JWT_NAME }}
-      JWT_SECRET: ${{ secrets.JWT_SECRET }}
-      JWT_EXPIRATION_MS: ${{ vars.JWT_EXPIRATION_MS }}
+      showtimesquad.app.jwtCookieName: ${{ vars.JWT_NAME }}
+      showtimesquad.app.jwtSecret: ${{ secrets.JWT_SECRET }}
+      showtimesquad.app.jwtExpirationMs: ${{ vars.JWT_EXPIRATION_MS }}
 
-      CORS_FRONTEND_URL: ${{ vars.CORS_FRONTEND_URL }}
+      FRONTEND_URL: ${{ vars.CORS_FRONTEND_URL }}
 
     defaults:
       run:
@@ -38,18 +38,5 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Build with Maven
-      run: |
-        mvn -B package \
-        -DTMDB_API_KEY=$TMDB_API_KEY \
-        -Dspring.datasource.url=$SPRING_DATASOURCE_URL \
-        -Dspring.datasource.username=$SPRING_DATASOURCE_USERNAME \
-        -Dspring.datasource.password=$SPRING_DATASOURCE_PASSWORD \
-        -Dspring.jpa.hibernate.ddl-auto=$SPRING_JPA_HIBERNATE_DDL_AUTO \
-        -Dspring.jpa.properties.hibernate.dialect=$SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT \
-        -Dspring.datasource.driver-class-name=$SPRING_DATASOURCE_DRIVER_CLASS_NAME \
-        -Dshowtimesquad.app.jwtCookieName=$JWT_NAME \
-        -Dshowtimesquad.app.jwtSecret=$JWT_SECRET \
-        -Dshowtimesquad.app.jwtExpirationMs=$JWT_EXPIRATION_MS \
-        -DFRONTEND_URL=$CORS_FRONTEND_URL \
-        --file pom.xml \
-        -X
+      run: mvn -B package --file pom.xml
+
