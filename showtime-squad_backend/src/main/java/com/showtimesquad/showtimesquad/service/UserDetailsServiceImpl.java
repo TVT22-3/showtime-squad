@@ -10,9 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.showtimesquad.showtimesquad.model.User;
 import com.showtimesquad.showtimesquad.repository.UserRepository;
 
-// import com.bezkoder.spring.security.login.models.User;
-// import com.bezkoder.spring.security.login.repository.UserRepository;
-
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
   @Autowired

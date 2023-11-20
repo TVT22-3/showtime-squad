@@ -9,7 +9,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-// import com.bezkoder.spring.security.login.models.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.showtimesquad.showtimesquad.model.User;
 

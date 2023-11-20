@@ -18,8 +18,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.showtimesquad.showtimesquad.service.UserDetailsServiceImpl;
 
-// import com.bezkoder.spring.security.login.security.services.UserDetailsServiceImpl;
-
 public class AuthTokenFilter extends OncePerRequestFilter {
   @Autowired
   private JwtUtils jwtUtils;

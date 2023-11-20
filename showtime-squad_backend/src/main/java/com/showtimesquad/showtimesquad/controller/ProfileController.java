@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/profile")
 public class ProfileController {
+    
     @GetMapping("/{username}")
     public String getUserProfile(@PathVariable String username, @AuthenticationPrincipal UserDetails userDetails) {
         if (userDetails != null && userDetails.getUsername().equals(username)) {

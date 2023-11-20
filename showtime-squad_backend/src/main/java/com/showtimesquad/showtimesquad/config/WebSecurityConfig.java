@@ -21,19 +21,12 @@ import com.showtimesquad.showtimesquad.security.AuthEntryPointJwt;
 import com.showtimesquad.showtimesquad.security.AuthTokenFilter;
 import com.showtimesquad.showtimesquad.service.UserDetailsServiceImpl;
 
-// import com.bezkoder.spring.security.login.security.jwt.AuthEntryPointJwt;
-// import com.bezkoder.spring.security.login.security.jwt.AuthTokenFilter;
-// import com.bezkoder.spring.security.login.security.services.UserDetailsServiceImpl;
-
 @Configuration
 @EnableMethodSecurity
 // (securedEnabled = true,
 // jsr250Enabled = true,
 // prePostEnabled = true) // by default
 public class WebSecurityConfig {
-
-    // @Value("${spring.h2.console.path}")
-    // private String h2ConsolePath;
 
     @Autowired
     UserDetailsServiceImpl userDetailsService;

@@ -34,18 +34,6 @@ import com.showtimesquad.showtimesquad.repository.UserRepository;
 import com.showtimesquad.showtimesquad.security.JwtUtils;
 import com.showtimesquad.showtimesquad.service.UserDetailsImpl;
 
-// import com.bezkoder.spring.security.login.models.ERole;
-// import com.bezkoder.spring.security.login.models.Role;
-// import com.bezkoder.spring.security.login.models.User;
-// import com.bezkoder.spring.security.login.payload.request.LoginRequest;
-// import com.bezkoder.spring.security.login.payload.request.SignupRequest;
-// import com.bezkoder.spring.security.login.payload.response.UserInfoResponse;
-// import com.bezkoder.spring.security.login.payload.response.MessageResponse;
-// import com.bezkoder.spring.security.login.repository.RoleRepository;
-// import com.bezkoder.spring.security.login.repository.UserRepository;
-// import com.bezkoder.spring.security.login.security.jwt.JwtUtils;
-// import com.bezkoder.spring.security.login.security.services.UserDetailsImpl;
-
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/auth")
