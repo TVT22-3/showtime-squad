@@ -41,21 +41,17 @@ jobs:
     - name: Create application.properties
       run: |
         echo "tmdb.api.key=${TMDB_API_KEY}" > src/main/resources/application.properties
-        echo "tmdb.api.key=${TMDB_API_KEY}" 
         echo "spring.datasource.url=${SPRING_DATASOURCE_URL}" >> src/main/resources/application.properties
         echo "spring.datasource.username=${SPRING_DATASOURCE_USERNAME}" >> src/main/resources/application.properties
         echo "spring.datasource.password=${SPRING_DATASOURCE_PASSWORD}" >> src/main/resources/application.properties
         echo "spring.jpa.hibernate.ddl-auto=${SPRING_JPA_HIBERNATE_DDL_AUTO}" >> src/main/resources/application.properties
-        echo "spring.jpa.hibernate.ddl-auto=${SPRING_JPA_HIBERNATE_DDL_AUTO}"
         echo "spring.jpa.properties.hibernate.dialect=${SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT}" >> src/main/resources/application.properties
         echo "spring.datasource.driver-class-name=${SPRING_DATASOURCE_DRIVER_CLASS_NAME}" >> src/main/resources/application.properties
         echo "showtimesquad.app.jwtCookieName=${JWT_NAME}" >> src/main/resources/application.properties
-        echo "showtimesquad.app.jwtCookieName=${JWT_NAME}" 
         echo "showtimesquad.app.jwtSecret=${JWT_SECRET}" >> src/main/resources/application.properties
         echo "showtimesquad.app.jwtExpirationMs=${JWT_EXPIRATION_MS}" >> src/main/resources/application.properties
-        echo "showtimesquad.app.jwtExpirationMs=${JWT_EXPIRATION_MS}" 
         echo "frontend.url=${CORS_FRONTEND_URL}" >> src/main/resources/application.properties
-        echo "frontend.url=${CORS_FRONTEND_URL}"
+        cat src/main/resources/application.properties
 
     - name: Build with Maven
       run: mvn -B package --file pom.xml
