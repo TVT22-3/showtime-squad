@@ -12,31 +12,39 @@ function NavElement(sitemapKey) {
     // Used to create a nav element for the NavBar component
     const show = sitemapKey.show;
     const subpages = hasKey(sitemapKey, "subpages")
+    console.log(subpages)
     console.log("component partly implemented")
 
     // guard clause to check if the user is logged in and if the element is for guests only
     if ((show=="user"&&loginStatus==false)||(show=="guest"&&loginStatus==true)){
-        return null
+        return null;
     }
     return (
-        <li className={subpages ? "dropdown" : ""}>
+        <li className={subpages ? 'dropdown' : ''}>
             <a href={sitemapKey.path}>{sitemapKey.title}</a>
             {subpages ? 
             <ul className='dropdown-content'>
-                {(Object.values(sitemapKey.subpages).map((key) => {SubElement(key, show)}))}
+                {Object.values(sitemapKey.subpages).map((key) => (
+                    SubElement(key)
+                ))}
             </ul> : null}
         </li>
     )
 }
 
-function SubElement(sitemapKey, show) {
-    console.log(sitemapKey)
+function SubElement(submapKey) {
+    console.log("in subelement")
+    console.log(submapKey)
+    const show = submapKey.show;
+    console.log(show)
+    
+    // guard clause
     if ((show=="user"&&loginStatus==false)||(show=="guest"&&loginStatus==true)){
-        return null
+        return null;
     }
     return (
         <li>
-            <a href={sitemapKey.path}>{sitemapKey.title}</a>
+            <a href={submapKey.path}>{submapKey.title}</a>
         </li>
     )
 }
