@@ -56,7 +56,7 @@ public class WebSecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        return new BCryptPasswordEncoder(10); // time complexity is O(2^n) so think wisely of increasing str
     }
 
     @Value("${frontend.url}")
@@ -82,8 +82,8 @@ public class WebSecurityConfig {
                     corsConfiguration.addAllowedHeader("*"); // Allow all headers
                     corsConfiguration.setAllowCredentials(true); // Allow credentials (cookies)
                     corsConfiguration.setMaxAge(3600L); // 1 hour max age for preflight requests
-
-                    customizer.configurationSource(request -> corsConfiguration);}); // Enable CORS configuration
+                    customizer.configurationSource(request -> corsConfiguration);
+                }); // Enable CORS configuration
 
         // fix H2 database console: Refused to display ' in a frame because it set
         // 'X-Frame-Options' to 'deny'
