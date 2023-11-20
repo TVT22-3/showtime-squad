@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './LoginRegister.css';
+import './LoginRegister.scss';
 
 function Login({toggleForms}) {
 
@@ -69,7 +69,7 @@ function Login({toggleForms}) {
   };
 
   return (
-    <form onSubmit={handleLogin}>
+    <form id="form" onSubmit={handleLogin}>
       <div className="container">
         <div className="header">
           <div className="text">Login</div>

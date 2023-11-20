@@ -1,0 +1,22 @@
+#search-bar {
+    /* changes to fixed when scrolled past*/
+    position: absolute;
+
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 10dvh;
+
+
+    input {
+        width: 30dvw;
+        font-size: 3dvw;
+    }
+
+    button {
+        position: absolute;
+        top: 50%;
+        transform: translate(-100%, -50%);
+
+        background-color: #333;
+    }
+}
