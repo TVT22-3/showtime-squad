@@ -40,7 +40,7 @@ jobs:
         
     - name: Create application.properties
       run: |
-        echo "tmdb.api.key=${TMDB_API_KEY}" > src/main/resources/application.properties
+        echo "TMDB_API_KEY=${TMDB_API_KEY}" > src/main/resources/application.properties
         echo "spring.datasource.url=${SPRING_DATASOURCE_URL}" >> src/main/resources/application.properties
         echo "spring.datasource.username=${SPRING_DATASOURCE_USERNAME}" >> src/main/resources/application.properties
         echo "spring.datasource.password=${SPRING_DATASOURCE_PASSWORD}" >> src/main/resources/application.properties
@@ -50,7 +50,7 @@ jobs:
         echo "showtimesquad.app.jwtCookieName=${JWT_NAME}" >> src/main/resources/application.properties
         echo "showtimesquad.app.jwtSecret=${JWT_SECRET}" >> src/main/resources/application.properties
         echo "showtimesquad.app.jwtExpirationMs=${JWT_EXPIRATION_MS}" >> src/main/resources/application.properties
-        echo "frontend.url=${CORS_FRONTEND_URL}" >> src/main/resources/application.properties
+        echo "FRONTEND_URL=${CORS_FRONTEND_URL}" >> src/main/resources/application.properties
         cat src/main/resources/application.properties
 
     - name: Build with Maven
