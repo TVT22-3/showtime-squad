@@ -2,7 +2,7 @@ name: Java CI with Maven
 
 on:
   push:
-    branches: [ "feature/backend/login" ]
+    branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
 
@@ -51,7 +51,6 @@ jobs:
         echo "showtimesquad.app.jwtSecret=${JWT_SECRET}" >> src/main/resources/application.properties
         echo "showtimesquad.app.jwtExpirationMs=${JWT_EXPIRATION_MS}" >> src/main/resources/application.properties
         echo "FRONTEND_URL=${CORS_FRONTEND_URL}" >> src/main/resources/application.properties
-        cat src/main/resources/application.properties
 
     - name: Build with Maven
       run: mvn -B package --file pom.xml
