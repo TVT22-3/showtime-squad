@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './LoginRegister.scss';
 
-function Login({toggleForms}) {
+function Login({ toggleForms }) {
+
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     username: '',
@@ -26,19 +29,19 @@ function Login({toggleForms}) {
 
     // Example validation, replace with your own logic
     if (formData.username !== '') {
-        setUsernameError('');
+      setUsernameError('');
     } else {
-        setUsernameError('Username is required');
-        setPasswordError('');
-        return;
+      setUsernameError('Username is required');
+      setPasswordError('');
+      return;
     }
 
     if (formData.password !== '') {
-        setPasswordError('');
+      setPasswordError('');
     } else {
-        setPasswordError('Password is required');
-        setUsernameError('');
-        return;
+      setPasswordError('Password is required');
+      setUsernameError('');
+      return;
     }
 
     // TODO: Add logic to send login request to your backend
@@ -74,6 +77,13 @@ function Login({toggleForms}) {
         <div className="header">
           <div className="text">Login</div>
           <div className="textUnderline"></div>
+          <button
+            type="button"
+            className="close-button"
+            onClick={() => navigate('/')} // Navigate to "/" when the button is clicked // Navigate to "/" when the button is clicked
+          >
+            X
+          </button>
         </div>
         <div className="inputs">
           <div className="input">

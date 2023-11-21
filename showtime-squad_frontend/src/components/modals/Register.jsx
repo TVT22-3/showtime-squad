@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import './LoginRegister.scss';
+import { useNavigate } from 'react-router-dom';
 
 function Register({ toggleForms }) {
-      
+
+    const navigate = useNavigate();
+
     const [formData, setFormData] = useState({
         username: '',
         email: '',
@@ -94,7 +97,7 @@ function Register({ toggleForms }) {
             // Handle network errors or other issues
           }
           */
-         console.log('Sending Request data:', registrationData);
+        console.log('Sending Request data:', registrationData);
     };
 
 
@@ -104,6 +107,13 @@ function Register({ toggleForms }) {
                 <div className="header">
                     <div className="text">Register</div>
                     <div className="textUnderline"></div>
+                    <button
+                        type="button"
+                        className="close-button"
+                        onClick={() => navigate('/')} // Navigate to "/" when the button is clicked // Navigate to "/" when the button is clicked
+                    >
+                        X
+                    </button>
                 </div>
                 <div className="inputs">
                     <div className="input">
