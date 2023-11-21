@@ -2,16 +2,9 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
-import Login from './components/ui/Login.jsx'
-import Register from './components/ui/Register.jsx'
-import LoginRegisterHandler from './components/ui/LoginRegisterHandler.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <App />
-    {/* <Home /> */}
-    {/* <Login /> */}
-    {/* <Register /> */}
-    {/* <LoginRegisterHandler /> */}
   </React.StrictMode>,
 )
