@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import './LoginRegister.scss';
+import { useNavigate } from 'react-router-dom';
 
-function ForgotPassword( { toggleForms } ) {
+function ForgotPassword({ toggleForms }) {
+
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState('');
 
@@ -53,6 +57,13 @@ function ForgotPassword( { toggleForms } ) {
         <div className="header">
           <div className="text">Forgot Password?</div>
           <div className="textUnderline"></div>
+          <button
+            type="button"
+            className="close-button"
+            onClick={() => navigate('/')} // Navigate to "/" when the button is clicked // Navigate to "/" when the button is clicked
+          >
+            X
+          </button>
           Enter your email to reset your password.
         </div>
         <div className="inputs">
