@@ -1,35 +1,66 @@
 package com.showtimesquad.showtimesquad.endpoints.integration.unit.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.showtimesquad.showtimesquad.controller.AuthController;
 
+import com.showtimesquad.showtimesquad.model.request.LoginRequest;
 import com.showtimesquad.showtimesquad.model.request.SignupRequest;
-import com.showtimesquad.showtimesquad.repository.RoleRepository;
-import com.showtimesquad.showtimesquad.repository.UserRepository;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.security.test.context.support.WithMockUser;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
+import java.util.Arrays;
+import java.util.HashSet;
+
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
 public class AuthTest {
-    UserRepository userRepository = mock(UserRepository.class);
-    RoleRepository roleRepository = mock(RoleRepository.class);
+    @Autowired
+    private MockMvc mockMvc;
+    @Test
+    @WithMockUser
+    void creatingUserReturnsOK() throws Exception {
 
-    AuthController authController = new AuthController();
+        // Test Data
+        SignupRequest signupRequest = new SignupRequest();
+        signupRequest.setUsername("testuser1");
+        signupRequest.setEmail("testuser1@testuser1.com");
+        signupRequest.setPassword("testuser1");
+        signupRequest.setRole(new HashSet<>(Arrays.asList("mod", "user")));
 
+        // Converting SignupRequest to JSON
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonRequestSignUp = objectMapper.writeValueAsString(signupRequest);
+
+        ResultActions result = mockMvc.perform(MockMvcRequestBuilders.post("http://localhost/api/auth/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonRequestSignUp));
+        result.andExpect(status().isOk());
+    }
 
     @Test
-    void creatingUserReturnsOK() throws Exception {
-        SignupRequest signupRequest = new SignupRequest();
-        ResultActions result = MockMvc.perform(post("/signup")
-                .contentType("application.json")
-                .content());
+    @WithMockUser
+    void userShouldExist() throws Exception {
+
+        // Test Data
+        LoginRequest loginRequest = new LoginRequest();
+        loginRequest.setUsername("testuser");
+        loginRequest.setPassword("testuser");
+
+        // Converting SignupRequest to JSON
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonRequestLogin = objectMapper.writeValueAsString(loginRequest);
+        ResultActions result = mockMvc.perform(MockMvcRequestBuilders.post("http://localhost/api/auth/signin")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonRequestLogin));
         result.andExpect(status().isOk());
     }
 }
