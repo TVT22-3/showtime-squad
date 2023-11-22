@@ -1,0 +1,37 @@
+.star-rating.stars {
+    --_star-color: orange;
+    --_tooltip_width: 5rem;
+
+    color: black;
+    position: relative;
+    display: flex;
+
+    background-image: linear-gradient(90deg,
+            var(--star-color, var(--_star-color)) 50%,
+            #000000AA 50%);
+
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    img {
+        width: 20%;
+    }
+
+    &:hover::before {
+        content: attr(data-rating);
+        background-color: #000000AA;
+        color: orange;
+        position: absolute;
+
+        text-align: center;
+
+        top: -2rem;
+        left: calc(50% - var(--_tooltip_width) / 2);
+        width: var(--_tooltip_width);
+
+        overflow: hidden;
+
+        border-radius: 5px;
+    }
+}
