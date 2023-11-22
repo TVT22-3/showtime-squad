@@ -23,6 +23,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -67,7 +68,6 @@ public class AuthTest {
         TestTransaction.flagForCommit();
         TestTransaction.end();
 
-
         Optional<User> userOptional = userRepository.findByUsername("testuser1");
         assertTrue(userOptional.isPresent(), "User should be present in the database");
 
@@ -98,5 +98,42 @@ public class AuthTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonRequestLogin));
         result.andExpect(status().isOk());
+    }
+
+    @Test
+    @WithMockUser
+    void shouldNotHavePermissions() throws Exception {
+
+        /*
+            This function makes a POST request to the /signin endpoint
+            , and it should return 401 Unauthorized.
+        */
+
+        // Test Data
+        LoginRequest loginRequest = new LoginRequest();
+        loginRequest.setUsername("noPerms");
+        loginRequest.setPassword("noPerms");
+
+        // Converting LoginRequest to JSON
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonRequestLogin = objectMapper.writeValueAsString(loginRequest);
+        ResultActions result = mockMvc.perform(MockMvcRequestBuilders.post("http://localhost/api/auth/signin")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonRequestLogin));
+        result.andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    @WithMockUser
+    void userShouldNotExist() throws Exception {
+
+        /*
+            This test passes if the input username doesn't exist in the database.
+        */
+
+        // Test Data
+        Optional<User> userOptional = userRepository.findByUsername("iShouldNotExist");
+        assertFalse(userOptional.isPresent(), "User should not be present in the database!");
+
     }
 }
