@@ -1,75 +1,80 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './LoginRegister.scss';
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import './LoginRegister.scss'
 
 function Login({ toggleForms }) {
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   const [formData, setFormData] = useState({
     username: '',
     password: '',
-  });
+  })
 
-  const [usernameError, setUsernameError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
+  const [usernameError, setUsernameError] = useState('')
+  const [passwordError, setPasswordError] = useState('')
+  const [loginError, setLoginError] = useState('')
+  const [loginSuccessful, setLoginSuccessful] = useState('')
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
-    }));
-  };
+    }))
+  }
 
   const handleLogin = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
-    // TODO: Implement login logic
-
-    // Example validation, replace with your own logic
     if (formData.username !== '') {
-      setUsernameError('');
+      setUsernameError('')
     } else {
-      setUsernameError('Username is required');
-      setPasswordError('');
-      return;
+      setUsernameError('Username is required')
+      setPasswordError('')
+      return
     }
 
     if (formData.password !== '') {
-      setPasswordError('');
+      setPasswordError('')
     } else {
-      setPasswordError('Password is required');
-      setUsernameError('');
-      return;
+      setPasswordError('Password is required')
+      setUsernameError('')
+      return
     }
 
-    // TODO: Add logic to send login request to your backend
-    /*
     try {
-      const response = await fetch('https://api.example.com/login', {
+      const response = await fetch('http://localhost:8080/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData),
-      });
+      })
+
+      console.log('Sending Request to server!', formData)
 
       if (response.ok) {
-        console.log('Login successful!');
-        // Handle successful login, e.g., redirect to dashboard
+        console.log('Login successful!')
+        setLoginSuccessful('Login successful!')
+        setLoginError('')
+        navigate('/')
+        // Handle successful registration
       } else {
-        console.error('Login failed:', response.statusText);
-        // Handle login failure, e.g., show error message to the user
+        const errorData = await response.json()
+        console.error('Login failed:', errorData.message)
+        setLoginError(errorData.message)
+        setLoginSuccessful('')
+        // Handle registration failure, e.g., show error message to the user
       }
     } catch (error) {
-      console.error('Error during login:', error.message);
+      console.error(error.message)
+      setLoginSuccessful('')
+      setLoginError(error.message)
       // Handle network errors or other issues
     }
-    */
 
-    console.log('Sending Request to server!', formData);
-  };
+  }
 
   return (
     <form id="form" onSubmit={handleLogin}>
@@ -80,7 +85,7 @@ function Login({ toggleForms }) {
           <button
             type="button"
             className="close-button"
-            onClick={() => navigate('/')} // Navigate to "/" when the button is clicked // Navigate to "/" when the button is clicked
+            onClick={() => navigate('/')}
           >
             X
           </button>
@@ -113,6 +118,8 @@ function Login({ toggleForms }) {
               />
             </div>
             <span id="passwordError" className="error-message">{passwordError}</span>
+            <span id="loginError" className="error-message">{loginError}</span>
+            <span id="loginSuccessful" className="successful-message">{loginSuccessful}</span>
           </div>
         </div>
         <div className="linkContainer">
@@ -124,8 +131,8 @@ function Login({ toggleForms }) {
         </button>
       </div>
     </form>
-  );
+  )
 }
 
-export default Login;
+export default Login
 
