@@ -77,6 +77,8 @@ public class AuthTest {
 
     @Test
     @WithMockUser
+    @Transactional
+    @Rollback
     void userShouldExist() throws Exception {
 
         /*
@@ -86,18 +88,44 @@ public class AuthTest {
             and returns the value 200 OK if it passes.
         */
 
-        // Test Data
+        // Sign Up Test Data
+        SignupRequest signupRequest = new SignupRequest();
+        signupRequest.setUsername("testuser1");
+        signupRequest.setEmail("testuser1@testuser1.com");
+        signupRequest.setPassword(" testuser1");
+        signupRequest.setRole(new HashSet<>(Arrays.asList("mod", "user")));
+
+        // Converting SignupRequest to JSON
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonRequestSignUp = objectMapper.writeValueAsString(signupRequest);
+
+        // Performs The Registration
+        ResultActions result = mockMvc.perform(MockMvcRequestBuilders.post("http://localhost/api/auth/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonRequestSignUp));
+
+        // Login Test Data
         LoginRequest loginRequest = new LoginRequest();
-        loginRequest.setUsername("testuser");
-        loginRequest.setPassword("testuser");
+        loginRequest.setUsername("testuser1");
+        loginRequest.setPassword("testuser1");
 
         // Converting LoginRequest to JSON
-        ObjectMapper objectMapper = new ObjectMapper();
-        String jsonRequestLogin = objectMapper.writeValueAsString(loginRequest);
-        ResultActions result = mockMvc.perform(MockMvcRequestBuilders.post("http://localhost/api/auth/signin")
+        ObjectMapper loginObjectMapper = new ObjectMapper();
+        String jsonRequestLogin = loginObjectMapper.writeValueAsString(loginRequest);
+        ResultActions loginResult = mockMvc.perform(MockMvcRequestBuilders.post("http://localhost/api/auth/signin")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonRequestLogin));
         result.andExpect(status().isOk());
+
+        TestTransaction.flagForCommit();
+        TestTransaction.end();
+
+        Optional<User> userOptional = userRepository.findByUsername("testuser1");
+        assertTrue(userOptional.isPresent(), "User should be present in the database");
+
+        // Deletes the user from the database
+        userRepository.delete(userOptional.get());
+
     }
 
     @Test
