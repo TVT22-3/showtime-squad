@@ -54,7 +54,7 @@ public class AuthTest {
         TestTransaction.flagForCommit();
         TestTransaction.end();
 
-        Optional<User> userOptional = userRepository.findByUsername("testuser1");
+        Optional<User> userOptional = userRepository.findByUsername("testuser");
         assertTrue(userOptional.isPresent(), "User should be present in the database");
 
         // Deletes the user from the database
@@ -75,13 +75,12 @@ public class AuthTest {
         */
 
         // Sign Up Test Data
-        ResultActions result = registerUser()
-                .andExpect(status().isOk());
+        ResultActions result = registerUser();
 
         // Login Test Data
         LoginRequest loginRequest = new LoginRequest();
-        loginRequest.setUsername("testuser1");
-        loginRequest.setPassword("testuser1");
+        loginRequest.setUsername("testuser");
+        loginRequest.setPassword("testuser");
 
         // Converting LoginRequest to JSON
         ObjectMapper loginObjectMapper = new ObjectMapper();
@@ -94,7 +93,7 @@ public class AuthTest {
         TestTransaction.flagForCommit();
         TestTransaction.end();
 
-        Optional<User> userOptional = userRepository.findByUsername("testuser1");
+        Optional<User> userOptional = userRepository.findByUsername("testuser");
         assertTrue(userOptional.isPresent(), "User should be present in the database");
 
         // Deletes the user from the database
@@ -141,22 +140,34 @@ public class AuthTest {
 
     @Test
     @WithMockUser
+    @Transactional
+    @Rollback
     void userShouldNotBeAbleToLogin() throws Exception {
-        // Test Data
-        SignupRequest signupRequest = new SignupRequest();
-        signupRequest.setUsername("testuser1");
-        signupRequest.setEmail("testuser1@testuser1.com");
-        signupRequest.setPassword(" testuser1");
-        signupRequest.setRole(new HashSet<>(Arrays.asList("mod", "user")));
 
-        // Converting SignupRequest to JSON
-        ObjectMapper SignupObjectMapper = new ObjectMapper();
-        String jsonRequestSignUp = SignupObjectMapper.writeValueAsString(signupRequest);
+        // Sign Up Test Data
+        ResultActions result = registerUser();
 
-        // Performs The Registration
-        ResultActions result = mockMvc.perform(MockMvcRequestBuilders.post("http://localhost/api/auth/register")
+        // Login request
+        LoginRequest loginRequest = new LoginRequest();
+        loginRequest.setUsername("testuser");
+        loginRequest.setPassword("nottestuser");
+
+        // Converting LoginRequest to JSON
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonRequestLogin = objectMapper.writeValueAsString(loginRequest);
+        ResultActions loginResult = mockMvc.perform(MockMvcRequestBuilders.post("http://localhost/api/auth/signin")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(jsonRequestSignUp));
+                .content(jsonRequestLogin));
+        loginResult.andExpect(status().isUnauthorized());
+
+        TestTransaction.flagForCommit();
+        TestTransaction.end();
+
+        Optional<User> userOptional = userRepository.findByUsername("testuser");
+        assertTrue(userOptional.isPresent(), "User should be present in the database");
+
+        // Deletes the user from the database
+        userRepository.delete(userOptional.get());
     }
 
     public ResultActions registerUser() throws Exception {
@@ -170,9 +181,9 @@ public class AuthTest {
 
         // Test Data
         SignupRequest signupRequest = new SignupRequest();
-        signupRequest.setUsername("testuser1");
-        signupRequest.setEmail("testuser1@testuser1.com");
-        signupRequest.setPassword(" testuser1");
+        signupRequest.setUsername("testuser");
+        signupRequest.setEmail("testuser@testuser.com");
+        signupRequest.setPassword(" testuser");
         signupRequest.setRole(new HashSet<>(Arrays.asList("mod", "user")));
 
         // Converting SignupRequest to JSON
