@@ -1,6 +1,7 @@
 import "./NestedOptionsMenu.scss"
+import OptionListItem from "./OptionListItem.jsx"
 
-function NestedOptionsButton({ options, icon = '💩'}) {
+function NestedOptionsButton({ options, icon = '💩' }) {
 
     return (
         <div className='nested-options'>
@@ -22,7 +23,7 @@ function generateNestedOptions(items) {
             // recursion stops when options are met
             let options = []
             for (let i = 0; i < item.options.length; i++) {
-                options.push(<li key={i}>{item.options[i]}</li>)
+                options.push(<OptionListItem key={i} category={key} option={item.options[i]} />)
             }
             return (<ul key={key} className="category">
                 <span>{key}</span>

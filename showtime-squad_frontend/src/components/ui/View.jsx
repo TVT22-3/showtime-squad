@@ -1,13 +1,17 @@
 import './View.css'
 import ViewBlock from '../containers/ViewBlock.jsx'
 
+import { MyContextProvider } from '../../context/MyContext.jsx';
+
 function View() {
     //TODO: Implement
     console.log("component not properly implemented")
 
     return (
         <section className='view'>
-            <ViewBlock />
+            <MyContextProvider>
+                <ViewBlock />
+            </MyContextProvider>
         </section>
     )
 }

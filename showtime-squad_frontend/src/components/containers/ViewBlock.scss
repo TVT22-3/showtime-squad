@@ -1,11 +1,12 @@
 .view-block {
     --_viewblock-color: #fff;
     --_viewblock-bg-dark: #333;
-    --_highlight: red;
+    --_viewblock-bg: #444;
+    --_highlight: red;    
 
     --_block-inset-margin: 2rem;
 
-    background-color: rebeccapurple;
+    background-color: var(--primary-bg, var(--_viewblock-bg));
     color: var(--primary-color, var(--_viewblock-color));
 
     margin: var(--_block-inset-margin);

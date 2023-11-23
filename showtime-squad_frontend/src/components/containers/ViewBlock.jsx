@@ -4,21 +4,25 @@ import NestedOptionsMenu from '../atoms/NestedOptionsMenu.jsx'
 import viewEditOptions from "../../data/viewEditOptions.json"
 import viewRemoveOptions from "../../data/viewRemoveOptions.json"
 
-function ViewBlock() {
+import { useMyContext } from '../../context/MyContext.jsx'
+
+function ViewBlock({ type = 'top movies' }) {
     //TODO: Implement
     console.log("component not properly implemented")
+
+    const { clickedButton, clickedCategory, clickedOption } = useMyContext()
 
     return (
         <article className='view-block'>
             <div className='action-row'>
                 <div className='title'>
-                    <h6>Title</h6>
+                    <h6>{clickedOption ? clickedOption : 'title'}</h6>
                 </div>
-
+                <p>Last Clicked Button: {clickedButton}</p>
                 <div className='options'>
-                    <NestedOptionsMenu options={viewEditOptions} icon="📝"/>
+                    <NestedOptionsMenu options={viewEditOptions} icon="📝" />
 
-                    <NestedOptionsMenu options={viewRemoveOptions} icon="❌"/>
+                    <NestedOptionsMenu options={viewRemoveOptions} icon="❌" />
                 </div>
             </div>
 
