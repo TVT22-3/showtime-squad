@@ -1,7 +1,6 @@
 package com.showtimesquad.showtimesquad.endpoints.integration.unit.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.showtimesquad.showtimesquad.controller.AuthController;
 import com.showtimesquad.showtimesquad.repository.UserRepository;
 import com.showtimesquad.showtimesquad.model.User;
 import com.showtimesquad.showtimesquad.model.request.LoginRequest;
@@ -49,21 +48,8 @@ public class AuthTest {
         */
 
         // Test Data
-        SignupRequest signupRequest = new SignupRequest();
-        signupRequest.setUsername("testuser1");
-        signupRequest.setEmail("testuser1@testuser1.com");
-        signupRequest.setPassword(" testuser1");
-        signupRequest.setRole(new HashSet<>(Arrays.asList("mod", "user")));
-
-        // Converting SignupRequest to JSON
-        ObjectMapper objectMapper = new ObjectMapper();
-        String jsonRequestSignUp = objectMapper.writeValueAsString(signupRequest);
-
-        // Performs The Registration
-        ResultActions result = mockMvc.perform(MockMvcRequestBuilders.post("http://localhost/api/auth/register")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(jsonRequestSignUp));
-        result.andExpect(status().isOk());
+        ResultActions result = registerUser()
+                .andExpect(status().isOk());
 
         TestTransaction.flagForCommit();
         TestTransaction.end();
@@ -83,26 +69,14 @@ public class AuthTest {
 
         /*
             This function makes sure that an account exists in a database.
-            The database has a test user called, "testuser".
+            The database has a test user called, "testuser1".
             The Unit Test performs a POST request to the /signin endpoint,
             and returns the value 200 OK if it passes.
         */
 
         // Sign Up Test Data
-        SignupRequest signupRequest = new SignupRequest();
-        signupRequest.setUsername("testuser1");
-        signupRequest.setEmail("testuser1@testuser1.com");
-        signupRequest.setPassword(" testuser1");
-        signupRequest.setRole(new HashSet<>(Arrays.asList("mod", "user")));
-
-        // Converting SignupRequest to JSON
-        ObjectMapper objectMapper = new ObjectMapper();
-        String jsonRequestSignUp = objectMapper.writeValueAsString(signupRequest);
-
-        // Performs The Registration
-        ResultActions result = mockMvc.perform(MockMvcRequestBuilders.post("http://localhost/api/auth/register")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(jsonRequestSignUp));
+        ResultActions result = registerUser()
+                .andExpect(status().isOk());
 
         // Login Test Data
         LoginRequest loginRequest = new LoginRequest();
@@ -163,5 +137,53 @@ public class AuthTest {
         Optional<User> userOptional = userRepository.findByUsername("iShouldNotExist");
         assertFalse(userOptional.isPresent(), "User should not be present in the database!");
 
+    }
+
+    @Test
+    @WithMockUser
+    void userShouldNotBeAbleToLogin() throws Exception {
+        // Test Data
+        SignupRequest signupRequest = new SignupRequest();
+        signupRequest.setUsername("testuser1");
+        signupRequest.setEmail("testuser1@testuser1.com");
+        signupRequest.setPassword(" testuser1");
+        signupRequest.setRole(new HashSet<>(Arrays.asList("mod", "user")));
+
+        // Converting SignupRequest to JSON
+        ObjectMapper SignupObjectMapper = new ObjectMapper();
+        String jsonRequestSignUp = SignupObjectMapper.writeValueAsString(signupRequest);
+
+        // Performs The Registration
+        ResultActions result = mockMvc.perform(MockMvcRequestBuilders.post("http://localhost/api/auth/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonRequestSignUp));
+    }
+
+    public ResultActions registerUser() throws Exception {
+
+        /*
+            This function registers a user into the database.
+            The function is called in different test cases where we need
+            to register a user temporarily before testing a certain function.
+        */
+
+
+        // Test Data
+        SignupRequest signupRequest = new SignupRequest();
+        signupRequest.setUsername("testuser1");
+        signupRequest.setEmail("testuser1@testuser1.com");
+        signupRequest.setPassword(" testuser1");
+        signupRequest.setRole(new HashSet<>(Arrays.asList("mod", "user")));
+
+        // Converting SignupRequest to JSON
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonRequestSignUp = objectMapper.writeValueAsString(signupRequest);
+
+        // Performs The Registration
+        ResultActions result = mockMvc.perform(MockMvcRequestBuilders.post("http://localhost/api/auth/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonRequestSignUp));
+        System.out.println(result);
+        return result;
     }
 }
