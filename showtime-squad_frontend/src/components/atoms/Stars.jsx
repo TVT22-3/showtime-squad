@@ -1,17 +1,21 @@
 import "./Stars.scss"
-import star from "../../assets/icon/star.svg"
+import Star from "../../assets/icon/star.jsx"
 
 function Stars({ rating = 2.5 }) {
-    let stars = [];
-    for (let i = 0; i < 5; i++) {
-        stars.push(<img key={i} src={star} alt="★" />)
-    }
 
     return (
         <div className="star-rating stars" data-rating={rating}>
-            {stars}
+            <span>★★★★★</span>
         </div>
     )
+}
+
+function generateStars(count) {
+    let stars = [];
+    for (let i = 0; i < count; i++) {
+        stars.push(<Star key={i} />)
+    }
+    return (stars)
 }
 
 export default Stars

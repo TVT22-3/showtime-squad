@@ -1,14 +1,14 @@
-import "./MovieBlocks.scss"
+import "./MovieBlock.scss"
 import Stars from "./Stars.jsx"
 
-function MovieBlock({ imgUrl = "https://m.media-amazon.com/images/I/71KPOvu-hOL._AC_UF894,1000_QL80_.jpg", linkUrl, title, rating }) {
+function MovieBlock({ imgUrl = "https://m.media-amazon.com/images/I/71KPOvu-hOL._AC_UF894,1000_QL80_.jpg",
+    linkUrl="#", title, rating }) {
 
     return (
         <section className='movie-block'>
-            <div className="image-container">
+            <a href={linkUrl} className="image-container" data-title={title}>
                 <img src={imgUrl} alt={`${title}_poster`} />
-            </div>
-            <h6>{title}</h6>
+            </a>
             <Stars rating={rating} />
         </section>
     )
