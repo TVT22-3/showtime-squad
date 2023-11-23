@@ -1,13 +1,31 @@
 {
-    "type": [
-        "top movies",
-        "free pick",
-        "favorites",
-        "news",
-        "review"
-    ],
-    "size": [
-        "width",
-        "height"
-    ]
+    "type": {
+        "movies": {
+            "options": [
+                "top movies",
+                "free pick",
+                "favorites"
+            ]
+        },
+        "text": {
+            "options": [
+                "news",
+                "review"
+            ]
+        }
+    },
+    "size": {
+        "width": {
+            "options": [
+                "+",
+                "-"
+            ]
+        },
+        "height": {
+            "options": [
+                "+",
+                "-"
+            ]
+        }
+    }
 }

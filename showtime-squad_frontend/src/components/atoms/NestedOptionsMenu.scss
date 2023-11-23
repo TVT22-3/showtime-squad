@@ -1,0 +1,85 @@
+.nested-options {
+
+    .nest::after {
+        content: '➡️';
+        margin-inline-start: 1rem;
+    }
+
+    ul {
+        list-style-type: none;
+        padding-inline-start: 0;
+    }
+
+    ul.menu-indicator>li {
+        background-color: var(--primary-bg-dark, var(--_viewblock-bg-dark));
+        border-radius: 5px 5px;
+        margin-inline-start: 1rem;
+    }
+
+    li {
+        position: relative;
+        display: inline;
+        padding: 0.5rem;
+        // padding-inline: 1rem;
+
+        .active:after {
+            content: '◆';
+            padding-inline-start: 0.5rem;
+        }
+    }
+
+    li:nth-child(odd) {
+        background-color: #00000011;
+    }
+
+    .dropdown-content>li:first-child {
+        border-top-left-radius: 5px;
+        border-top-right-radius: 20px;
+    }
+
+    // this is scuffed af lol
+    .dropdown-content:last-child>li:last-child,
+    .dropdown-content:last-child>.category:last-child>li:last-child {
+        border-bottom-right-radius: 5px;
+        border-bottom-left-radius: 20px;
+    }
+
+    .dropdown:hover>.dropdown-content {
+        display: inline-block;
+        filter: drop-shadow(1px 1px 4px #00000099);
+    }
+
+    .dropdown-content {
+        z-index: 1;
+
+        display: none;
+        position: absolute;
+        background-color: var(--primary-bg-dark, var(--_viewblock-bg-dark));
+        min-width: 10rem;
+
+        border-radius: 5px 20px;
+    }
+
+    .dropdown-content li {
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        text-align: left;
+    }
+
+    li:hover {
+        background-color: #FFFFFF11;
+    }
+
+    .category span {
+        background-color: #00000088;
+
+        display: block;
+
+        padding-inline-start: 4px;
+    }
+
+    .dropdown-content>.category:first-child>span {
+        border-radius: 5px 20px 0 0;
+    }
+}

@@ -5,15 +5,15 @@ function MovieBlocks() {
 
     return (
         <section className='movie-blocks'>
-            {generateBlocks(<MovieBlock />, 5)}
+            {generateBlocks(5)}
         </section>
     )
 }
 
-function generateBlocks(component, count) {
+function generateBlocks(count) {
     let blocks = []
     for (let i = 0; i < count; i++) {
-        blocks.push(component)
+        blocks.push(<MovieBlock key={i}/>);
     }
     return blocks
 }

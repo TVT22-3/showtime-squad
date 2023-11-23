@@ -1,5 +1,8 @@
 import './ViewBlock.scss'
 import MovieBlocks from './MovieBlocks.jsx'
+import NestedOptionsMenu from '../atoms/NestedOptionsMenu.jsx'
+import viewEditOptions from "../../data/viewEditOptions.json"
+import viewRemoveOptions from "../../data/viewRemoveOptions.json"
 
 function ViewBlock() {
     //TODO: Implement
@@ -13,40 +16,9 @@ function ViewBlock() {
                 </div>
 
                 <div className='options'>
-                    <ul className='edit menu-indicator'>
-                        <li className='dropdown'>
-                            📝
-                            <ul className='dropdown-content'>
-                                <li className='dropdown'>Type
-                                    <ul className='types dropdown-content dropdown-options'>
-                                        <li className='active'>Top Movies</li>
-                                        <li>Favorites</li>
-                                        <li>Favorites</li>
-                                        <li>Favorites</li>
-                                        <li>Favorites</li>
-                                        <li>Favorites</li>
-                                        <li>Favorites</li>
-                                    </ul>
-                                </li>
-                                <li className='size dropdown'>Size
-                                    <ul className='dropdown-content'>
-                                        <li>width</li>
-                                        <li>height</li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
+                    <NestedOptionsMenu options={viewEditOptions} icon="📝"/>
 
-                    <ul className='remove menu-indicator'>
-                        <li className='remove dropdown'>
-                            ❌
-                            <ul className='dropdown-content dropdown-options'>
-                                <li>Reset</li>
-                                <li>Remove</li>
-                            </ul>
-                        </li>
-                    </ul>
+                    <NestedOptionsMenu options={viewRemoveOptions} icon="❌"/>
                 </div>
             </div>
 
