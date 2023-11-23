@@ -1,5 +1,5 @@
 import './ViewBlock.scss'
-import MovieBlock from '../atoms/MovieBlock.jsx'
+import MovieBlocks from './MovieBlocks.jsx'
 
 function ViewBlock() {
     //TODO: Implement
@@ -54,15 +54,6 @@ function ViewBlock() {
                 <MovieBlocks />
             </div>
         </article>
-    )
-}
-
-function MovieBlocks() {
-    
-    return (
-        <section className='movie-blocks'>
-            <MovieBlock />
-        </section>
     )
 }
 

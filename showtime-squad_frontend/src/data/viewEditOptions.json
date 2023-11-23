@@ -1,0 +1,13 @@
+{
+    "type": [
+        "top movies",
+        "free pick",
+        "favorites",
+        "news",
+        "review"
+    ],
+    "size": [
+        "width",
+        "height"
+    ]
+}
