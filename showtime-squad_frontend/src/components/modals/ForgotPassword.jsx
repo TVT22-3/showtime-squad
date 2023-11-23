@@ -1,55 +1,30 @@
-import React, { useState } from 'react';
-import './LoginRegister.scss';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react'
+import './LoginRegister.scss'
+import { useNavigate } from 'react-router-dom'
 
 function ForgotPassword({ toggleForms }) {
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
-  const [email, setEmail] = useState('');
-  const [emailError, setEmailError] = useState('');
+  const [email, setEmail] = useState('')
+  const [emailError, setEmailError] = useState('')
 
   const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
+    setEmail(e.target.value)
+  }
 
   const handleForgotPassword = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
-    // Example validation, replace with your own logic
+    //TODO: implement logic to send email for reset password
     if (email !== '') {
-      setEmailError('');
+      setEmailError('')
     } else {
-      setEmailError('Email is required');
-      return;
+      setEmailError('Email is required')
+      return
     }
-
-    // TODO: Add logic to send forgot password request to your backend
-    /*
-    try {
-      const response = await fetch('https://api.example.com/forgot-password', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email }),
-      });
-
-      if (response.ok) {
-        console.log('Forgot Password request successful!');
-        // Handle successful request, e.g., show a success message to the user
-      } else {
-        console.error('Forgot Password request failed:', response.statusText);
-        // Handle request failure, e.g., show error message to the user
-      }
-    } catch (error) {
-      console.error('Error during forgot password request:', error.message);
-      // Handle network errors or other issues
-    }
-    */
-
-    console.log('Sending Forgot Password Request to server!', email);
-  };
+    console.log('Sending Forgot Password Request to server!', email)
+  }
 
   return (
     <form id="form" onSubmit={handleForgotPassword}>
@@ -60,7 +35,7 @@ function ForgotPassword({ toggleForms }) {
           <button
             type="button"
             className="close-button"
-            onClick={() => navigate('/')} // Navigate to "/" when the button is clicked // Navigate to "/" when the button is clicked
+            onClick={() => navigate('/')}
           >
             X
           </button>
@@ -90,7 +65,7 @@ function ForgotPassword({ toggleForms }) {
         </button>
       </div>
     </form>
-  );
+  )
 }
 
-export default ForgotPassword;
+export default ForgotPassword

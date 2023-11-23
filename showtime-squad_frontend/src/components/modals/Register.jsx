@@ -1,104 +1,126 @@
-import React, { useState } from 'react';
-import './LoginRegister.scss';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react'
+import './LoginRegister.scss'
+import { useNavigate } from 'react-router-dom'
 
 function Register({ toggleForms }) {
 
-    const navigate = useNavigate();
+    const navigate = useNavigate()
+
+    const toLogin = () => {
+        setTimeout(() => {
+          toggleForms('login')
+        }, 3000)
+      }
 
     const [formData, setFormData] = useState({
         username: '',
         email: '',
         password: '',
         confirmPassword: ''
-    });
+    })
 
-    const [usernameError, setUsernameError] = useState('');
-    const [passwordError, setPasswordError] = useState('');
-    const [confirmPasswordError, setConfirmPasswordError] = useState('');
+    const [usernameError, setUsernameError] = useState('')
+    const [passwordError, setPasswordError] = useState('')
+    const [confirmPasswordError, setConfirmPasswordError] = useState('')
+    const [registerError, setRegisterError] = useState('')
+    const [registerSuccessful, setRegisterSuccessful] = useState('')
+    
 
     const handleInputChange = (e) => {
-        const { name, value } = e.target;
+        const { name, value } = e.target
         setFormData((prevData) => ({
             ...prevData,
             [name]: value,
-        }));
-    };
+        }))
+    }
 
     const isUsernameValid = () => {
-        const usernameRegex = /^[a-zA-Z0-9_-]{4,20}$/;
-        return usernameRegex.test(formData.username);
-    };
+        const usernameRegex = /^[a-zA-Z0-9_-]{4,20}$/
+        return usernameRegex.test(formData.username)
+    }
 
     const isPasswordValid = () => {
-        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,25}$/;
-        return passwordRegex.test(formData.password);
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,25}$/
+        return passwordRegex.test(formData.password)
     }
 
     const handleRegister = async (e) => {
-        e.preventDefault();
+        e.preventDefault()
 
         // Validation for acceptable username format
         if (!isUsernameValid(formData.username)) {
-            console.log('Username must be 4 to 20 characters without special letters except underscore and hyphen!');
-            setUsernameError('Username must be 4 to 20 characters without special letters except underscore and hyphen!');
-            setPasswordError('');
-            setConfirmPasswordError('');
-            return;
+            console.log('Username must be 4 to 20 characters without special letters except underscore and hyphen!')
+            setUsernameError('Username must be 4 to 20 characters without special letters except underscore and hyphen!')
+            setPasswordError('')
+            setConfirmPasswordError('')
+            setRegisterSuccessful('')
+            setRegisterError('')
+            return
         } else {
-            setUsernameError('');
+            setUsernameError('')
         }
 
         if (!isPasswordValid()) {
             // Password does not meet requirements, handle accordingly
-            setPasswordError('Password must be 6 to 25 characters, including at least one uppercase letter, one lowercase letter, and one digit');
-            console.log('Password must be 6 to 25 characters, including at least one uppercase letter, one lowercase letter, and one digit');
-            setUsernameError('');
-            setConfirmPasswordError('');
-            return;
+            setPasswordError('Password must be 6 to 25 characters, including at least one uppercase letter, one lowercase letter, and one digit')
+            console.log('Password must be 6 to 25 characters, including at least one uppercase letter, one lowercase letter, and one digit')
+            setUsernameError('')
+            setConfirmPasswordError('')
+            setRegisterSuccessful('')
+            setRegisterError('')
+            return
         } else {
-            setPasswordError('');
+            setPasswordError('')
         }
 
-        const isMatch = formData.password === formData.confirmPassword;
+        const isMatch = formData.password === formData.confirmPassword
         if (!isMatch) {
             // Passwords do not match, handle accordingly
-            setConfirmPasswordError('Passwords do not match');
-            console.log('Passwords do not match');
-            setUsernameError('');
-            setPasswordError('');
-            return;
+            setConfirmPasswordError('Passwords do not match')
+            console.log('Passwords do not match')
+            setUsernameError('')
+            setPasswordError('')
+            setRegisterSuccessful('')
+            setRegisterError('')
+            return
         } else {
-            setConfirmPasswordError('');
+            setConfirmPasswordError('')
         }
         // Exclude confirmPassword from formData
-        const { confirmPassword, ...registrationData } = formData;
+        const { confirmPassword, ...registrationData } = formData
         // TODO: Add logic to send registration request to your backend
 
-        /*
         try {
-            const response = await fetch('https://api.example.com/register', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(registrationData),
-            });
-        
+            const response = await fetch('http://localhost:8080/auth/register', { // Replace with your backend endpoint
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(registrationData),
+            })
+
+            console.log('Sending Request data:', registrationData)
+    
             if (response.ok) {
-              console.log('Registration successful!');
-              // Handle successful registration, e.g., redirect to login page
+                const responseMessage = await response.json()
+                console.log(responseMessage.message)
+                setRegisterError('')
+                setRegisterSuccessful(responseMessage.message + ' Redirecting to Login...')
+                toLogin()
+                // Handle successful registration, e.g., redirect to login page
             } else {
-              console.error('Registration failed:', response.statusText);
-              // Handle registration failure, e.g., show error message to the user
+                const errorData = await response.json()
+                console.error(errorData.message)
+                setRegisterError(errorData.message)
+                // Handle registration failure, e.g., show error message to the user
             }
-          } catch (error) {
-            console.error('Error during registration:', error.message);
+        } catch (error) {
+            console.error(error.message)
+            setRegisterError(error.message)
+            setRegisterSuccessful('')
             // Handle network errors or other issues
-          }
-          */
-        console.log('Sending Request data:', registrationData);
-    };
+        }
+    }
 
 
     return (
@@ -170,6 +192,8 @@ function Register({ toggleForms }) {
                             />
                         </div>
                         <span id="confirmPasswordError" className="error-message">{confirmPasswordError}</span>
+                        <span id="registerError" className="error-message">{registerError}</span>
+                        <span id="registerSuccessful" className="successful-message">{registerSuccessful}</span>
                     </div>
                 </div>
                 <div className="linkContainer">
@@ -180,9 +204,10 @@ function Register({ toggleForms }) {
                 <button type="submit" className='submit'>
                     Register
                 </button>
+
             </div>
         </form>
-    );
+    )
 }
 
 export default Register

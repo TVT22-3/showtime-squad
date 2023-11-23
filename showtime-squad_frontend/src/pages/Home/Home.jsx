@@ -1,40 +1,24 @@
-import { Routes, Route } from "react-router-dom";
-import Footer from "../../components/ui/Footer";
-import Header from "../../components/ui/Header";
-import Main from "../../components/ui/Main";
-import Sitemap from "../../data/sitemap.json";
-import LoginRegisterHandler from "../../components/ui/LoginRegisterHandler";
+import { Routes, Route } from "react-router-dom"
+import Footer from "../../components/ui/Footer"
+import Header from "../../components/ui/Header"
+import Main from "../../components/ui/Main"
+import Sitemap from "../../data/sitemap.json"
+import LoginRegisterHandler from "../../components/ui/LoginRegisterHandler"
 
 function Home() {
     // TODO: Implement
-    console.log("component not properly implemented");
+    console.log("component not properly implemented")
 
     return (
-        <Routes>
-            <Route
-                path="/"
-                element={
-                    <>
-                        <Header />
-                        <Main />
-                        <Footer sitemap={Sitemap} loggedIn={true} />
-                    </>
-                }
-            />
-            <Route
-                path="/login"
-                element={
-                    <>
-                        <Header />
-                        <LoginRegisterHandler />
-                        <Main />
-                        <Footer sitemap={Sitemap} loggedIn={true} />
-                    </>
-                }
-            />
-
-        </Routes>
-    );
+        <>
+            <Header />
+            <Main />
+            <Routes>
+                <Route path="/login" element={<LoginRegisterHandler />} />
+            </Routes>
+            <Footer sitemap={Sitemap} loggedIn={true} />
+        </>
+    )
 }
 
-export default Home;
+export default Home
