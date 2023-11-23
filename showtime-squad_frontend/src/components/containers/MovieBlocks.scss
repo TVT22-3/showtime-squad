@@ -1,7 +1,23 @@
 .movie-blocks {
+    --_default-padding: 1rem;
+
     display: flex;
 
     .movie-block {
-        padding-inline: 1rem;
+        padding-inline: var(--_default-padding);
+    }
+
+    @media only screen and (max-width: 600px),
+    (max-aspect-ratio: 2/3) {
+        flex-wrap: wrap;
+
+        > section {
+            flex-basis: calc(33% - 2* var(--_default-padding));
+        }
+
+        > section:nth-child(1), 
+        > section:nth-child(2) {
+            flex-basis: calc(50% - 2* var(--_default-padding));
+        }
     }
 }
