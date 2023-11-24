@@ -30,9 +30,8 @@
 
         text-align: center;
 
-        top: -2rem;
-        left: calc(50% - var(--_tooltip_width) / 2);
         width: var(--_tooltip_width);
+        transform: translateY(-1rem);
 
         overflow: hidden;
 
