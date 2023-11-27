@@ -1,0 +1,19 @@
+:root {
+    background-color: white;
+    padding-top: 50px;
+}
+
+#profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5px;
+}
+    .profile_container {
+    display: flex;
+    width: 1240px;
+    max-width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    background-color: white;
+    }
