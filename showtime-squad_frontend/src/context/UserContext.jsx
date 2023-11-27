@@ -1,12 +1,13 @@
-import { createContext, useContext, useState } from 'react'
+import React, { useContext, useState } from 'react'
 
-const UserContext = createContext();
+const UserContext = React.createContext();
 
 const UserProvider = ({ children }) => {
-  const [username, setUsername] = useState('')
+  const [username, setUsername] = useState(sessionStorage.getItem('username') || '');
 
   const setLoggedInUser = (newUsername) => {
     setUsername(newUsername);
+    sessionStorage.setItem('username', newUsername);
   }
 
   return (

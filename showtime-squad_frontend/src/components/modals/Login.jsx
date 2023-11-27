@@ -55,7 +55,6 @@ function Login({ toggleForms }) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData),
-        credentials: 'include',
       })
 
       console.log('Sending Request to server!', formData)
