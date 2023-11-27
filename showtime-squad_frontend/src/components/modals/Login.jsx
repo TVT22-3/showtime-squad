@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useUser } from '../../context/UserContext.jsx';
+import { useUser, useLoginStatus } from '../../context/UserContext.jsx'
 import './LoginRegister.scss'
 
 function Login({ toggleForms }) {
@@ -8,6 +8,8 @@ function Login({ toggleForms }) {
   const apiUrl = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL
 
   const navigate = useNavigate()
+  const { setLoggedInUser } = useUser()
+  const { setLoginStatus } = useLoginStatus()
 
   const [formData, setFormData] = useState({
     username: '',
@@ -26,8 +28,6 @@ function Login({ toggleForms }) {
       [name]: value,
     }))
   }
-
-  const { setLoggedInUser } = useUser();
 
   const handleLogin = async (e) => {
     e.preventDefault()
@@ -60,12 +60,15 @@ function Login({ toggleForms }) {
       console.log('Sending Request to server!', formData)
 
       if (response.ok) {
-        const responseData = await response.json();
-        const { username } = responseData;
-        setLoggedInUser(username);
+        const responseData = await response.json()
+        const { username } = responseData
+        setLoggedInUser(username)
+        setLoginStatus(true)
+
         console.log('Login successful!')
         setLoginSuccessful('Login successful!')
         setLoginError('')
+
         navigate('/')
         // Handle successful registration
       } else {
