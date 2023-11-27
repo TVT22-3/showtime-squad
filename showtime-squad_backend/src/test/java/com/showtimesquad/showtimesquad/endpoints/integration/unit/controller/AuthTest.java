@@ -1,7 +1,6 @@
 package com.showtimesquad.showtimesquad.endpoints.integration.unit.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.showtimesquad.showtimesquad.controller.AuthController;
 import com.showtimesquad.showtimesquad.repository.UserRepository;
 import com.showtimesquad.showtimesquad.model.User;
 import com.showtimesquad.showtimesquad.model.request.LoginRequest;
@@ -49,26 +48,13 @@ public class AuthTest {
         */
 
         // Test Data
-        SignupRequest signupRequest = new SignupRequest();
-        signupRequest.setUsername("testuser1");
-        signupRequest.setEmail("testuser1@testuser1.com");
-        signupRequest.setPassword(" testuser1");
-        signupRequest.setRole(new HashSet<>(Arrays.asList("mod", "user")));
-
-        // Converting SignupRequest to JSON
-        ObjectMapper objectMapper = new ObjectMapper();
-        String jsonRequestSignUp = objectMapper.writeValueAsString(signupRequest);
-
-        // Performs The Registration
-        ResultActions result = mockMvc.perform(MockMvcRequestBuilders.post("http://localhost/api/auth/register")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(jsonRequestSignUp));
-        result.andExpect(status().isOk());
+        ResultActions result = registerUser()
+                .andExpect(status().isOk());
 
         TestTransaction.flagForCommit();
         TestTransaction.end();
 
-        Optional<User> userOptional = userRepository.findByUsername("testuser1");
+        Optional<User> userOptional = userRepository.findByUsername("testuser");
         assertTrue(userOptional.isPresent(), "User should be present in the database");
 
         // Deletes the user from the database
@@ -77,27 +63,42 @@ public class AuthTest {
 
     @Test
     @WithMockUser
+    @Transactional
+    @Rollback
     void userShouldExist() throws Exception {
 
         /*
             This function makes sure that an account exists in a database.
-            The database has a test user called, "testuser".
+            The database has a test user called, "testuser1".
             The Unit Test performs a POST request to the /signin endpoint,
             and returns the value 200 OK if it passes.
         */
 
-        // Test Data
+        // Sign Up Test Data
+        ResultActions result = registerUser();
+
+        // Login Test Data
         LoginRequest loginRequest = new LoginRequest();
         loginRequest.setUsername("testuser");
         loginRequest.setPassword("testuser");
 
         // Converting LoginRequest to JSON
-        ObjectMapper objectMapper = new ObjectMapper();
-        String jsonRequestLogin = objectMapper.writeValueAsString(loginRequest);
-        ResultActions result = mockMvc.perform(MockMvcRequestBuilders.post("http://localhost/api/auth/signin")
+        ObjectMapper loginObjectMapper = new ObjectMapper();
+        String jsonRequestLogin = loginObjectMapper.writeValueAsString(loginRequest);
+        ResultActions loginResult = mockMvc.perform(MockMvcRequestBuilders.post("http://localhost/api/auth/signin")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonRequestLogin));
         result.andExpect(status().isOk());
+
+        TestTransaction.flagForCommit();
+        TestTransaction.end();
+
+        Optional<User> userOptional = userRepository.findByUsername("testuser");
+        assertTrue(userOptional.isPresent(), "User should be present in the database");
+
+        // Deletes the user from the database
+        userRepository.delete(userOptional.get());
+
     }
 
     @Test
@@ -135,5 +136,65 @@ public class AuthTest {
         Optional<User> userOptional = userRepository.findByUsername("iShouldNotExist");
         assertFalse(userOptional.isPresent(), "User should not be present in the database!");
 
+    }
+
+    @Test
+    @WithMockUser
+    @Transactional
+    @Rollback
+    void userShouldNotBeAbleToLogin() throws Exception {
+
+        // Sign Up Test Data
+        ResultActions result = registerUser();
+
+        // Login request
+        LoginRequest loginRequest = new LoginRequest();
+        loginRequest.setUsername("testuser");
+        loginRequest.setPassword("nottestuser");
+
+        // Converting LoginRequest to JSON
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonRequestLogin = objectMapper.writeValueAsString(loginRequest);
+        ResultActions loginResult = mockMvc.perform(MockMvcRequestBuilders.post("http://localhost/api/auth/signin")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonRequestLogin));
+        loginResult.andExpect(status().isUnauthorized());
+
+        TestTransaction.flagForCommit();
+        TestTransaction.end();
+
+        Optional<User> userOptional = userRepository.findByUsername("testuser");
+        assertTrue(userOptional.isPresent(), "User should be present in the database");
+
+        // Deletes the user from the database
+        userRepository.delete(userOptional.get());
+    }
+
+    public ResultActions registerUser() throws Exception {
+
+        /*
+            This function registers a user into the database.
+            The function is called in different test cases where we need
+            to register a user temporarily before testing a certain function.
+        */
+
+
+        // Test Data
+        SignupRequest signupRequest = new SignupRequest();
+        signupRequest.setUsername("testuser");
+        signupRequest.setEmail("testuser@testuser.com");
+        signupRequest.setPassword(" testuser");
+        signupRequest.setRole(new HashSet<>(Arrays.asList("mod", "user")));
+
+        // Converting SignupRequest to JSON
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonRequestSignUp = objectMapper.writeValueAsString(signupRequest);
+
+        // Performs The Registration
+        ResultActions result = mockMvc.perform(MockMvcRequestBuilders.post("http://localhost/api/auth/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonRequestSignUp));
+        System.out.println(result);
+        return result;
     }
 }
