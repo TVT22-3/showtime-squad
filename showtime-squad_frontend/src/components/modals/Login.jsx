@@ -5,6 +5,8 @@ import './LoginRegister.scss'
 
 function Login({ toggleForms }) {
 
+  const apiUrl = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL
+
   const navigate = useNavigate()
 
   const [formData, setFormData] = useState({
@@ -47,12 +49,13 @@ function Login({ toggleForms }) {
     }
 
     try {
-      const response = await fetch('http://localhost:8080/auth/login', {
+      const response = await fetch(`${apiUrl}/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData),
+        credentials: 'include',
       })
 
       console.log('Sending Request to server!', formData)
