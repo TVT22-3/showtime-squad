@@ -1,21 +1,21 @@
-import Header from "../../components/ui/Header";
-import NavBar from "../../components/ui/NavBar";
 import "./Profile.scss";
 
 function Profile() {
   return (
     <div id="profile">
       <div className="profile_container">
-        <div className="container_item">
+        <div className="container_image">
           {" "}
           <img
-            src="https://www.google.com/url?sa=i&url=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fimage&psig=AOvVaw19yG0ZKIngkfosTj1YIUF5&ust=1701176398207000&source=images&cd=vfe&ved=0CBEQjRxqFwoTCOix5Yie5IIDFQAAAAAdAAAAABAI"
+            src="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aHVtYW58ZW58MHx8MHx8fDA%3D"
             width={300}
             height={300}
+            alt="man in the fields"
           />
         </div>
-        <div className="container_item">
-          <p>
+        <div className="container_text">
+            <h1 className="h1">About Me</h1>
+          <p className="p">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
             vulputate massa et felis vestibulum, nec semper elit aliquam. Nunc
             nulla nulla, cursus eu vestibulum eu, interdum in nisl. Integer eu

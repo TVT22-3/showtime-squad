@@ -1,27 +1,47 @@
 :root {
     background-color: white;
-    padding-top: 50px;
+    // padding-top: 50px;
 }
 
 #profile {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: left;
     align-items: center;
-    padding: 5px;
+    padding: 50px;
 }
     .profile_container {
     width: 1240px;
     max-width: 100%;
-    display: grid;
-    align-items: center; 
-    grid-template-columns: 1fr 1fr 1fr;
-    column-gap: 5px;
-    border: black;
-    border-style: solid; 
+    display: flex;
+    align-items: left; 
+    column-gap: 25px;
+    background-color: black;
+    //border: black;
+    //border-style: solid; 
     }
 
-    .container_item {
-        border: black;
-        border-style: solid; 
+    .container_image {
+        max-width: 300px;
+        max-height: 300px;
+        //border: black;
+        //border-style: solid; 
+    }
+
+    .container_text {
+        height: 300px;
+        //border: black;
+        //border-style: solid;  
+    }
+
+    .h1 {
+        color: white;
+        font-size: xx-large;
+        font-family: monospace;
+    }
+
+    .p {
+        color: white;
+        font-size: x-large;
+        font-family: monospace;
     }
