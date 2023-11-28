@@ -18,7 +18,7 @@ function ViewBlock() {
                 <div className='title'>
                     <h6>{clickedOption ? clickedOption : 'title'}</h6>
                 </div>
-                
+
                 <div className='options'>
                     <NestedOptionsMenu options={viewEditOptions} icon="📝" />
 
@@ -27,7 +27,7 @@ function ViewBlock() {
             </div>
 
             <div className='content'>
-                <MovieBlocks />
+                <MovieBlocks type={clickedOption}/>
             </div>
         </article>
     )
