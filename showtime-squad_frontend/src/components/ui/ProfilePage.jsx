@@ -1,24 +1,7 @@
-import React, { useState, useEffect } from "react";
-//import axios from "axios";
-
 import "./Profile.scss";
 
-export default function Home() {
+export default function ProfilePage() {
 
-  /*const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    const fetchUser = async() => {
-      try {
-        const response = await axios.get(`/api/users/${match.params.username}`);
-        setUser(response.data);
-      } catch (error) {
-        console.error('Error fetching user: ', error);
-      }
-    };
-    fetchUser();
-  }, [match.params.username]);
-*/
   return (
     <div className="profile-container">
       <div className="profile-top">

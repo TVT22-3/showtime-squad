@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom"
 import Footer from "../../components/ui/Footer"
 import Header from "../../components/ui/Header"
-import Profile from "../../components/ui/Profile"
+import ProfilePage from "../../components/ui/ProfilePage"
 import Sitemap from "../../data/sitemap.json"
 import LoginRegisterHandler from "../../components/ui/LoginRegisterHandler"
 
@@ -12,7 +12,7 @@ function Profile() {
     return (
         <>
             <Header />
-            <Profile />
+            <ProfilePage />
             <Routes>
                 <Route path="/login" element={<LoginRegisterHandler />} />
             </Routes>
