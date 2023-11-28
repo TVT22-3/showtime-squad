@@ -1,12 +1,30 @@
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+
 import "./Profile.scss";
 
 export default function Home() {
+
+  /*const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const fetchUser = async() => {
+      try {
+        const response = await axios.get(`/api/users/${match.params.username}`);
+        setUser(response.data);
+      } catch (error) {
+        console.error('Error fetching user: ', error);
+      }
+    };
+    fetchUser();
+  }, [match.params.username]);
+*/
   return (
     <div className="profile-container">
       <div className="profile-top">
         <img src="https://via.placeholder.com/100" alt="Profile" />
         <div className="description">
-          <h2>Your Name</h2>
+          <h2>ss</h2>
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua.
