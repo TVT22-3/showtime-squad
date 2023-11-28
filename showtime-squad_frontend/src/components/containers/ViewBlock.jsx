@@ -12,6 +12,17 @@ function ViewBlock() {
 
     const { clickedButton, clickedCategory, clickedOption } = useOptionsButtonContext()
 
+    if (clickedCategory === 'remove') {
+        switch (clickedOption) {
+            case 'remove':
+                handleRemove()
+                return <></>
+
+            case 'reset':
+                break
+        }
+    }
+
     return (
         <article className='view-block'>
             <div className='action-row'>
@@ -27,10 +38,15 @@ function ViewBlock() {
             </div>
 
             <div className='content'>
-                <MovieBlocks type={clickedOption}/>
+                <MovieBlocks type={clickedOption} />
             </div>
         </article>
     )
+}
+
+// should send delete request to backend
+function handleRemove() {
+
 }
 
 export default ViewBlock
