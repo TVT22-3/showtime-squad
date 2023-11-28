@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom'
 
 function Register({ toggleForms }) {
 
+    const apiUrl = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL
+
     const navigate = useNavigate()
 
     const toLogin = () => {
@@ -91,7 +93,7 @@ function Register({ toggleForms }) {
         // TODO: Add logic to send registration request to your backend
 
         try {
-            const response = await fetch('http://localhost:8080/auth/register', { // Replace with your backend endpoint
+            const response = await fetch(`${apiUrl}/auth/register`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
