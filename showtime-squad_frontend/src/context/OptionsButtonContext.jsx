@@ -3,6 +3,10 @@ import React, { createContext, useState, useContext } from 'react';
 
 const OptionsButtonContext = createContext();
 
+// @param type: {}, pass in default category and option via 
+// @var clickedButton tracks which button was clicked, mostly useful for debugging
+// @var clickedCategory tracks which category was clicked, parsing is up to caller
+// @var clickedOption tracks which option was clicked, parsing is up to caller
 const OptionsButtonContextProvider = ({ children, type: { category, option } }) => {
 
   const [clickedButton, setClickedButton] = useState(null);
