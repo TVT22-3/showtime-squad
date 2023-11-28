@@ -1,5 +1,6 @@
 import './View.css'
 import ViewBlock from '../containers/ViewBlock.jsx'
+import Adder from '../atoms/Adder.jsx'
 
 import { OptionsButtonContextProvider } from '../../context/OptionsButtonContext.jsx';
 
@@ -27,7 +28,10 @@ function View() {
             {generateViewBlocks(mockBlockInfoContainer)}
 
             <OptionsButtonContextProvider key='adder' category='adder' type='adder'>
-                <ViewBlock key='adder' />
+                <Adder onClick={() => {
+                    console.log("clicked adder!")
+                    return null
+                }} />
             </OptionsButtonContextProvider>
         </section>
     )
