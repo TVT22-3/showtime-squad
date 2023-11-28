@@ -25,6 +25,10 @@ function View() {
     return (
         <section className='view'>
             {generateViewBlocks(mockBlockInfoContainer)}
+
+            <OptionsButtonContextProvider key='adder' category='adder' type='adder'>
+                <ViewBlock key='adder' />
+            </OptionsButtonContextProvider>
         </section>
     )
 }
@@ -36,7 +40,7 @@ function generateViewBlocks({ blocks }) {
             {
                 blocks.map((block, index) => {
                     return (
-                        <OptionsButtonContextProvider key={index} type={block.type} >
+                        <OptionsButtonContextProvider key={index} category={block.category} type={block.type} >
                             <ViewBlock key={index} />
                         </OptionsButtonContextProvider>)
                 })
