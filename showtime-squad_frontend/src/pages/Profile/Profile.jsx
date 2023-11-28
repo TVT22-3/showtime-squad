@@ -1,38 +1,64 @@
 import "./Profile.scss";
 
-function Profile() {
+export default function Home() {
   return (
-    <div id="profile">
-      <div className="profile_container">
-        <div className="container_image">
-          {" "}
-          <img
-            src="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aHVtYW58ZW58MHx8MHx8fDA%3D"
-            width={300}
-            height={300}
-            alt="man in the fields"
-          />
-        </div>
-        <div className="container_text">
-            <h1 className="h1">About Me</h1>
-          <p className="p">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
-            vulputate massa et felis vestibulum, nec semper elit aliquam. Nunc
-            nulla nulla, cursus eu vestibulum eu, interdum in nisl. Integer eu
-            nunc sem. Integer a neque pharetra, rutrum metus eget, varius elit.
-            Phasellus eu dui condimentum, cursus dui a, iaculis ex. Nam
-            efficitur augue et justo vulputate, in luctus lacus suscipit.
-            Pellentesque vitae egestas dui. Morbi convallis justo et placerat
-            eleifend. Ut in porta ex. Etiam vehicula leo eu diam congue, quis
-            tempus justo pellentesque. Nullam viverra dapibus ipsum nec
-            volutpat. Praesent volutpat turpis justo, nec semper neque pretium
-            eget. Phasellus ultrices a est vitae sollicitudin. Phasellus
-            eleifend placerat eros, a blandit nisi porttitor id.
+    <div className="profile-container">
+      <div className="profile-top">
+        <img src="https://via.placeholder.com/100" alt="Profile" />
+        <div className="description">
+          <h2>Your Name</h2>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua.
           </p>
+        </div>
+      </div>
+
+      <div className="favorite-movies">
+        <h1>Favorite Movies</h1>
+        <div className="movie-grid">
+          <div className="movie-item">
+            <img src="https://via.placeholder.com/150" alt="Movie Poster" />
+            <p>Movie Title</p>
+          </div>
+          <div className="movie-item">
+            <img src="https://via.placeholder.com/150" alt="Movie Poster" />
+            <p>Movie Title</p>
+          </div>
+          <div className="movie-item">
+            <img src="https://via.placeholder.com/150" alt="Movie Poster" />
+            <p>Movie Title</p>
+          </div>
+          <div className="movie-item">
+            <img src="https://via.placeholder.com/150" alt="Movie Poster" />
+            <p>Movie Title</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="recent-reviews">
+        <h1>Recent Reviews</h1>
+        <div className="review-container">
+          <div className="review-item">
+               <img src="https://via.placeholder.com/100x150" alt="Movie Poster" />
+               <div className="review-text">
+                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec bibendum sem diam, eget laoreet odio gravida sed. Etiam quis lorem eget orci molestie ultricies a ac nisi. Aliquam lobortis eros vehicula magna posuere, nec pellentesque ipsum interdum. In nec imperdiet quam, ut sollicitudin massa. Mauris elit nisl, tincidunt eget lobortis vitae, efficitur vel tortor. Ut tincidunt vestibulum metus vel condimentum. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed sed nibh mi. Suspendisse porttitor dui id nisi porttitor volutpat euismod eget lacus. Aliquam erat volutpat. Nam porta diam at porta varius. Nullam sapien leo, dignissim viverra aliquet faucibus, molestie id ligula. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>
+               </div>
+          </div>
+          <div className="review-item">
+               <img src="https://via.placeholder.com/100x150" alt="Movie Poster" />
+               <div className="review-text">
+                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec bibendum sem diam, eget laoreet odio gravida sed. Etiam quis lorem eget orci molestie ultricies a ac nisi. Aliquam lobortis eros vehicula magna posuere, nec pellentesque ipsum interdum. In nec imperdiet quam, ut sollicitudin massa. Mauris elit nisl, tincidunt eget lobortis vitae, efficitur vel tortor. Ut tincidunt vestibulum metus vel condimentum. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed sed nibh mi. Suspendisse porttitor dui id nisi porttitor volutpat euismod eget lacus. Aliquam erat volutpat. Nam porta diam at porta varius. Nullam sapien leo, dignissim viverra aliquet faucibus, molestie id ligula. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>
+               </div>
+          </div>
+          <div className="review-item">
+               <img src="https://via.placeholder.com/100x150" alt="Movie Poster" />
+               <div className="review-text">
+                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec bibendum sem diam, eget laoreet odio gravida sed. Etiam quis lorem eget orci molestie ultricies a ac nisi. Aliquam lobortis eros vehicula magna posuere, nec pellentesque ipsum interdum. In nec imperdiet quam, ut sollicitudin massa. Mauris elit nisl, tincidunt eget lobortis vitae, efficitur vel tortor. Ut tincidunt vestibulum metus vel condimentum. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed sed nibh mi. Suspendisse porttitor dui id nisi porttitor volutpat euismod eget lacus. Aliquam erat volutpat. Nam porta diam at porta varius. Nullam sapien leo, dignissim viverra aliquet faucibus, molestie id ligula. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>
+               </div>
+          </div>
         </div>
       </div>
     </div>
   );
 }
-
-export default Profile;
