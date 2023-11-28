@@ -1,4 +1,4 @@
-name: Java CI with Maven
+name: Spring Boot Build & Unit Tests
 
 on:
   push:
@@ -54,4 +54,3 @@ jobs:
 
     - name: Build with Maven
       run: mvn -B package --file pom.xml
-
