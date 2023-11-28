@@ -1,8 +1,13 @@
 import "./MovieBlock.scss"
 import Stars from "./Stars.jsx"
 
-function MovieBlock({ imgUrl = "https://m.media-amazon.com/images/I/71KPOvu-hOL._AC_UF894,1000_QL80_.jpg",
-    linkUrl = "#", title, rating = 2.5 }) {
+function MovieBlock({ movie = {
+    imgUrl: "https://m.media-amazon.com/images/I/71KPOvu-hOL._AC_UF894,1000_QL80_.jpg",
+    linkUrl: "#",
+    title: "",
+    rating: 2.5
+} }) {
+    const { imgUrl, linkUrl, title, rating } = movie;
 
     return (
         <section className='movie-block'>

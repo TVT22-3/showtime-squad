@@ -2,9 +2,11 @@
     --_default-padding: 1rem;
 
     display: flex;
+    justify-content: space-around;
 
     .movie-block {
         padding-inline: var(--_default-padding);
+        width: -webkit-fill-available;
     }
 
     @media only screen and (max-width: 600px),

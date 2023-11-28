@@ -6,7 +6,7 @@ import viewRemoveOptions from "../../data/viewRemoveOptions.json"
 
 import { useMyContext } from '../../context/MyContext.jsx'
 
-function ViewBlock({ type = 'top movies' }) {
+function ViewBlock() {
     //TODO: Implement
     console.log("component not properly implemented")
 
@@ -18,7 +18,7 @@ function ViewBlock({ type = 'top movies' }) {
                 <div className='title'>
                     <h6>{clickedOption ? clickedOption : 'title'}</h6>
                 </div>
-                <p>Last Clicked Button: {clickedButton}</p>
+                
                 <div className='options'>
                     <NestedOptionsMenu options={viewEditOptions} icon="📝" />
 

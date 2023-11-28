@@ -3,20 +3,21 @@ import React, { createContext, useState, useContext } from 'react';
 
 const MyContext = createContext();
 
-const MyContextProvider = ({ children }) => {
+const MyContextProvider = ({ children, type: {category, option} }) => {
+
   const [clickedButton, setClickedButton] = useState(null);
 
   const setClicked = (categoryAndOption) => {
     setClickedButton(categoryAndOption);
   };
 
-  const [clickedCategory, setClickedCategory] = useState(null);
+  const [clickedCategory, setClickedCategory] = useState(category);
 
   const setCategory = (category) => {
     setClickedCategory(category)
   }
 
-  const [clickedOption, setClickedOption] = useState(null);
+  const [clickedOption, setClickedOption] = useState(option);
 
   const setOption = (option) => {
     setClickedOption(option)
