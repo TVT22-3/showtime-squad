@@ -4,13 +4,13 @@ import NestedOptionsMenu from '../atoms/NestedOptionsMenu.jsx'
 import viewEditOptions from "../../data/viewEditOptions.json"
 import viewRemoveOptions from "../../data/viewRemoveOptions.json"
 
-import { useMyContext } from '../../context/MyContext.jsx'
+import { useOptionsButtonContext } from '../../context/OptionsButtonContext.jsx'
 
 function ViewBlock() {
     //TODO: Implement
     console.log("component not properly implemented")
 
-    const { clickedButton, clickedCategory, clickedOption } = useMyContext()
+    const { clickedButton, clickedCategory, clickedOption } = useOptionsButtonContext()
 
     return (
         <article className='view-block'>

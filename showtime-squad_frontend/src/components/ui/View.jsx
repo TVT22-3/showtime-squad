@@ -1,7 +1,7 @@
 import './View.css'
 import ViewBlock from '../containers/ViewBlock.jsx'
 
-import { MyContextProvider } from '../../context/MyContext.jsx';
+import { OptionsButtonContextProvider } from '../../context/OptionsButtonContext.jsx';
 
 // Mock data to hold information on what ViewBlocks to render for the user.
 // Real info will be loaded from db.
@@ -36,9 +36,9 @@ function generateViewBlocks({ blocks }) {
             {
                 blocks.map((block, index) => {
                     return (
-                        <MyContextProvider key={index} type={block.type} >
+                        <OptionsButtonContextProvider key={index} type={block.type} >
                             <ViewBlock key={index} />
-                        </MyContextProvider>)
+                        </OptionsButtonContextProvider>)
                 })
             }
         </>

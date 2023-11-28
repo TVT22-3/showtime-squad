@@ -1,11 +1,11 @@
 import "./NestedOptionsMenu.scss"
 
 import React, { useContext } from 'react'
-import { useMyContext } from '../../context/MyContext.jsx'
+import { useOptionsButtonContext } from '../../context/OptionsButtonContext.jsx'
 
 function NestedOptionsButton({ category, option }) {
 
-    const { setClicked, setCategory, setOption } = useMyContext()
+    const { setClicked, setCategory, setOption } = useOptionsButtonContext()
 
     const handleClick = () => {
         setClicked(`${category}.${option}`)

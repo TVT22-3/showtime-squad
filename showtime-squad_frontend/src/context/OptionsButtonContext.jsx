@@ -1,9 +1,9 @@
 // MyContext.js
 import React, { createContext, useState, useContext } from 'react';
 
-const MyContext = createContext();
+const OptionsButtonContext = createContext();
 
-const MyContextProvider = ({ children, type: {category, option} }) => {
+const OptionsButtonContextProvider = ({ children, type: { category, option } }) => {
 
   const [clickedButton, setClickedButton] = useState(null);
 
@@ -24,18 +24,18 @@ const MyContextProvider = ({ children, type: {category, option} }) => {
   }
 
   return (
-    <MyContext.Provider value={{ clickedButton, setClicked , clickedCategory, setCategory, clickedOption, setOption}}>
+    <OptionsButtonContext.Provider value={{ clickedButton, setClicked, clickedCategory, setCategory, clickedOption, setOption }}>
       {children}
-    </MyContext.Provider>
+    </OptionsButtonContext.Provider>
   );
 };
 
-const useMyContext = () => {
-  const context = useContext(MyContext);
+const useOptionsButtonContext = () => {
+  const context = useContext(OptionsButtonContext);
   if (!context) {
     throw new Error("useMyContext must be used within a MyContextProvider");
   }
   return context;
 };
 
-export { MyContext, MyContextProvider, useMyContext };
+export { OptionsButtonContext, OptionsButtonContextProvider, useOptionsButtonContext };
