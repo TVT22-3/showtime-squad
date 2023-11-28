@@ -1,6 +1,7 @@
 import "./Adder.scss"
 
-
+// Displays a button with plus on it.
+// Pass any onClick function you want and handle it in the parent element
 function Adder({ onClick }) {
 
     return (

@@ -25,8 +25,6 @@ function MovieBlocks({ type }) {
 }
 
 function generateBlocks(maxMovies, movies) {
-    console.log("::", movies)
-
     let blocks = []
 
     // generate as much movies as there are

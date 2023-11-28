@@ -1,3 +1,5 @@
+import { signal } from '@preact/signals-react'
+
 import './View.css'
 import ViewBlock from '../containers/ViewBlock.jsx'
 import Adder from '../atoms/Adder.jsx'
@@ -21,21 +23,27 @@ function View() {
     //TODO: Implement
     console.log("component not properly implemented")
 
-    let blockInfoContainer = mockBlockInfoContainer; // TODO: get from db
+    let blockInfoContainer = signal(mockBlockInfoContainer) // TODO: get from db
+
+    function handleAdder() {
+        console.log("clicked adder!")
+        let modify = blockInfoContainer.value.blocks
+        modify.push({ type: { category: "movies", option: "free pick" } })
+        blockInfoContainer.value = modify
+    }
 
     return (
         <section className='view'>
-            {generateViewBlocks(mockBlockInfoContainer)}
+            {generateViewBlocks(blockInfoContainer.value)}
 
             <OptionsButtonContextProvider key='adder' category='adder' type='adder'>
-                <Adder onClick={() => {
-                    console.log("clicked adder!")
-                    return null
-                }} />
+                <Adder onClick={handleAdder} />
             </OptionsButtonContextProvider>
         </section>
     )
 }
+
+
 
 function generateViewBlocks({ blocks }) {
 
