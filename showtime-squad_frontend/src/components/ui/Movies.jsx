@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import './Movies.scss'; // Import the SCSS file
 
 const Movies = () => {
+  const apiUrl = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL
   const [movieData, setMovieData] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -13,14 +14,20 @@ const Movies = () => {
       setLoading(true);
 
       try {
-        const response = await fetch(`http://localhost:8080/movies?page=${page}`);
+        const response = await fetch(`${apiUrl}/movies?page=${page}`);
         const data = await response.json();
-        setMovieData((prevData) => [...prevData, ...data.results]);
-        setPage((prevPage) => prevPage + 1);
+        const hasMorePages = data.page < data.total_pages;
+
+        if (hasMorePages) {
+          setMovieData((prevData) => [...prevData, ...data.results]);
+          setPage((prevPage) => prevPage + 1);
+        } else {
+          console.log('No more pages available.');
+        }
       } catch (error) {
         console.error('Error fetching movie data:', error);
       }
-
+    
       setLoading(false);
     };
 
@@ -44,7 +51,7 @@ const Movies = () => {
   return (
     <div className="movie-container">
       {movieData.map((movie) => (
-        <div key={movie.id} className="movie-card">
+        <div key={`${movie.id}-${movie.title}`} className="movie-card">
           <p>{movie.title}</p>
           <p>Release Date: {movie.release_date}</p>
           <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt={movie.title} />

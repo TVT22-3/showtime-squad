@@ -25,7 +25,7 @@ public class Controller {
 
     @GetMapping(value = "/movies", produces = MediaType.APPLICATION_JSON_VALUE)
     private String getMovies(@RequestParam(defaultValue = "1") int page) {
-        final String uri = "https://api.themoviedb.org/3/movie/popular?page=" + page + "&api_key=" + apiKey;
+        final String uri = "https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=" + page + "&region=US" + "&api_key=" + apiKey;
         RestTemplate restTemplate = new RestTemplate();
         return restTemplate.getForObject(uri, String.class);
     }
