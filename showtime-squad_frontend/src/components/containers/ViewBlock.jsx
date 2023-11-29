@@ -24,7 +24,7 @@ function ViewBlock() {
     }
 
     return (
-        <article className='view-block'>
+        <article className='view-block' data-testid='view-block'>
             <div className='action-row'>
                 <div className='title'>
                     <h6>{clickedOption ? clickedOption : 'title'}</h6>

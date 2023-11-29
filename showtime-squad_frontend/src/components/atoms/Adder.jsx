@@ -5,7 +5,7 @@ import "./Adder.scss"
 function Adder({ onClick }) {
 
     return (
-        <section className='adder'>
+        <section className='adder' data-testid="adder">
             <div className="inner" onClick={onClick}>
                 <span>+</span>
             </div>

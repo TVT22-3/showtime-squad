@@ -14,7 +14,7 @@ function NestedOptionsButton({ category, option }) {
     }
 
     return (
-        <li onClick={handleClick}>{option}</li>
+        <li onClick={handleClick} data-testid='nested-option-button'>{option}</li>
     )
 }
 
