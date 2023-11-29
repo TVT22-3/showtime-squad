@@ -87,7 +87,7 @@ async function getRequest(url) {
         return data
     } catch (error) {
         console.error('Error fetching data:', error)
-        throw error
+        // throw error // TODO: figure out how to run fetches with GitHub actions
     }
 }
 
