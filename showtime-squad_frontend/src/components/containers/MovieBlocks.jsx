@@ -69,8 +69,10 @@ async function fetchFavorites(url) {
     let movies = []
 
     for (let i = 0; i < 5; i++) {
-        const movie = await getRequest('https://yesno.wtf/api');
-        movies.push({ imgUrl: movie.image, title: movie.answer });
+        const movie = await getRequest('https://yesno.wtf/api')
+        if(movie) {
+            movies.push({ imgUrl: movie.image, title: movie.answer })
+        }
     }
 
     return movies;
@@ -87,7 +89,7 @@ async function getRequest(url) {
         return data
     } catch (error) {
         console.error('Error fetching data:', error)
-        // throw error // TODO: figure out how to run fetches with GitHub actions
+        // throw error // TODO: this is annoying with GitHub actions, figure out error throws
     }
 }
 
