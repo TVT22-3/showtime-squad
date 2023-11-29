@@ -1,0 +1,48 @@
+.view-block {
+    --_viewblock-color: #fff;
+    --_viewblock-bg-dark: #333;
+    --_viewblock-bg: #444;
+    --_highlight: red;    
+
+    --_block-inset-margin: 2rem;
+
+    background-color: var(--primary-bg, var(--_viewblock-bg));
+    color: var(--primary-color, var(--_viewblock-color));
+
+    margin: var(--_block-inset-margin);
+
+    border-radius: 5px;
+
+    .action-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        // offset buttons and title to be slightly outside of the block
+        margin-inline: calc(-0.5 * var(--_block-inset-margin));
+        margin-block-end: calc(-1 * var(--_block-inset-margin));
+        transform: translateY(-50%);
+
+        .title {
+            background-color: var(--primary-bg-dark, var(--_viewblock-bg-dark));
+
+            min-width: 8rem;
+
+            border-radius: 5px;
+
+            text-transform: capitalize;
+
+            h6 {
+                text-align: center;
+                font-size: 1.5rem;
+                margin-block-start: 0;
+                margin-block-end: 0;
+                margin-inline: 1rem;
+            }
+        }
+
+        .options {
+            display: flex;
+        }
+    }
+}

@@ -1,6 +1,6 @@
 // path: showtime-squad_frontend/src/components/ui/NavBar.jsx
 
-import './NavBar.css'
+import './NavBar.scss'
 import sitemap from '../../data/sitemap.json'
 import { useLoginStatus } from '../../context/UserContext';
 
