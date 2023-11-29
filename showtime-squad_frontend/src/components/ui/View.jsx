@@ -1,17 +1,63 @@
+import { signal } from '@preact/signals-react'
+
 import './View.css'
+import ViewBlock from '../containers/ViewBlock.jsx'
+import Adder from '../atoms/Adder.jsx'
+
+import { OptionsButtonContextProvider } from '../../context/OptionsButtonContext.jsx';
+
+// Mock data to hold information on what ViewBlocks to render for the user.
+// Real info will be loaded from db.
+// 'blocks' will contain an array of (block) objects, that all contain its type,
+// using objects since these might be expanded to include size and other info.
+// Root object may be expanded to include other meta info like order.
+const mockBlockInfoContainer = {
+    blocks: [
+        { type: { category: "movies", option: "top movies" } },
+        { type: { category: "text", option: "news" } },
+        { type: { category: "movies", option: "favorites" } }
+    ],
+}
 
 function View() {
     //TODO: Implement
     console.log("component not properly implemented")
 
+    let blockInfoContainer = signal(mockBlockInfoContainer) // TODO: get from db
+
+    function handleAdder() {
+        console.log("clicked adder!")
+        let modify = blockInfoContainer.value.blocks
+        modify.push({ type: { category: "movies", option: "free pick" } })
+        blockInfoContainer.value = modify
+    }
+
     return (
-        <section className='view'>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Labore aliquam ipsum vel error doloribus corporis. Inventore itaque quaerat repellendus? Fuga vero explicabo vel, alias non eius quod quo quae deserunt?
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Amet cumque numquam eligendi consequatur sint error! Illum unde voluptas deserunt ratione id, illo laborum delectus non, tempora libero ea autem dicta.
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit ipsa tenetur vitae illum deserunt sed consectetur veniam molestias incidunt cum iste non maiores odio commodi consequatur delectus, accusantium itaque nulla.
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam vitae, nostrum neque vero veritatis laborum. Laboriosam magni porro provident recusandae architecto, libero aspernatur veniam quo! Nihil ad mollitia quaerat dolore.
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo quis repellendus earum corporis dolorem obcaecati beatae veritatis delectus sequi, enim optio nisi ex recusandae! Architecto laudantium omnis amet blanditiis aut?
+        <section className='view' data-testid='view'>
+            {generateViewBlocks(blockInfoContainer.value)}
+
+            <OptionsButtonContextProvider key='adder' category='adder' type='adder'>
+                <Adder onClick={handleAdder} />
+            </OptionsButtonContextProvider>
         </section>
+    )
+}
+
+
+
+function generateViewBlocks({ blocks }) {
+
+    return (
+        <>
+            {
+                blocks.map((block, index) => {
+                    return (
+                        <OptionsButtonContextProvider key={index} category={block.category} type={block.type} >
+                            <ViewBlock key={index} />
+                        </OptionsButtonContextProvider>)
+                })
+            }
+        </>
     )
 }
 

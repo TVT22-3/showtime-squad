@@ -1,0 +1,34 @@
+{
+    "edit": {
+        "options": []
+    },
+    "type": {
+        "movies": {
+            "options": [
+                "top movies",
+                "free pick",
+                "favorites"
+            ]
+        },
+        "text": {
+            "options": [
+                "news",
+                "review"
+            ]
+        }
+    },
+    "size": {
+        "width": {
+            "options": [
+                "+",
+                "-"
+            ]
+        },
+        "height": {
+            "options": [
+                "+",
+                "-"
+            ]
+        }
+    }
+}
