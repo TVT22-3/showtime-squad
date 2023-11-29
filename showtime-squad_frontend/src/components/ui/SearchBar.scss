@@ -5,7 +5,14 @@
     left: 50%;
     transform: translateX(-50%);
     bottom: 10dvh;
+    transition: all 0.9s ease;
 
+    &.scrolled {
+        position: fixed;
+        top: 0;
+        height: 0;
+        left: 84%;
+    }
 
     input {
         width: 30dvw;
@@ -16,7 +23,13 @@
         position: absolute;
         top: 50%;
         transform: translate(-100%, -50%);
-
         background-color: #333;
+
+        &#scrolled {
+            position: fixed;
+            top: 4.2%;
+            transform: translateY(20%);
+            right: 0;
+        }
     }
 }
