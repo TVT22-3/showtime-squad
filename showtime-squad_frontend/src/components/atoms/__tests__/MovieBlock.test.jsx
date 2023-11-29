@@ -21,7 +21,7 @@ test('render MovieBlock without any props', () => {
     expect(starElement.getAttribute('data-rating')).toBe("-1")
 })
 
-test('render MovieBlock with mockData', () => {
+test('render MovieBlock with mock data', () => {
 
     const imgUrl = "https://www.wikipedia.org/portal/wikipedia.org/assets/img/Wikipedia-logo-v2.png"
     const linkUrl = "https://www.wikipedia.org/"
