@@ -8,7 +8,7 @@ function NestedOptionsButton({ options, icon = '💩' }) {
             <ul className='edit menu-indicator'>
                 <li className='dropdown'>
                     {icon}
-                    {generateNestedOptions(options)}
+                    {options ? generateNestedOptions(options) : <>null</>}
                 </li>
             </ul>
         </div>
