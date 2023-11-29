@@ -1,10 +1,10 @@
 import "./Profile.scss";
-import { useUser } from '../../context/UserContext.jsx'
+import { useUser } from "../../context/UserContext.jsx";
+import View from "./View.jsx";
 
 export default function ProfilePage() {
-
   const { username } = useUser();
-  
+
   return (
     <div id="profile">
       <div className="profile-container">
@@ -20,25 +20,7 @@ export default function ProfilePage() {
         </div>
 
         <div className="favorite-movies">
-          <h1>Favorite Movies</h1>
-          <div className="movie-grid">
-            <div className="movie-item">
-              <img src="https://via.placeholder.com/150" alt="Movie Poster" />
-              <p>Movie Title</p>
-            </div>
-            <div className="movie-item">
-              <img src="https://via.placeholder.com/150" alt="Movie Poster" />
-              <p>Movie Title</p>
-            </div>
-            <div className="movie-item">
-              <img src="https://via.placeholder.com/150" alt="Movie Poster" />
-              <p>Movie Title</p>
-            </div>
-            <div className="movie-item">
-              <img src="https://via.placeholder.com/150" alt="Movie Poster" />
-              <p>Movie Title</p>
-            </div>
-          </div>
+            <View />
         </div>
 
         <div className="recent-reviews">
