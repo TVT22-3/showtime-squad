@@ -9,6 +9,7 @@
     &.scrolled {
         position: fixed;
         top: 0;
+        height: 0;
     }
 
     input {
@@ -25,6 +26,8 @@
         &#scrolled {
             position: fixed;
             top: 4.2%;
+            transform: translateY(20%);
+            right: 0;
         }
     }
 }
