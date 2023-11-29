@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import "./MovieBlocks.scss"
 import MovieBlock from "../atoms/MovieBlock.jsx"
 
-function MovieBlocks({ type }) {
+function MovieBlocks({ type, maxAmount = 5 }) {
     const [movies, setMovies] = useState(null);
 
     useEffect(() => {
@@ -15,11 +15,9 @@ function MovieBlocks({ type }) {
         fetchData()
     }, [type]);
 
-    const BLOCK_COUNT = 5;
-
     return (
-        <section className='movie-blocks'>
-            {generateBlocks(BLOCK_COUNT, movies)}
+        <section className='movie-blocks' data-testid='movie-blocks'>
+            {generateBlocks(maxAmount, movies)}
         </section>
     )
 }
