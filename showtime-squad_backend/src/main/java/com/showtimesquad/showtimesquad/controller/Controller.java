@@ -22,7 +22,7 @@ public class Controller {
     private String apiKey;
     @GetMapping(value = "/movies", produces = MediaType.APPLICATION_JSON_VALUE)
     private String getMovies(){
-        final String uri = "https://api.themoviedb.org/3/movie/157435?api_key=" + apiKey;
+        final String uri = "https://api.themoviedb.org/3/movie/popular?page=1&api_key=" + apiKey;
         RestTemplate restTemplate = new RestTemplate();
         return restTemplate.getForObject(uri, String.class);
     }

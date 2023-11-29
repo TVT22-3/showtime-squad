@@ -10,6 +10,7 @@
 
     background-color: black;
     color: var(--light-med, white);
+    z-index:999;
 }
 
 .nav-bar ul {
