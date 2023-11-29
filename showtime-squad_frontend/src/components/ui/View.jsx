@@ -33,7 +33,7 @@ function View() {
     }
 
     return (
-        <section className='view'>
+        <section className='view' data-testid='view'>
             {generateViewBlocks(blockInfoContainer.value)}
 
             <OptionsButtonContextProvider key='adder' category='adder' type='adder'>
