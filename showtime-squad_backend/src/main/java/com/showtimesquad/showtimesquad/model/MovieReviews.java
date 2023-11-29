@@ -17,9 +17,8 @@ public class MovieReviews {
     @JoinColumn(name = "users_id", nullable = false)
     private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "movies_api_id", nullable = false)
-    private MovieApi movieApi;
+    @Column(name = "movies_api_id", nullable = false)
+    private Integer movieApi;
 
     @Column(name = "review_stars")
     private Integer reviewStars;
