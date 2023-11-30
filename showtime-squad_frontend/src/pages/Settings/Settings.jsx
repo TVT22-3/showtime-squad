@@ -33,7 +33,7 @@ function Settings() {
             console.log("clicked delete for user:", username)
         try {
             // attempt to delete
-            let response = await deleteRequest(`${apiUrl}/api/settings/delete/${username}`)
+            let response = await deleteRequest({ url: `${apiUrl}/api/settings/delete/${username}` })
 
             // display bad http status
             // const badStatusCodes = [400, 401, 403, 404]; 

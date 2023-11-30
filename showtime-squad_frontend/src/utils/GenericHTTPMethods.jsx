@@ -1,6 +1,6 @@
 
 async function handleResponse(response, requestType) {
-    const responseData = { status: response.status, headers: response.headers}
+    const responseData = { status: response.status, headers: response.headers }
 
     if (response.ok) {
         console.log(`${requestType} request successful`)
@@ -25,7 +25,7 @@ async function handleResponse(response, requestType) {
     return responseData
 }
 
-async function getRequest({url, cookies = null}) {
+async function getRequest({ url, cookies = null }) {
     // TODO: kinda barebones
     try {
         const response = await fetch(url, {
@@ -46,7 +46,7 @@ async function getRequest({url, cookies = null}) {
     }
 }
 
-async function postRequest({url, cookies = null, body}) {
+async function postRequest({ url, cookies = null, body }) {
     try {
         const response = await fetch(url, {
             method: 'POST',
@@ -71,13 +71,14 @@ async function putRequest(url, body) {
     throw new Error("Unimplemented")
 }
 
-async function deleteRequest(url) {
+async function deleteRequest({ url, cookies }) {
     try {
         const response = await fetch(url, {
             method: 'DELETE',
             credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
+                'Cookie': cookies,
             },
         })
 
