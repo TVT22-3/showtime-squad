@@ -1,0 +1,39 @@
+.movie-container {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around; // Default for multiple movies
+  
+    .movie-card {
+      width: 250px;
+      margin: 20px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s;
+  
+      img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 4px;
+        
+      }
+
+  
+      p {
+        margin: 8px 0;
+      }
+    }
+
+    .movie-card:hover {
+        transform: scale(1.1);
+    }
+  
+    // Adjust the justification for a single movie
+    @media (max-width: 300px) {
+      justify-content: flex-start;
+    }
+  }
+  
