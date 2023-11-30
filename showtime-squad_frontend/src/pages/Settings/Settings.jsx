@@ -7,6 +7,8 @@ import Sitemap from "../../data/sitemap.json"
 import FunctionButton from "../../components/atoms/FunctionButton"
 import "./Settings.scss"
 
+import { deleteRequest } from '../../utils/GenericHTTPMethods'
+
 import { useUser } from '../../context/UserContext';
 const countdown = signal(-1)
 const displayErrorMessage = signal(null)
@@ -95,44 +97,6 @@ async function logoutUser(url) {
         }
     } catch (error) {
         console.error('Error logging out:', error)
-    }
-}
-
-async function deleteRequest(url) {
-    try {
-        const response = await fetch(url, {
-            method: 'DELETE',
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-
-        const responseData = { status: response.status }
-
-        if (response.ok) {
-            console.log('Delete request successful')
-
-            const contentType = response.headers.get('Content-Type')
-            if (contentType && contentType.includes('application/json')) {
-                // response is json
-                const jsonResponse = await response.json()
-                Object.assign(responseData, additionalData)
-            } else if (contentType && contentType.includes('text')) {
-                // response is text
-                const textResponse = await response.text()
-                Object.assign(responseData, textResponse)
-            } else {
-                // unknown / unimplemented response type
-                throw new Error("Unkown response type")
-            }
-        } else {
-            console.error(`Delete request failed with status ${response.status}`)
-        }
-
-        return responseData;
-    } catch (error) {
-        console.error('Error fetching data:', error)
     }
 }
 
