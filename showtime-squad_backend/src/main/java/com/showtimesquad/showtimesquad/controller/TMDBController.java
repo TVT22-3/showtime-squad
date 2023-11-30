@@ -12,6 +12,10 @@ import org.springframework.http.ResponseEntity;
 import java.util.Arrays;
 import java.util.List;
 
+
+// TODO: Add more endpoints
+// TODO: test endpoints
+
 @RestController
 public class TMDBController {
 
@@ -34,5 +38,35 @@ public class TMDBController {
         return ResponseEntity.ok(Arrays.asList(movies));
     }
 
-    @GetMapping(value = "/movie")
+    @GetMapping(value = "/movies/popular")
+    public ResponseEntity<List<Object>> getPopularMovies() {
+        String uri = "https://api.themoviedb.org/3/movie/popular?api_key=" + tmdbApiKey;
+        RestTemplate restTemplate = new RestTemplate();
+        Object[] popular = restTemplate.getForObject(uri, Object[].class);
+        return ResponseEntity.ok(Arrays.asList(popular));
+    }
+
+    @GetMapping(value = "/movies/now_playing")
+    public ResponseEntity<List<Object>> getNowPlayingMovies() {
+        String uri = "https://api.themoviedb.org/3/movie/now_playing?api_key=" + tmdbApiKey;
+        RestTemplate restTemplate = new RestTemplate();
+        Object[] movies = restTemplate.getForObject(uri, Object[].class);
+        return ResponseEntity.ok(Arrays.asList(movies));
+    }
+
+    @GetMapping(value="/movies/upcoming")
+    public ResponseEntity<List<Object>> getUpcoming() {
+        String uri = "https://api.themoviedb.org/3/movie/upcoming?api_key=" + tmdbApiKey;
+        RestTemplate restTemplate = new RestTemplate();
+        Object[] movies = restTemplate.getForObject(uri, Object[].class);
+        return new ResponseEntity.ok(Arrays.asList(movies));
+    }
+    
+    @GetMapping(value="/movies/genre")
+    public ResponseEntity<List<Object>> getGenre(@RequestParam("genreId") String genreId) {
+        String uri = "https://api.themoviedb.org/3/discover/movie?api_key=" + tmdbApiKey + "&with_genres=" + genreId;
+        RestTemplate restTemplate = new RestTemplate();
+        Object[] movies = restTemplate.getForObject(uri, Object[].class);
+        return new ResponseEntity.ok(Arrays.asList(movies));
+    }
 }
