@@ -35,19 +35,14 @@ function Settings() {
 
             // display bad http status
             // const badStatusCodes = [400, 401, 403, 404]; 
-            if ((response && response.status) && 
-            (response.status >= 400 /*|| badStatusCodes.includes(response.status)*/)) {
+            if ((response && response.status) &&
+                (response.status >= 400 /*|| badStatusCodes.includes(response.status)*/)) {
                 displayErrorMessage.value = response.status
+            } else {
+                // trigger logout and countdown for moving back to index
+                response = await logoutUser(`${apiUrl}/auth/logout`)
+                countDown()
             }
-
-            // trigger logout
-            response = await logoutUser(`${apiUrl}/auth/logout`)
-
-            // if (response && !response.status) {
-            //     countDown()
-            // } else {
-            //     console.error("unauthor", response)
-            // }
         } catch (error) {
             console.error('Error deleting user:', error);
         }
