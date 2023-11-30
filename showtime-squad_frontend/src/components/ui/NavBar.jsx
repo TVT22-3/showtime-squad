@@ -1,14 +1,14 @@
 // path: showtime-squad_frontend/src/components/ui/NavBar.jsx
 
-import './NavBar.css'
+import './NavBar.scss'
 import sitemap from '../../data/sitemap.json'
+import { useLoginStatus } from '../../context/UserContext';
 
 const sitemapArray = Object.values(sitemap)
 //console.log(sitemapArray)
-const loginStatus = false // placeholder for login status
-console.log("placeholder login status is set to: " + loginStatus)
+//console.log("placeholder login status is set to: " + loginStatus)
 
-function NavElement(sitemapKey) {
+function NavElement(sitemapKey, loginStatus) {
     // Used to create a nav element for the NavBar component
     const show = sitemapKey.show;
     const subpages = hasKey(sitemapKey, "subpages")
@@ -32,7 +32,7 @@ function NavElement(sitemapKey) {
     )
 }
 
-function SubElement(submapKey) {
+function SubElement(submapKey, loginStatus) {
     console.log("in subelement")
     console.log(submapKey)
     const show = submapKey.show;
@@ -56,6 +56,8 @@ function hasKey(obj, key) {
 }
 
 function NavBar() {
+
+    const { loginStatus } = useLoginStatus();
     //TODO: Implement
     console.log("component might not be fully implemented yet")
     //console.log(sitemapArray)
@@ -66,7 +68,7 @@ function NavBar() {
                 {sitemapArray.map((key) => {
                     return (
                         <>
-                        {NavElement(key)}
+                        {NavElement(key, loginStatus)}
                         </>
                     );
                 })}

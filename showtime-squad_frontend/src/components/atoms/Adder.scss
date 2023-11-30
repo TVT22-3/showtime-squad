@@ -1,0 +1,32 @@
+.adder {
+    --_block-inset-margin: 2rem;
+    --_border-width: 0.1em;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: var(--_block-inset-margin);
+
+    font-size: 5em;
+
+    border-radius: 5px;
+
+    background-color: #000000AA;
+    color: #FFFFFF44;
+
+    .inner {
+        cursor: pointer;
+        user-select: none;
+
+        width: 100%;
+
+        text-align: center;
+
+        margin: var(--_border-width);
+
+        border-width: var(--_border-width);
+        border-style: dashed;
+        border-radius: 5px;
+    }
+}
