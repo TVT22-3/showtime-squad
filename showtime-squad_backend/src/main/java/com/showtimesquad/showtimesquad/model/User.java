@@ -32,6 +32,11 @@ public class User {
   @Size(max = 120)
   private String password;
 
+  @Column(name = "profile_pic")
+  @NotBlank
+  @Size(max = 120)
+  private String profilePicture;
+
   @ManyToMany(fetch = FetchType.LAZY)
   @JoinTable(name = "user_roles", 
              joinColumns = @JoinColumn(name = "user_id"),
@@ -87,5 +92,13 @@ public class User {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public String getProfilePic(String profilePicture) {
+      return profilePicture;
+    }
+
+    public void setProfilePicture(String profilePicture) {
+        this.profilePicture = profilePicture;
     }
 }

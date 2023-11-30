@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.showtimesquad.showtimesquad.config.ProfilePictureConfig;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,7 +87,7 @@ public class AuthController {
     if (userRepository.existsByEmail(signUpRequest.getEmail())) {
       return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already in use!"));
     }
-
+    ProfilePictureConfig config = new ProfilePictureConfig();
     // Create new user's account
     User user = new User(signUpRequest.getUsername(),
         signUpRequest.getEmail(),
