@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { postRequest } from '../GenericHTTPMethods';
 
 function MiikaSandbox() {
 
@@ -22,27 +23,29 @@ function MiikaSandbox() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        try {
-            console.log(`${apiUrl}/api/auth/signin`)
-            console.log(JSON.stringify(formData))
-            const response = await fetch(`${apiUrl}/api/auth/signin`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
-                credentials: 'include', // Include this line
-            })
+        postRequest(`${apiUrl}/api/auth/signin`, JSON.stringify(formData))
 
-            if (response.ok) {
-                console.log('Login successful!');
-                return response.json()
-            } else {
-                console.error('Login failed:', response.statusText);
-            }
-        } catch (error) {
-            console.error('Error during login:', error.message);
-        }
+        // try {
+        //     console.log(`${apiUrl}/api/auth/signin`)
+        //     console.log(JSON.stringify(formData))
+        //     const response = await fetch(`${apiUrl}/api/auth/signin`, {
+        //         method: 'POST',
+        //         headers: {
+        //             'Content-Type': 'application/json',
+        //         },
+        //         body: JSON.stringify(formData),
+        //         credentials: 'include', // Include this line
+        //     })
+
+        //     if (response.ok) {
+        //         console.log('Login successful!');
+        //         return response.json()
+        //     } else {
+        //         console.error('Login failed:', response.statusText);
+        //     }
+        // } catch (error) {
+        //     console.error('Error during login:', error.message);
+        // }
     };
 
     const handleFetchData = () => {
