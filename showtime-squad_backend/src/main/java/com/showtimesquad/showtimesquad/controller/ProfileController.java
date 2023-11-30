@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping({ "/api/users", "/profile", "/users" })
+@RequestMapping({ "/api/profile", "/profile", "/users" })
 public class ProfileController {
 
     @GetMapping("/{username}")
