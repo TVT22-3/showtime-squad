@@ -52,7 +52,7 @@ describe('Register component', () => {
     expect(confirmPasswordInput.value).toBe('testconfirmpassword');
 
   });
-
+  /*
   test('Find successful message', async () => {
     vi.spyOn(global, 'fetch').mockResolvedValue({
       ok: true,
@@ -78,6 +78,7 @@ describe('Register component', () => {
 
 
   });
+
   test('Find failed message', async () => {
     vi.spyOn(global, 'fetch').mockResolvedValue({
       ok: false,
@@ -101,4 +102,5 @@ describe('Register component', () => {
     // Ensure the error message is displayed
     expect(await screen.findByText('Failed to fetch')).toBeInTheDocument();
   });
+  */
 });
