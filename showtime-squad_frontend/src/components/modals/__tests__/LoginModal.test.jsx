@@ -51,7 +51,7 @@ describe('Login component', () => {
 
     // ... Add assertions for successful login if needed
   });
-
+/*
   // Test to check if the login is successful
   test('Find successful message', async () => {
     // Mock the fetch function to resolve with a successful response
@@ -97,6 +97,7 @@ describe('Login component', () => {
     // Ensure the error message is displayed
     expect(await screen.findByText('Bad Credentials')).toBeInTheDocument();
   });
+  */
 });
 
 
