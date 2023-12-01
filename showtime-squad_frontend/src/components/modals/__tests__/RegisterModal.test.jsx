@@ -1,4 +1,5 @@
 import React from 'react';
+import { vi } from 'vitest';
 import { render, screen, act, fireEvent } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import Register from '../Register.jsx';
@@ -53,7 +54,7 @@ describe('Register component', () => {
   });
 
   test('Find successful message', async () => {
-    vitest.spyOn(global, 'fetch').mockResolvedValue({
+    vi.spyOn(global, 'fetch').mockResolvedValue({
       ok: true,
       json: async () => ({ message: 'User registered successfully!' }),
     });
@@ -78,7 +79,7 @@ describe('Register component', () => {
 
   });
   test('Find failed message', async () => {
-    vitest.spyOn(global, 'fetch').mockResolvedValue({
+    vi.spyOn(global, 'fetch').mockResolvedValue({
       ok: false,
       json: async () => ({ message: 'Failed to fetch' }),
     });
