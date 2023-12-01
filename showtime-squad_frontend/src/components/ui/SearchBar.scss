@@ -6,6 +6,7 @@
     transform: translateX(-50%);
     bottom: 10dvh;
     transition: all 0.9s ease;
+    z-index: 4;
 
     &.scrolled {
         position: fixed;

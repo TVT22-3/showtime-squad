@@ -1,7 +1,6 @@
-.nav-bar {
+#nav-bar {
     top: 0;
-    position: fixed;
-    z-index: 3;
+    /* Change to sticky instead of fixed */
 
     display: flex;
     justify-content: center;
@@ -11,6 +10,7 @@
 
     background-color: black;
     color: var(--light-med, white);
+    z-index: 2;
 
     ul {
         list-style-type: none;
@@ -34,7 +34,7 @@
         background-color: #f9f9f9;
         min-width: 160px;
         box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-        z-index: 1;
+        z-index: 2; /* Increase the z-index value for the dropdown */
     }
 
     .dropdown-content li {
