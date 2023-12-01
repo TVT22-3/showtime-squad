@@ -1,5 +1,6 @@
 // Importing necessary libraries and components for testing
 import React from 'react';
+import { vi } from 'vitest';
 import { render, screen, act, fireEvent } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { UserProvider } from "../../../context/UserContext.jsx";
@@ -54,7 +55,7 @@ describe('Login component', () => {
   // Test to check if the login is successful
   test('Find successful message', async () => {
     // Mock the fetch function to resolve with a successful response
-    vitest.spyOn(global, 'fetch').mockResolvedValue({
+    vi.spyOn(global, 'fetch').mockResolvedValue({
       ok: true,
       json: async () => ({ message: 'Login successful!' }),
     });
@@ -77,7 +78,7 @@ describe('Login component', () => {
   // Test to check if the login fails with bad credentials
   test('Find Bad Credentials message', async () => {
     // Mock the fetch function to resolve with a failed response
-    vitest.spyOn(global, 'fetch').mockResolvedValue({
+    vi.spyOn(global, 'fetch').mockResolvedValue({
       ok: false,
       json: async () => ({ message: 'Bad Credentials' }),
     });
