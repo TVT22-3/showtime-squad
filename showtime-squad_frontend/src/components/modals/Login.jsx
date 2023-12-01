@@ -88,7 +88,7 @@ function Login({ toggleForms }) {
   }
 
   return (
-    <form id="form" onSubmit={handleLogin}>
+    <form  data-testid="form" id="form" onSubmit={handleLogin}>
       <div className="container">
         <div className="header">
           <div className="text">Login</div>
