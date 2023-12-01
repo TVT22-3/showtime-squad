@@ -27,7 +27,7 @@ function ForgotPassword({ toggleForms }) {
   }
 
   return (
-    <form id="form" onSubmit={handleForgotPassword}>
+    <form data-testid="form" id="form" onSubmit={handleForgotPassword}>
       <div className="container">
         <div className="header">
           <div className="text">Forgot Password?</div>
