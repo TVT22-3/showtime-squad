@@ -46,12 +46,11 @@ public class GroupController {
             // Authenticated user
             return ResponseEntity.status(HttpStatus.OK)
                     .body(new MessageResponse(
-                            "Post to groups succeeded + authenticated as group owner (not really, TODO)"));
+                            "Post to groups succeeded + authenticated"));
         } else {
             // Unauthenticated user
-            return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                    .body(new MessageResponse(
-                            "Post to groups succeeded"));
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(new MessageResponse("Post to groups succeeded"));
         }
     }
 
@@ -65,8 +64,7 @@ public class GroupController {
 
         if (username == null || groupname == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new MessageResponse(
-                            "Bad request body"));
+                    .body(new MessageResponse("Bad request body"));
         }
 
         if (userDetails == null || !userDetails.getUsername().equals(username)) {
@@ -77,8 +75,7 @@ public class GroupController {
 
         if (groupRepository.existsByGroupname(groupname)) {
             return ResponseEntity.status(HttpStatus.CONFLICT)
-                    .body(new MessageResponse(
-                            "Group already exists"));
+                    .body(new MessageResponse("Group already exists"));
         }
 
         // can create group
@@ -91,9 +88,8 @@ public class GroupController {
         groupRepository.save(group);
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(new MessageResponse(
-                        "Group '%s' created"
-                                .formatted(groupname)));
+                .body(new MessageResponse("Group '%s' created"
+                        .formatted(groupname)));
     }
 
     @PostMapping("/join")
@@ -106,21 +102,18 @@ public class GroupController {
 
         if (username == null || groupname == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new MessageResponse(
-                            "Bad request body"));
+                    .body(new MessageResponse("Bad request body"));
         }
 
         if (userDetails == null || !userDetails.getUsername().equals(username)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                    .body(new MessageResponse(
-                            "Bad credentials"));
+                    .body(new MessageResponse("Bad credentials"));
         }
 
         Optional<Group> groupOptional = groupRepository.findByGroupname(groupname);
         if (!groupOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.CONFLICT)
-                    .body(new MessageResponse(
-                            "Group does not exists"));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new MessageResponse("Group does not exists"));
         }
 
         Group group = groupOptional.get();
@@ -130,9 +123,8 @@ public class GroupController {
         groupRepository.save(group);
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(new MessageResponse(
-                        "User '%s' joined group '%s' (TODO)"
-                                .formatted(username, groupname)));
+                .body(new MessageResponse("User '%s' joined group '%s' (TODO)"
+                        .formatted(username, groupname)));
     }
 
     @GetMapping("/{groupname}")
@@ -142,9 +134,8 @@ public class GroupController {
 
         Optional<Group> groupOptional = groupRepository.findByGroupname(groupname);
         if (!groupOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                    .body(new MessageResponse(
-                            "No group with that name"));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new MessageResponse("No group with that name"));
         }
 
         return ResponseEntity.status(HttpStatus.FORBIDDEN)
