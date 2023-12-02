@@ -122,7 +122,7 @@ public class GroupController {
         group.getUsers().add(user);
         groupRepository.save(group);
 
-        return ResponseEntity.status(HttpStatus.CREATED)
+        return ResponseEntity.status(HttpStatus.OK)
                 .body(new MessageResponse("User '%s' joined group '%s' (TODO)"
                         .formatted(username, groupname)));
     }
@@ -138,7 +138,7 @@ public class GroupController {
                     .body(new MessageResponse("No group with that name"));
         }
 
-        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+        return ResponseEntity.status(HttpStatus.OK)
                 .body(new GroupInfoResponse(groupOptional.get()));
     }
 
