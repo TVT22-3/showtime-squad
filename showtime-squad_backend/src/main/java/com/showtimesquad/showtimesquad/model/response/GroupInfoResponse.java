@@ -3,18 +3,19 @@ package com.showtimesquad.showtimesquad.model.response;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.showtimesquad.showtimesquad.model.Group;
 import com.showtimesquad.showtimesquad.model.User;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class GroupInfoResponse {
     String groupname;
     String owner;
     String groupPic;
 
-    @Autowired
     List<String> users;
+
+    List<String> joinRequests;
 
     public GroupInfoResponse(Group group) {
         this.groupname = group.getGroupname();
@@ -25,6 +26,22 @@ public class GroupInfoResponse {
                 .stream()
                 .map(User::getUsername)
                 .collect(Collectors.toList());
+    }
+
+    /**
+     * Get partial data for niche cases
+     * @param group
+     * @param args[0] is owner?
+     */
+    public GroupInfoResponse(Group group, boolean... args) {
+        if (args.length > 0 && args[0] == true) {
+            // is owner
+            this.joinRequests = group.getJoinRequests()
+                    .stream()
+                    .map(User::getUsername)
+                    .collect(Collectors.toList());
+                    return;
+        }
     }
 
     public String getGroupname() {
@@ -57,6 +74,14 @@ public class GroupInfoResponse {
 
     public void setUsers(List<String> users) {
         this.users = users;
+    }
+
+    public List<String> getJoinRequests() {
+        return this.joinRequests;
+    }
+
+    public void setJoinRequests(List<String> joinRequests) {
+        this.joinRequests = joinRequests;
     }
 
 }

@@ -31,6 +31,10 @@ public class Group {
     @JoinTable(name = "groups_users", joinColumns = @JoinColumn(name = "groups_id"), inverseJoinColumns = @JoinColumn(name = "users_id"))
     private Set<User> users = new HashSet<>();
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "groups_join_requests", joinColumns = @JoinColumn(name = "groups_id"), inverseJoinColumns = @JoinColumn(name = "users_id"))
+    private Set<User> joinRequests = new HashSet<>();
+
     public Group() {
     }
 
@@ -41,7 +45,6 @@ public class Group {
     }
 
     // getters and setters
-
 
     public Long getId() {
         return this.id;
@@ -83,4 +86,13 @@ public class Group {
         this.users = users;
     }
 
+
+    public Set<User> getJoinRequests() {
+        return this.joinRequests;
+    }
+
+    public void setJoinRequests(Set<User> joinRequests) {
+        this.joinRequests = joinRequests;
+    }
+    
 }

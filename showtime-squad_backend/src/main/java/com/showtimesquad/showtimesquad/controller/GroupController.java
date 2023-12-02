@@ -1,5 +1,8 @@
 package com.showtimesquad.showtimesquad.controller;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -52,6 +55,21 @@ public class GroupController {
             return ResponseEntity.status(HttpStatus.OK)
                     .body(new MessageResponse("Post to groups succeeded"));
         }
+    }
+
+    @GetMapping("/{groupname}")
+    public ResponseEntity<?> getGroup(
+            @PathVariable String groupname,
+            @AuthenticationPrincipal UserDetails userDetails) {
+
+        Optional<Group> groupOptional = groupRepository.findByGroupname(groupname);
+        if (!groupOptional.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new MessageResponse("No group with that name"));
+        }
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new GroupInfoResponse(groupOptional.get()));
     }
 
     @PostMapping("/create")
@@ -119,27 +137,151 @@ public class GroupController {
         Group group = groupOptional.get();
         User user = userRepository.findByUsername(username).get();
 
-        group.getUsers().add(user);
+        group.getJoinRequests().add(user);
         groupRepository.save(group);
 
         return ResponseEntity.status(HttpStatus.OK)
-                .body(new MessageResponse("User '%s' joined group '%s' (TODO)"
+                .body(new MessageResponse("User '%s' requested to join group '%s'"
                         .formatted(username, groupname)));
     }
 
-    @GetMapping("/{groupname}")
-    public ResponseEntity<?> getGroup(
-            @PathVariable String groupname,
+    @PostMapping("/requests")
+    public ResponseEntity<?> getJoinRequests(
+            @RequestBody Map<String, String> requestBody,
             @AuthenticationPrincipal UserDetails userDetails) {
+
+        String username = requestBody.get("username");
+        String groupname = requestBody.get("groupname");
+
+        if (username == null || groupname == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new MessageResponse("Bad request body"));
+        }
+
+        if (userDetails == null || !userDetails.getUsername().equals(username)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body(new MessageResponse("Bad credentials"));
+        }
 
         Optional<Group> groupOptional = groupRepository.findByGroupname(groupname);
         if (!groupOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(new MessageResponse("No group with that name"));
+                    .body(new MessageResponse("Group does not exists"));
+        }
+
+        Group group = groupOptional.get();
+        User user = userRepository.findByUsername(username).get();
+
+        if (!group.getOwner().equals(user)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body(new MessageResponse("Not owner of the group"));
         }
 
         return ResponseEntity.status(HttpStatus.OK)
-                .body(new GroupInfoResponse(groupOptional.get()));
+                .body(new GroupInfoResponse(groupOptional.get(), true));
+    }
+
+    @PostMapping("/accept")
+    public ResponseEntity<?> acceptJoinRequests(
+            @RequestBody Map<String, String> requestBody,
+            @AuthenticationPrincipal UserDetails userDetails) {
+
+        String username = requestBody.get("username");
+        String groupname = requestBody.get("groupname");
+        String joinername = requestBody.get("joiner");
+
+        if (username == null || groupname == null || joinername == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new MessageResponse("Bad request body"));
+        }
+
+        if (userDetails == null || !userDetails.getUsername().equals(username)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body(new MessageResponse("Bad credentials"));
+        }
+
+        Optional<Group> groupOptional = groupRepository.findByGroupname(groupname);
+        if (!groupOptional.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new MessageResponse("Group does not exists"));
+        }
+
+        Optional<User> joinerOptional = userRepository.findByUsername(joinername);
+        if (!joinerOptional.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new MessageResponse("User does not exists"));
+        }
+
+        Group group = groupOptional.get();
+        User user = userRepository.findByUsername(username).get();
+        User joiner = joinerOptional.get();
+
+        if (!group.getOwner().equals(user)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body(new MessageResponse("Not owner of the group"));
+        }
+
+        group.getUsers().add(joiner);
+        group.getJoinRequests().remove(joiner);
+        groupRepository.save(group);
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new MessageResponse("User '%s' accepted to group '%s'"
+                        .formatted(joinername, groupname)));
+    }
+
+    @PostMapping("/remove")
+    public ResponseEntity<?> removeUser(
+            @RequestBody Map<String, String> requestBody,
+            @AuthenticationPrincipal UserDetails userDetails) {
+
+        String username = requestBody.get("username");
+        String groupname = requestBody.get("groupname");
+        String removename = requestBody.get("remove");
+
+        if (username == null || groupname == null || removename == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new MessageResponse("Bad request body"));
+        }
+
+        if (userDetails == null || !userDetails.getUsername().equals(username)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body(new MessageResponse("Bad credentials"));
+        }
+
+        Optional<Group> groupOptional = groupRepository.findByGroupname(groupname);
+        if (!groupOptional.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new MessageResponse("Group does not exists"));
+        }
+
+        Optional<User> removeOptional = userRepository.findByUsername(removename);
+        if(!removeOptional.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new MessageResponse("User does not exists"));
+        }
+
+        Group group = groupOptional.get();
+        User user = userRepository.findByUsername(username).get();
+        User remove = removeOptional.get();
+
+        if (!user.equals(remove) && !group.getOwner().equals(user)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body(new MessageResponse("Only owner can remove other users"));
+        }
+
+        if (group.getOwner().equals(remove)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body(new MessageResponse("Can not remove owner, use /delete instead"));
+        }
+
+        group.getUsers().remove(remove);
+        group.getJoinRequests().remove(remove);
+        groupRepository.save(group);
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new MessageResponse("User '%s' has left group '%s'"
+                        .formatted(removename, groupname)));
     }
 
 }
