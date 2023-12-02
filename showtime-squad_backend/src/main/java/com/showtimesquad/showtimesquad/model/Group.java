@@ -37,7 +37,50 @@ public class Group {
     public Group(String groupname, User owner) {
         this.groupname = groupname;
         this.owner = owner;
+        users.add(owner);
     }
 
     // getters and setters
+
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getGroupname() {
+        return this.groupname;
+    }
+
+    public void setGroupname(String groupname) {
+        this.groupname = groupname;
+    }
+
+    public User getOwner() {
+        return this.owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
+
+    public String getGroupPic() {
+        return this.groupPic;
+    }
+
+    public void setGroupPic(String groupPic) {
+        this.groupPic = groupPic;
+    }
+
+    public Set<User> getUsers() {
+        return this.users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
+    }
+
 }
