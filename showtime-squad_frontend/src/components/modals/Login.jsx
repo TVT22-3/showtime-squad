@@ -51,6 +51,7 @@ function Login({ toggleForms }) {
     try {
       const response = await fetch(`${apiUrl}/auth/login`, {
         method: 'POST',
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
         },
