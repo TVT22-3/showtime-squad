@@ -44,6 +44,12 @@ public class GroupController {
                         @PathVariable String groupname,
                         @AuthenticationPrincipal UserDetails userDetails) {
 
+                if (userDetails == null) {
+                        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                                        .body(new MessageResponse(
+                                                        "Bad credentials"));
+                }
+
                 Optional<Group> groupOptional = groupRepository.findByGroupname(groupname);
                 if (!groupOptional.isPresent()) {
                         return ResponseEntity.status(HttpStatus.NOT_FOUND)
@@ -67,14 +73,14 @@ public class GroupController {
                         @Valid @RequestBody GroupRequest requestBody,
                         @AuthenticationPrincipal UserDetails userDetails) {
 
-                String username = requestBody.getUsername();
-                String groupname = requestBody.getGroupname();
-
-                if (userDetails == null || !userDetails.getUsername().equals(username)) {
+                if (userDetails == null) {
                         return ResponseEntity.status(HttpStatus.FORBIDDEN)
                                         .body(new MessageResponse(
                                                         "Bad credentials"));
                 }
+
+                String username = userDetails.getUsername();
+                String groupname = requestBody.getGroupname();
 
                 if (groupRepository.existsByGroupname(groupname)) {
                         return ResponseEntity.status(HttpStatus.CONFLICT)
@@ -98,13 +104,14 @@ public class GroupController {
                         @Valid @RequestBody GroupRequest requestBody,
                         @AuthenticationPrincipal UserDetails userDetails) {
 
-                String username = requestBody.getUsername();
-                String groupname = requestBody.getGroupname();
-
-                if (userDetails == null || !userDetails.getUsername().equals(username)) {
+                if (userDetails == null) {
                         return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                                        .body(new MessageResponse("Bad credentials"));
+                                        .body(new MessageResponse(
+                                                        "Bad credentials"));
                 }
+
+                String username = userDetails.getUsername();
+                String groupname = requestBody.getGroupname();
 
                 Optional<Group> groupOptional = groupRepository.findByGroupname(groupname);
                 if (!groupOptional.isPresent()) {
@@ -133,13 +140,14 @@ public class GroupController {
                         @Valid @RequestBody GroupRequest requestBody,
                         @AuthenticationPrincipal UserDetails userDetails) {
 
-                String username = requestBody.getUsername();
-                String groupname = requestBody.getGroupname();
-
-                if (userDetails == null || !userDetails.getUsername().equals(username)) {
+                if (userDetails == null) {
                         return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                                        .body(new MessageResponse("Bad credentials"));
+                                        .body(new MessageResponse(
+                                                        "Bad credentials"));
                 }
+
+                String username = userDetails.getUsername();
+                String groupname = requestBody.getGroupname();
 
                 Optional<Group> groupOptional = groupRepository.findByGroupname(groupname);
                 if (!groupOptional.isPresent()) {
@@ -164,19 +172,15 @@ public class GroupController {
                         @Valid @RequestBody GroupOwnerOnUserRequest requestBody,
                         @AuthenticationPrincipal UserDetails userDetails) {
 
-                String username = requestBody.getUsername();
+                if (userDetails == null) {
+                        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                                        .body(new MessageResponse(
+                                                        "Bad credentials"));
+                }
+
+                String username = userDetails.getUsername();
                 String groupname = requestBody.getGroupname();
                 String joinername = requestBody.getAnother();
-
-                if (username == null || groupname == null || joinername == null) {
-                        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                                        .body(new MessageResponse("Bad request body"));
-                }
-
-                if (userDetails == null || !userDetails.getUsername().equals(username)) {
-                        return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                                        .body(new MessageResponse("Bad credentials"));
-                }
 
                 Optional<Group> groupOptional = groupRepository.findByGroupname(groupname);
                 if (!groupOptional.isPresent()) {
@@ -213,14 +217,15 @@ public class GroupController {
                         @Valid @RequestBody GroupOwnerOnUserRequest requestBody,
                         @AuthenticationPrincipal UserDetails userDetails) {
 
-                String username = requestBody.getUsername();
+                if (userDetails == null) {
+                        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                                        .body(new MessageResponse(
+                                                        "Bad credentials"));
+                }
+
+                String username = userDetails.getUsername();
                 String groupname = requestBody.getGroupname();
                 String removename = requestBody.getAnother();
-
-                if (userDetails == null || !userDetails.getUsername().equals(username)) {
-                        return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                                        .body(new MessageResponse("Bad credentials"));
-                }
 
                 Optional<Group> groupOptional = groupRepository.findByGroupname(groupname);
                 if (!groupOptional.isPresent()) {
@@ -231,12 +236,13 @@ public class GroupController {
                 Optional<User> removeOptional = userRepository.findByUsername(removename);
                 if (!removeOptional.isPresent()) {
                         return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                                        .body(new MessageResponse("User does not exists"));
+                                        .body(new MessageResponse("User does not exist"));
                 }
 
                 Group group = groupOptional.get();
                 User user = userRepository.findByUsername(username).get();
                 User remove = removeOptional.get();
+                
 
                 if (!user.equals(remove) && !group.getOwner().equals(user)) {
                         return ResponseEntity.status(HttpStatus.FORBIDDEN)
@@ -262,16 +268,17 @@ public class GroupController {
                         @Valid @RequestBody GroupNewsRequest requestBody,
                         @AuthenticationPrincipal UserDetails userDetails) {
 
-                String username = requestBody.getUsername();
+                if (userDetails == null) {
+                        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                                        .body(new MessageResponse(
+                                                        "Bad credentials"));
+                }
+
+                String username = userDetails.getUsername();
                 String groupname = requestBody.getGroupname();
                 Integer news = requestBody.getNews();
 
                 Optional<User> userOptional = userRepository.findByUsername(username);
-                if (userDetails == null || !userDetails.getUsername().equals(username) || !userOptional.isPresent()) {
-                        return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                                        .body(new MessageResponse("Bad credentials"));
-                }
-
                 Optional<Group> groupOptional = groupRepository.findByGroupname(groupname);
                 if (!groupOptional.isPresent()) {
                         return ResponseEntity.status(HttpStatus.NOT_FOUND)
@@ -299,14 +306,15 @@ public class GroupController {
                         @Valid @RequestBody GroupNewsRequest requestBody,
                         @AuthenticationPrincipal UserDetails userDetails) {
 
-                String username = requestBody.getUsername();
+                if (userDetails == null) {
+                        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                                        .body(new MessageResponse(
+                                                        "Bad credentials"));
+                }
+
+                String username = userDetails.getUsername();
                 String groupname = requestBody.getGroupname();
                 Integer newsId = requestBody.getNews();
-
-                if (userDetails == null || !userDetails.getUsername().equals(username)) {
-                        return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                                        .body(new MessageResponse("Bad credentials"));
-                }
 
                 Optional<Group> groupOptional = groupRepository.findByGroupname(groupname);
                 if (!groupOptional.isPresent()) {
@@ -329,14 +337,15 @@ public class GroupController {
                         @Valid @RequestBody GroupNewsRequest requestBody,
                         @AuthenticationPrincipal UserDetails userDetails) {
 
-                String username = requestBody.getUsername();
+                if (userDetails == null) {
+                        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                                        .body(new MessageResponse(
+                                                        "Bad credentials"));
+                }
+
+                String username = userDetails.getUsername();
                 String groupname = requestBody.getGroupname();
                 Integer newsIndex = requestBody.getNews();
-
-                if (userDetails == null || !userDetails.getUsername().equals(username)) {
-                        return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                                        .body(new MessageResponse("Bad credentials"));
-                }
 
                 Optional<Group> groupOptional = groupRepository.findByGroupname(groupname);
                 if (!groupOptional.isPresent()) {
@@ -350,8 +359,8 @@ public class GroupController {
                         group.removeNewsAtIndex(newsIndex);
                 } catch (Exception e) {
                         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                                .body(new MessageResponse("Index '%s is invalid'"
-                                                .formatted(newsIndex)));
+                                        .body(new MessageResponse("Index '%s is invalid'"
+                                                        .formatted(newsIndex)));
                 }
                 groupRepository.save(group);
 

@@ -2,7 +2,7 @@ package com.showtimesquad.showtimesquad.model.request;
 
 import jakarta.validation.constraints.NotBlank;
 
-public class GroupRequest extends AuthenticatedUserRequest {
+public class GroupRequest {
 
     @NotBlank
     private String groupname;
