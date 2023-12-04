@@ -50,6 +50,14 @@ public class GroupController {
                                         .body(new MessageResponse("No group with that name"));
                 }
 
+                Group group = groupOptional.get();
+                User user = userRepository.findByUsername(userDetails.getUsername()).get();
+
+                if (!group.getUsers().contains(user)) {
+                        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                                        .body(new MessageResponse("Only members can access this group"));
+                }
+
                 return ResponseEntity.status(HttpStatus.OK)
                                 .body(new GroupInfoResponse(groupOptional.get()));
         }
