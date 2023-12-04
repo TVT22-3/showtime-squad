@@ -1,10 +1,10 @@
 package com.showtimesquad.showtimesquad.model.request;
 
-import io.micrometer.common.lang.NonNull;
+import jakarta.validation.constraints.NotNull;
 
 public class GroupNewsRequest extends GroupRequest {
 
-    @NonNull
+    @NotNull
     private Integer news;
 
     public Integer getNews() {
