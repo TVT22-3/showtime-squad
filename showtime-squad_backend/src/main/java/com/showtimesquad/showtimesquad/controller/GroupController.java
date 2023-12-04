@@ -1,8 +1,5 @@
 package com.showtimesquad.showtimesquad.controller;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -27,7 +24,6 @@ import com.showtimesquad.showtimesquad.model.response.GroupInfoResponse;
 import com.showtimesquad.showtimesquad.model.response.MessageResponse;
 import com.showtimesquad.showtimesquad.repository.GroupRepository;
 import com.showtimesquad.showtimesquad.repository.UserRepository;
-import com.showtimesquad.showtimesquad.util.ParseHelper;
 
 import jakarta.validation.Valid;
 
@@ -41,63 +37,6 @@ public class GroupController {
 
         @Autowired
         GroupRepository groupRepository;
-
-        private enum AccessLevel {
-                OWNER,
-                MEMBER,
-                JOINER,
-                OUTSIDER,
-                GUEST,
-                UNAUTHORIZED,
-        }
-
-        private boolean userAndGroupNameIsValid(String username, String groupname) {
-                if (username == null || groupname == null) {
-                        // bad info
-                        return false;
-                }
-
-                if (!userRepository.findByUsername(username).isPresent()) {
-                        // no user
-                        return false;
-                }
-
-                if (!groupRepository.findByGroupname(groupname).isPresent()) {
-                        // no group
-                        return false;
-                }
-
-                return true;
-        }
-
-        private AccessLevel checkAccess(
-                        Map<String, String> requestBody,
-                        UserDetails userDetails) {
-
-                String username = requestBody.get("username");
-                String groupname = requestBody.get("groupname");
-
-                if (userDetails == null || !userDetails.getUsername().equals(username)) {
-                        return AccessLevel.UNAUTHORIZED;
-                }
-
-                Group group = groupRepository.findByGroupname(groupname).get();
-                User user = userRepository.findByUsername(username).get();
-
-                if (group.getOwner().equals(user)) {
-                        return AccessLevel.OWNER;
-                }
-
-                if (group.getUsers().contains(user)) {
-                        return AccessLevel.MEMBER;
-                }
-
-                if (group.getJoinRequests().contains(user)) {
-                        return AccessLevel.JOINER;
-                }
-
-                return AccessLevel.OUTSIDER;
-        }
 
         @PostMapping("/test")
         public ResponseEntity<?> testPost(
