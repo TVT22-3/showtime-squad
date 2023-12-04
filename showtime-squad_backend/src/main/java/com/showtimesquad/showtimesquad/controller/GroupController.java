@@ -242,7 +242,6 @@ public class GroupController {
                 Group group = groupOptional.get();
                 User user = userRepository.findByUsername(username).get();
                 User remove = removeOptional.get();
-                
 
                 if (!user.equals(remove) && !group.getOwner().equals(user)) {
                         return ResponseEntity.status(HttpStatus.FORBIDDEN)
@@ -278,7 +277,6 @@ public class GroupController {
                 String groupname = requestBody.getGroupname();
                 Integer news = requestBody.getNews();
 
-                Optional<User> userOptional = userRepository.findByUsername(username);
                 Optional<Group> groupOptional = groupRepository.findByGroupname(groupname);
                 if (!groupOptional.isPresent()) {
                         return ResponseEntity.status(HttpStatus.NOT_FOUND)
@@ -286,11 +284,10 @@ public class GroupController {
                 }
 
                 Group group = groupOptional.get();
-                User user = userOptional.get();
-
-                if (!group.getUsers().contains(user)) {
+                if (!group.getUsers().contains(userRepository.findByUsername(username).get())) {
                         return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                                        .body(new MessageResponse("Only members can access this group"));
+                                        .body(new MessageResponse(
+                                                        "Only members can access this group"));
                 }
 
                 group.addNews(news);
@@ -323,6 +320,11 @@ public class GroupController {
                 }
 
                 Group group = groupOptional.get();
+                if (!group.getUsers().contains(userRepository.findByUsername(username).get())) {
+                        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                                        .body(new MessageResponse(
+                                                        "Only members can access this group"));
+                }
 
                 group.removeNews(newsId);
                 groupRepository.save(group);
@@ -354,6 +356,11 @@ public class GroupController {
                 }
 
                 Group group = groupOptional.get();
+                if (!group.getUsers().contains(userRepository.findByUsername(username).get())) {
+                        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                                        .body(new MessageResponse(
+                                                        "Only members can access this group"));
+                }
 
                 try {
                         group.removeNewsAtIndex(newsIndex);
