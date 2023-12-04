@@ -347,17 +347,12 @@ public class GroupController {
 
         @PostMapping("/news/add")
         public ResponseEntity<?> addGroupNews(
-                        @RequestBody Map<String, String> requestBody,
+                        @Valid @RequestBody GroupNewsRequest requestBody,
                         @AuthenticationPrincipal UserDetails userDetails) {
 
-                String username = requestBody.get("username");
-                String groupname = requestBody.get("groupname");
-                String news = requestBody.get("news");
-
-                if (username == null || groupname == null || news == null || !ParseHelper.isNumeric(news)) {
-                        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                                        .body(new MessageResponse("Bad request body"));
-                }
+                String username = requestBody.getUsername();
+                String groupname = requestBody.getGroupname();
+                Integer news = requestBody.getNews();
 
                 Optional<User> userOptional = userRepository.findByUsername(username);
                 if (userDetails == null || !userDetails.getUsername().equals(username) || !userOptional.isPresent()) {
@@ -379,7 +374,7 @@ public class GroupController {
                                         .body(new MessageResponse("Only members can access this group"));
                 }
 
-                group.addNews(Integer.parseInt(news));
+                group.addNews(news);
                 groupRepository.save(group);
 
                 return ResponseEntity.status(HttpStatus.OK)
