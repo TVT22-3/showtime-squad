@@ -1,63 +1,50 @@
 package com.showtimesquad.showtimesquad.endpoints.integration.unit.controller;
 
-/**********************************************************
- * needs api key in test/resources/application.properties *
- **********************************************************/
-
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
-import java.net.URI;
-import java.util.Arrays;
-import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
 import com.showtimesquad.showtimesquad.controller.TMDBController;
 
-class TMDBControllerTest {
+public class TMDBControllerTest {
 
-    private TMDBController tmdbController;
+    @Value("${TMDB_API_KEY}")
+    private String apiKey;
+
+    @Value("${standard.GET.response}")
+    private String standardGetResponse;
+
+    @Mock
     private RestTemplate restTemplate;
 
+    @Mock
+    private TMDBController tmdbController; // Mocked TMDBController
+
     @BeforeEach
-    void setUp() {
-        restTemplate = mock(RestTemplate.class);
+    public void setup() {
+        MockitoAnnotations.openMocks(this);
         tmdbController = new TMDBController(restTemplate);
     }
 
     @Test
-    void testGetAllMovies() {
-        // Arrange
-        List<Object> movies = Arrays.asList(new Object(), new Object());
-        ResponseEntity<Object> expectedResponse = new ResponseEntity<>(movies, HttpStatus.OK);
-        when(restTemplate.getForEntity(any(String.class), any())).thenReturn(expectedResponse);
-
-        // Act
-        ResponseEntity<List<Object>> response = tmdbController.getAllMovies();
-
-        // Assert
-        // Add your assertions here
-    }
-
-    @Test
-    void testSearchMovies() {
-        // Arrange
-        String searchQuery = "Armaggedon";
-        List<Object> movies = Arrays.asList(new Object(), new Object());
-        ResponseEntity<List<Object>> expectedResponse = new ResponseEntity<>(movies, HttpStatus.OK);
-        when(restTemplate.exchange(any(URI.class), eq(HttpMethod.GET), any(HttpEntity.class),
-                eq(new ParameterizedTypeReference<List<Object>>() {
-                })))
+    public void testGetMovies() {
+        // Mock the response from the external API
+        String mockResponse = "Armageddon";
+        ResponseEntity<String> expectedResponse = new ResponseEntity<>(mockResponse, HttpStatus.OK);
+        when(restTemplate.getForEntity("https://api.themoviedb.org/3/movie/95?api_key={apiKey}", String.class, apiKey))
                 .thenReturn(expectedResponse);
+        ResponseEntity<String> actualResponse = tmdbController.getMovieById("95");
+
+        // Assert the response
+        assertEquals(expectedResponse, actualResponse);
     }
 
-    // Add tests for other methods
+    // Add more test methods for other endpoints
+
 }
