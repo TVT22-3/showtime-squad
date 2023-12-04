@@ -379,7 +379,6 @@ public class GroupController {
                                         .body(new MessageResponse("Only members can access this group"));
                 }
 
-                // TODO check parse int
                 group.addNews(Integer.parseInt(news));
                 groupRepository.save(group);
 
@@ -410,7 +409,6 @@ public class GroupController {
 
                 Group group = groupOptional.get();
 
-                // TODO check parse int
                 group.removeNews(newsId);
                 groupRepository.save(group);
 
@@ -421,17 +419,12 @@ public class GroupController {
 
         @PostMapping("/news/remove-index")
         public ResponseEntity<?> removeGroupNewsByIndex(
-                        @RequestBody Map<String, String> requestBody,
+                        @Valid @RequestBody GroupNewsRequest requestBody,
                         @AuthenticationPrincipal UserDetails userDetails) {
 
-                String username = requestBody.get("username");
-                String groupname = requestBody.get("groupname");
-                String newsIndex = requestBody.get("index");
-
-                if (username == null || groupname == null || newsIndex == null || !ParseHelper.isNumeric(newsIndex)) {
-                        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                                        .body(new MessageResponse("Bad request body"));
-                }
+                String username = requestBody.getUsername();
+                String groupname = requestBody.getGroupname();
+                Integer newsIndex = requestBody.getNews();
 
                 if (userDetails == null || !userDetails.getUsername().equals(username)) {
                         return ResponseEntity.status(HttpStatus.FORBIDDEN)
@@ -446,8 +439,13 @@ public class GroupController {
 
                 Group group = groupOptional.get();
 
-                // TODO check parse int
-                group.removeNewsAtIndex(Integer.parseInt(newsIndex));
+                try {
+                        group.removeNewsAtIndex(newsIndex);
+                } catch (Exception e) {
+                        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                                .body(new MessageResponse("Index '%s is invalid'"
+                                                .formatted(newsIndex)));
+                }
                 groupRepository.save(group);
 
                 return ResponseEntity.status(HttpStatus.OK)
