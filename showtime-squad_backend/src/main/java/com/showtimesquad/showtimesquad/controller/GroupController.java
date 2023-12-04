@@ -39,6 +39,12 @@ public class GroupController {
         @Autowired
         GroupRepository groupRepository;
 
+        @GetMapping("/")
+        public ResponseEntity<?> getAll() {
+                return ResponseEntity.status(HttpStatus.OK)
+                                .body(new GroupInfoResponse(groupRepository.findAllGroupNames()));
+        }
+
         @GetMapping("/{groupname}")
         public ResponseEntity<?> getGroup(
                         @PathVariable String groupname,

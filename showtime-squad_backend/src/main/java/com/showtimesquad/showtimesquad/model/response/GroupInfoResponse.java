@@ -15,10 +15,14 @@ public class GroupInfoResponse {
     String groupPic;
 
     List<String> users;
-
     List<String> joinRequests;
-
     List<Integer> news;
+
+    List<String> groups;
+
+    public GroupInfoResponse(List<String> allGroups) {
+        this.groups = allGroups;
+    }
 
     public GroupInfoResponse(Group group) {
         this.groupname = group.getGroupname();
@@ -51,6 +55,15 @@ public class GroupInfoResponse {
     }
 
     // getters and setters
+
+    public List<String> getGroups() {
+        return this.groups;
+    }
+
+    public void setGroups(List<String> allGroups) {
+        this.groups = allGroups;
+    }
+    
 
     public List<Integer> getNews() {
         return this.news;
