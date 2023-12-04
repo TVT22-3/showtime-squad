@@ -1,52 +1,52 @@
-import React, { useState, useEffect, useRef } from 'react';
-import './Movies.scss'; // Import the SCSS file
+import React, { useState, useEffect } from 'react';
+import './Movies.scss';
+import { useSearchContext } from '../../context/SearchContext';
 
 const Movies = () => {
-  const apiUrl = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL
+  const { searchQuery } = useSearchContext();
+  const apiUrl = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL;
   const [movieData, setMovieData] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
 
-  const loaderRef = useRef(null);
+  const fetchMovieData = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch(`${apiUrl}/movies?page=${page}&query=${searchQuery}`);
+      const data = await response.json();
+      const hasMorePages = data.page < data.total_pages;
+
+      if (page === 1) {
+        // If it's the first page, set the movieData directly
+        setMovieData(data.results);
+      } else {
+        // If it's not the first page, append the new data to the existing movieData
+        setMovieData((prevData) => [...prevData, ...data.results]);
+      }
+
+      if (hasMorePages) {
+        setPage((prevPage) => prevPage + 1);
+      } else {
+        console.log('No more pages available.');
+      }
+    } catch (error) {
+      console.error('Error fetching movie data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchMovieData = async () => {
-      setLoading(true);
+    // Clear movieData when searchQuery changes
+    setMovieData([]);
+    // Reset page to 1 when searchQuery changes
+    setPage(1);
+  }, [searchQuery]);
 
-      try {
-        const response = await fetch(`${apiUrl}/movies?page=${page}`);
-        const data = await response.json();
-        const hasMorePages = data.page < data.total_pages;
-
-        if (hasMorePages) {
-          setMovieData((prevData) => [...prevData, ...data.results]);
-          setPage((prevPage) => prevPage + 1);
-        } else {
-          console.log('No more pages available.');
-        }
-      } catch (error) {
-        console.error('Error fetching movie data:', error);
-      }
-    
-      setLoading(false);
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting) {
-        fetchMovieData();
-      }
-    }, { threshold: 1 });
-
-    if (loaderRef.current) {
-      observer.observe(loaderRef.current);
-    }
-
-    return () => {
-      if (loaderRef.current) {
-        observer.unobserve(loaderRef.current);
-      }
-    };
-  }, [page]); // Dependency on page to trigger fetch when page changes
+  useEffect(() => {
+    // Fetch movieData when either searchQuery or page changes
+    fetchMovieData();
+  }, [searchQuery, page]);
 
   return (
     <div className="movie-container">
@@ -60,11 +60,11 @@ const Movies = () => {
       ))}
 
       {loading && <p>Loading more movies...</p>}
-
-      <div ref={loaderRef}></div>
     </div>
   );
 };
 
 export default Movies;
+
+
 

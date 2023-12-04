@@ -11,9 +11,11 @@ import MoviesPage from './pages/Home/MoviesPage.jsx'
 import DebugSandbox from './utils/sandbox/DebugSandbox.jsx'
 import Settings from './pages/Settings/Settings.jsx'
 import { UserProvider } from './context/UserContext.jsx'
+import { SearchProvider } from './context/SearchContext.jsx'
 
 function App() {
   return (
+    <SearchProvider>
     <UserProvider>
     <BrowserRouter>
       <Routes>
@@ -28,6 +30,7 @@ function App() {
       </Routes>
     </BrowserRouter>
     </UserProvider>
+    </SearchProvider>
   )
 }
 
