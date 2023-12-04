@@ -12,14 +12,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/")
 public class TMDBController {
 
-    private final RestTemplate restTemplate;
+    private final RestTemplate restTemplate = new RestTemplate();
 
     @Value("${TMDB_API_KEY}")
     private String apiKey;
-
-    public TMDBController(RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
-    }
 
     @GetMapping("/movies")
     public ResponseEntity<String> getMovies() {

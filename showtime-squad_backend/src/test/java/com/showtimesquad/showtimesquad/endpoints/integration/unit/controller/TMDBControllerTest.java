@@ -29,7 +29,7 @@ public class TMDBControllerTest {
     @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
-        tmdbController = new TMDBController(restTemplate);
+        tmdbController = new TMDBController();
     }
 
     @Test
