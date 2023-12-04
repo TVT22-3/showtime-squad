@@ -115,6 +115,11 @@ public class GroupController {
                 Group group = groupOptional.get();
                 User user = userRepository.findByUsername(username).get();
 
+                if (group.getUsers().contains(user) || group.getJoinRequests().contains(user)) {
+                        return ResponseEntity.status(HttpStatus.CONFLICT)
+                                        .body(new MessageResponse("User already in group / attempting to join"));
+                }
+
                 group.getJoinRequests().add(user);
                 groupRepository.save(group);
 
