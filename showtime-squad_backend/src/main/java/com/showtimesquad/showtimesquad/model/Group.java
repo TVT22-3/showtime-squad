@@ -2,11 +2,8 @@ package com.showtimesquad.showtimesquad.model;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
-
-import com.showtimesquad.showtimesquad.util.CustomArrays;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -29,7 +26,7 @@ public class Group {
     private User owner;
 
     @Column(name = "news", columnDefinition = "integer[]")
-    private Integer[] news;
+    private List<Integer> news;
 
     @Size(max = 255)
     @Column(name = "group_pic")
@@ -52,54 +49,61 @@ public class Group {
         users.add(owner);
     }
 
-    public Group(String groupname, User owner, Integer[] news) {
-        this.groupname = groupname;
-        this.owner = owner;
-        users.add(owner);
-        this.news = news;
-    }
+    public void removeNews(Integer newsIdToRemove) throws IllegalArgumentException {
+        if (newsIdToRemove == null)
+            throw new IllegalArgumentException();
 
-    public void removeNews(Integer newsIdToRemove) {
-        CustomArrays.removeElements(this.news, newsIdToRemove);
+        for (int i = 0; i < this.news.size(); i++) {
+            Integer item = this.news.get(i);
+            if (item != null && item.equals(newsIdToRemove)) {
+                this.news.remove(newsIdToRemove);
+            }
+        }
     }
 
     public void removeNewsAtIndex(Integer indexToRemove) throws IndexOutOfBoundsException {
-        if (indexToRemove < 0 || indexToRemove >= 10) {
+        if (indexToRemove < 0 || indexToRemove >= this.news.size()) {
             throw new IndexOutOfBoundsException();
         }
 
-        this.news[indexToRemove] = null;
-        
-        CustomArrays.shiftElements(this.news, indexToRemove, indexToRemove + 1);
-        this.news = CustomArrays.realloc(this.news, this.news.length - 1);
+        this.news.remove(indexToRemove);
     }
 
     public void addNews(Integer newsToAdd) {
         if (this.news == null) {
-            // create new array
-            this.news = new Integer[1];
-            this.news[0] = newsToAdd;
-            return;
+            // create new list
+            this.news = new ArrayList<>();
         }
 
-        if (this.news.length >= 10) {
+        if (this.news.size() >= 10) {
             // remove oldest
-            CustomArrays.shiftElements(this.news, 0, 1);
-        } else {
-            // grow array
-            this.news = CustomArrays.realloc(this.news, this.news.length + 1);
+            dequeueNews();
         }
 
-        CustomArrays.addToLast(this.news, newsToAdd);
+        this.news.add(newsToAdd);
+    }
+
+    public Integer enqueueNews() {
+        if (!news.isEmpty()) {
+            return news.remove(0);
+        }
+        return null;
+    }
+
+    public Integer dequeueNews() {
+        if (!news.isEmpty()) {
+            return news.remove(0);
+        }
+        return null;
     }
 
     // getters and setters
 
-    public Integer[] getNews() {
+    public List<Integer> getNews() {
         return this.news;
     }
 
-    public void setNews(Integer[] news) {
+    public void setNews(List<Integer> news) {
         this.news = news;
     }
 

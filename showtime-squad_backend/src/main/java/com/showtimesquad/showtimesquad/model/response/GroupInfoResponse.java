@@ -1,5 +1,6 @@
 package com.showtimesquad.showtimesquad.model.response;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,7 +18,7 @@ public class GroupInfoResponse {
 
     List<String> joinRequests;
 
-    Integer[] news;
+    List<Integer> news;
 
     public GroupInfoResponse(Group group) {
         this.groupname = group.getGroupname();
@@ -51,14 +52,13 @@ public class GroupInfoResponse {
 
     // getters and setters
 
-    public Integer[] getNews() {
+    public List<Integer> getNews() {
         return this.news;
     }
 
-    public void setNews(Integer[] news) {
+    public void setNews(LinkedList<Integer> news) {
         this.news = news;
     }
-
 
     public String getGroupname() {
         return this.groupname;
