@@ -22,11 +22,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.showtimesquad.showtimesquad.model.Group;
 import com.showtimesquad.showtimesquad.model.User;
+import com.showtimesquad.showtimesquad.model.request.GroupNewsRemoveIdRequest;
 import com.showtimesquad.showtimesquad.model.response.GroupInfoResponse;
 import com.showtimesquad.showtimesquad.model.response.MessageResponse;
 import com.showtimesquad.showtimesquad.repository.GroupRepository;
 import com.showtimesquad.showtimesquad.repository.UserRepository;
 import com.showtimesquad.showtimesquad.util.ParseHelper;
+
+import jakarta.validation.Valid;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -387,17 +390,12 @@ public class GroupController {
 
         @PostMapping("/news/remove-id")
         public ResponseEntity<?> removeGroupNewsById(
-                        @RequestBody Map<String, String> requestBody,
+                        @Valid @RequestBody GroupNewsRemoveIdRequest requestBody,
                         @AuthenticationPrincipal UserDetails userDetails) {
 
-                String username = requestBody.get("username");
-                String groupname = requestBody.get("groupname");
-                String newsId = requestBody.get("id");
-
-                if (username == null || groupname == null || newsId == null || !ParseHelper.isNumeric(newsId)) {
-                        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                                        .body(new MessageResponse("Bad request body"));
-                }
+                String username = requestBody.getUsername();
+                String groupname = requestBody.getGroupname();
+                Integer newsId = requestBody.getId();
 
                 if (userDetails == null || !userDetails.getUsername().equals(username)) {
                         return ResponseEntity.status(HttpStatus.FORBIDDEN)
@@ -413,7 +411,7 @@ public class GroupController {
                 Group group = groupOptional.get();
 
                 // TODO check parse int
-                group.removeNews(Integer.parseInt(newsId));
+                group.removeNews(newsId);
                 groupRepository.save(group);
 
                 return ResponseEntity.status(HttpStatus.OK)
