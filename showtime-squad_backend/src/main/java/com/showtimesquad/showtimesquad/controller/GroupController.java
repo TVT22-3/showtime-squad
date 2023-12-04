@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.showtimesquad.showtimesquad.model.Group;
 import com.showtimesquad.showtimesquad.model.User;
-import com.showtimesquad.showtimesquad.model.request.GroupNewsRemoveIdRequest;
+import com.showtimesquad.showtimesquad.model.request.GroupNewsRequest;
 import com.showtimesquad.showtimesquad.model.response.GroupInfoResponse;
 import com.showtimesquad.showtimesquad.model.response.MessageResponse;
 import com.showtimesquad.showtimesquad.repository.GroupRepository;
@@ -390,12 +390,12 @@ public class GroupController {
 
         @PostMapping("/news/remove-id")
         public ResponseEntity<?> removeGroupNewsById(
-                        @Valid @RequestBody GroupNewsRemoveIdRequest requestBody,
+                        @Valid @RequestBody GroupNewsRequest requestBody,
                         @AuthenticationPrincipal UserDetails userDetails) {
 
                 String username = requestBody.getUsername();
                 String groupname = requestBody.getGroupname();
-                Integer newsId = requestBody.getId();
+                Integer newsId = requestBody.getNews();
 
                 if (userDetails == null || !userDetails.getUsername().equals(username)) {
                         return ResponseEntity.status(HttpStatus.FORBIDDEN)
