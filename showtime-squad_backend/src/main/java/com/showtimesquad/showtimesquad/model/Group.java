@@ -69,7 +69,9 @@ public class Group {
         }
 
         this.news[indexToRemove] = null;
+        
         CustomArrays.shiftElements(this.news, indexToRemove, indexToRemove + 1);
+        this.news = CustomArrays.realloc(this.news, this.news.length - 1);
     }
 
     public void addNews(Integer newsToAdd) {

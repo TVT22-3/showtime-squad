@@ -26,6 +26,7 @@ import com.showtimesquad.showtimesquad.model.response.GroupInfoResponse;
 import com.showtimesquad.showtimesquad.model.response.MessageResponse;
 import com.showtimesquad.showtimesquad.repository.GroupRepository;
 import com.showtimesquad.showtimesquad.repository.UserRepository;
+import com.showtimesquad.showtimesquad.util.ParseHelper;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -72,7 +73,7 @@ public class GroupController {
 
                 String username = requestBody.get("username");
                 String groupname = requestBody.get("groupname");
-                
+
                 if (userDetails == null || !userDetails.getUsername().equals(username)) {
                         return AccessLevel.UNAUTHORIZED;
                 }
@@ -88,7 +89,7 @@ public class GroupController {
                         return AccessLevel.MEMBER;
                 }
 
-                if(group.getJoinRequests().contains(user)) {
+                if (group.getJoinRequests().contains(user)) {
                         return AccessLevel.JOINER;
                 }
 
@@ -350,7 +351,7 @@ public class GroupController {
                 String groupname = requestBody.get("groupname");
                 String news = requestBody.get("news");
 
-                if (username == null || groupname == null || news == null) {
+                if (username == null || groupname == null || news == null || !ParseHelper.isNumeric(news)) {
                         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                                         .body(new MessageResponse("Bad request body"));
                 }
@@ -393,7 +394,7 @@ public class GroupController {
                 String groupname = requestBody.get("groupname");
                 String newsId = requestBody.get("id");
 
-                if (username == null || groupname == null || newsId == null) {
+                if (username == null || groupname == null || newsId == null || !ParseHelper.isNumeric(newsId)) {
                         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                                         .body(new MessageResponse("Bad request body"));
                 }
@@ -416,7 +417,7 @@ public class GroupController {
                 groupRepository.save(group);
 
                 return ResponseEntity.status(HttpStatus.OK)
-                                .body(new MessageResponse("Successfully added news id '%s'"
+                                .body(new MessageResponse("Successfully removed all news with id '%s'"
                                                 .formatted(newsId)));
         }
 
@@ -429,7 +430,7 @@ public class GroupController {
                 String groupname = requestBody.get("groupname");
                 String newsIndex = requestBody.get("index");
 
-                if (username == null || groupname == null || newsIndex == null) {
+                if (username == null || groupname == null || newsIndex == null || !ParseHelper.isNumeric(newsIndex)) {
                         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                                         .body(new MessageResponse("Bad request body"));
                 }
@@ -452,9 +453,8 @@ public class GroupController {
                 groupRepository.save(group);
 
                 return ResponseEntity.status(HttpStatus.OK)
-                                .body(new MessageResponse("Successfully added news id '%s'"
+                                .body(new MessageResponse("Successfully removed news at index '%s'"
                                                 .formatted(newsIndex)));
         }
-
 
 }

@@ -45,13 +45,6 @@ public class CustomArrays {
         }
     }
 
-    private static <T> void printArray(T[] arr) {
-        for (T element : arr) {
-            System.out.print(element + ", ");
-        }
-        System.out.println();
-    }
-
     public static <T> void addToLast(T[] arr, T element) throws ArrayIndexOutOfBoundsException {
         if (arr[arr.length - 1] != null) {
             throw new ArrayIndexOutOfBoundsException("Array is already full");
@@ -86,13 +79,14 @@ public class CustomArrays {
 
     @SuppressWarnings("unchecked")
     public static <T> T[] realloc(T[] arr, int newSize) throws IllegalArgumentException, OutOfMemoryError {
-        if (arr.length > newSize) {
+        if (newSize < 0) {
             throw new IllegalArgumentException();
         }
 
         T[] newArr = (T[]) Array.newInstance(arr.getClass().getComponentType(), newSize);
-
-        System.arraycopy(arr, 0, newArr, 0, arr.length);
+System.out.println(arr.length + ", " + newSize);
+        int copyLength = Math.min(arr.length, newSize);
+        System.arraycopy(arr, 0, newArr, 0, copyLength);
 
         return newArr;
     }

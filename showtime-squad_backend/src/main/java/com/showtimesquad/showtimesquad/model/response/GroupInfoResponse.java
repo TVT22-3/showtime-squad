@@ -17,6 +17,8 @@ public class GroupInfoResponse {
 
     List<String> joinRequests;
 
+    Integer[] news;
+
     public GroupInfoResponse(Group group) {
         this.groupname = group.getGroupname();
         this.owner = group.getOwner().getUsername();
@@ -26,10 +28,13 @@ public class GroupInfoResponse {
                 .stream()
                 .map(User::getUsername)
                 .collect(Collectors.toList());
+
+        this.news = group.getNews();
     }
 
     /**
      * Get partial data for niche cases
+     * 
      * @param group
      * @param args[0] is owner?
      */
@@ -40,9 +45,20 @@ public class GroupInfoResponse {
                     .stream()
                     .map(User::getUsername)
                     .collect(Collectors.toList());
-                    return;
+            return;
         }
     }
+
+    // getters and setters
+
+    public Integer[] getNews() {
+        return this.news;
+    }
+
+    public void setNews(Integer[] news) {
+        this.news = news;
+    }
+
 
     public String getGroupname() {
         return this.groupname;
