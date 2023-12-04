@@ -1,0 +1,14 @@
+.function-button-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    .error {
+        position: absolute;
+        transform: translateY(calc(-100% - 1rem));
+    }
+
+    .transparent {
+        opacity: 0;
+    }
+}
