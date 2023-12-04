@@ -21,6 +21,7 @@ import com.showtimesquad.showtimesquad.model.Group;
 import com.showtimesquad.showtimesquad.model.User;
 import com.showtimesquad.showtimesquad.model.request.GroupNewsRequest;
 import com.showtimesquad.showtimesquad.model.request.GroupOwnerOnUserRequest;
+import com.showtimesquad.showtimesquad.model.request.GroupRequest;
 import com.showtimesquad.showtimesquad.model.response.GroupInfoResponse;
 import com.showtimesquad.showtimesquad.model.response.MessageResponse;
 import com.showtimesquad.showtimesquad.repository.GroupRepository;
@@ -75,16 +76,11 @@ public class GroupController {
 
         @PostMapping("/create")
         public ResponseEntity<?> createGroup(
-                        @RequestBody Map<String, String> requestBody,
+                        @Valid @RequestBody GroupRequest requestBody,
                         @AuthenticationPrincipal UserDetails userDetails) {
 
-                String username = requestBody.get("username");
-                String groupname = requestBody.get("groupname");
-
-                if (username == null || groupname == null) {
-                        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                                        .body(new MessageResponse("Bad request body"));
-                }
+                String username = requestBody.getUsername();
+                String groupname = requestBody.getGroupname();
 
                 if (userDetails == null || !userDetails.getUsername().equals(username)) {
                         return ResponseEntity.status(HttpStatus.FORBIDDEN)
@@ -96,8 +92,6 @@ public class GroupController {
                         return ResponseEntity.status(HttpStatus.CONFLICT)
                                         .body(new MessageResponse("Group already exists"));
                 }
-
-                // can create group
 
                 // get user
                 Optional<User> userOptional = userRepository.findByUsername(username);
@@ -113,16 +107,11 @@ public class GroupController {
 
         @PostMapping("/join")
         public ResponseEntity<?> joinGroup(
-                        @RequestBody Map<String, String> requestBody,
+                        @Valid @RequestBody GroupRequest requestBody,
                         @AuthenticationPrincipal UserDetails userDetails) {
 
-                String username = requestBody.get("username");
-                String groupname = requestBody.get("groupname");
-
-                if (username == null || groupname == null) {
-                        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                                        .body(new MessageResponse("Bad request body"));
-                }
+                String username = requestBody.getUsername();
+                String groupname = requestBody.getGroupname();
 
                 if (userDetails == null || !userDetails.getUsername().equals(username)) {
                         return ResponseEntity.status(HttpStatus.FORBIDDEN)
@@ -148,16 +137,11 @@ public class GroupController {
 
         @PostMapping("/requests")
         public ResponseEntity<?> getJoinRequests(
-                        @RequestBody Map<String, String> requestBody,
+                        @Valid @RequestBody GroupRequest requestBody,
                         @AuthenticationPrincipal UserDetails userDetails) {
 
-                String username = requestBody.get("username");
-                String groupname = requestBody.get("groupname");
-
-                if (username == null || groupname == null) {
-                        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                                        .body(new MessageResponse("Bad request body"));
-                }
+                String username = requestBody.getUsername();
+                String groupname = requestBody.getGroupname();
 
                 if (userDetails == null || !userDetails.getUsername().equals(username)) {
                         return ResponseEntity.status(HttpStatus.FORBIDDEN)
