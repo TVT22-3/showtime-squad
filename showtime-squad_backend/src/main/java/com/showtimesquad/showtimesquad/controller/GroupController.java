@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.showtimesquad.showtimesquad.model.Group;
 import com.showtimesquad.showtimesquad.model.User;
 import com.showtimesquad.showtimesquad.model.request.GroupNewsRequest;
+import com.showtimesquad.showtimesquad.model.request.GroupOwnerOnUserRequest;
 import com.showtimesquad.showtimesquad.model.response.GroupInfoResponse;
 import com.showtimesquad.showtimesquad.model.response.MessageResponse;
 import com.showtimesquad.showtimesquad.repository.GroupRepository;
@@ -183,12 +184,12 @@ public class GroupController {
 
         @PostMapping("/accept")
         public ResponseEntity<?> acceptJoinRequests(
-                        @RequestBody Map<String, String> requestBody,
+                        @Valid @RequestBody GroupOwnerOnUserRequest requestBody,
                         @AuthenticationPrincipal UserDetails userDetails) {
 
-                String username = requestBody.get("username");
-                String groupname = requestBody.get("groupname");
-                String joinername = requestBody.get("joiner");
+                String username = requestBody.getUsername();
+                String groupname = requestBody.getGroupname();
+                String joinername = requestBody.getAnother();
 
                 if (username == null || groupname == null || joinername == null) {
                         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -232,17 +233,12 @@ public class GroupController {
 
         @PostMapping("/remove")
         public ResponseEntity<?> removeUser(
-                        @RequestBody Map<String, String> requestBody,
+                        @Valid @RequestBody GroupOwnerOnUserRequest requestBody,
                         @AuthenticationPrincipal UserDetails userDetails) {
 
-                String username = requestBody.get("username");
-                String groupname = requestBody.get("groupname");
-                String removename = requestBody.get("remove");
-
-                if (username == null || groupname == null || removename == null) {
-                        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                                        .body(new MessageResponse("Bad request body"));
-                }
+                String username = requestBody.getUsername();
+                String groupname = requestBody.getGroupname();
+                String removename = requestBody.getAnother();
 
                 if (userDetails == null || !userDetails.getUsername().equals(username)) {
                         return ResponseEntity.status(HttpStatus.FORBIDDEN)
