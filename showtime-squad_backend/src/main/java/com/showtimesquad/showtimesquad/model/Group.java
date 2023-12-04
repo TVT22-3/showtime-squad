@@ -1,7 +1,12 @@
 package com.showtimesquad.showtimesquad.model;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
+
+import com.showtimesquad.showtimesquad.util.CustomArrays;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -22,6 +27,9 @@ public class Group {
     @ManyToOne
     @JoinColumn(name = "owner_id", nullable = false)
     private User owner;
+
+    @Column(name = "news", columnDefinition = "integer[]")
+    private Integer[] news;
 
     @Size(max = 255)
     @Column(name = "group_pic")
@@ -44,7 +52,54 @@ public class Group {
         users.add(owner);
     }
 
+    public Group(String groupname, User owner, Integer[] news) {
+        this.groupname = groupname;
+        this.owner = owner;
+        users.add(owner);
+        this.news = news;
+    }
+
+    public void removeNews(Integer newsIdToRemove) {
+        CustomArrays.removeElements(this.news, newsIdToRemove);
+    }
+
+    public void removeNewsAtIndex(Integer indexToRemove) throws IndexOutOfBoundsException {
+        if (indexToRemove < 0 || indexToRemove >= 10) {
+            throw new IndexOutOfBoundsException();
+        }
+
+        this.news[indexToRemove] = null;
+        CustomArrays.shiftElements(this.news, indexToRemove, indexToRemove + 1);
+    }
+
+    public void addNews(Integer newsToAdd) {
+        if (this.news == null) {
+            // create new array
+            this.news = new Integer[1];
+            this.news[0] = newsToAdd;
+            return;
+        }
+
+        if (this.news.length >= 10) {
+            // remove oldest
+            CustomArrays.shiftElements(this.news, 0, 1);
+        } else {
+            // grow array
+            this.news = CustomArrays.realloc(this.news, this.news.length + 1);
+        }
+
+        CustomArrays.addToLast(this.news, newsToAdd);
+    }
+
     // getters and setters
+
+    public Integer[] getNews() {
+        return this.news;
+    }
+
+    public void setNews(Integer[] news) {
+        this.news = news;
+    }
 
     public Long getId() {
         return this.id;
@@ -86,7 +141,6 @@ public class Group {
         this.users = users;
     }
 
-
     public Set<User> getJoinRequests() {
         return this.joinRequests;
     }
@@ -94,5 +148,5 @@ public class Group {
     public void setJoinRequests(Set<User> joinRequests) {
         this.joinRequests = joinRequests;
     }
-    
+
 }
