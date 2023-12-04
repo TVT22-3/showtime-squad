@@ -40,25 +40,6 @@ public class GroupController {
         @Autowired
         GroupRepository groupRepository;
 
-        @PostMapping("/test")
-        public ResponseEntity<?> testPost(
-                        @RequestBody Map<String, String> requestBody,
-                        @AuthenticationPrincipal UserDetails userDetails) {
-
-                String username = requestBody.get("username");
-
-                if (username != null && userDetails != null && userDetails.getUsername().equals(username)) {
-                        // Authenticated user
-                        return ResponseEntity.status(HttpStatus.OK)
-                                        .body(new MessageResponse(
-                                                        "Post to groups succeeded + authenticated"));
-                } else {
-                        // Unauthenticated user
-                        return ResponseEntity.status(HttpStatus.OK)
-                                        .body(new MessageResponse("Post to groups succeeded"));
-                }
-        }
-
         @GetMapping("/{groupname}")
         public ResponseEntity<?> getGroup(
                         @PathVariable String groupname,
