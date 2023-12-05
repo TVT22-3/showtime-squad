@@ -11,7 +11,7 @@ import MoviesPage from './pages/Home/MoviesPage.jsx'
 import DebugSandbox from './utils/sandbox/DebugSandbox.jsx'
 import Settings from './pages/Settings/Settings.jsx'
 import { UserProvider } from './context/UserContext.jsx'
-import ProfilePage from './components/ui/ProfilePage.jsx'
+import Profile from './pages/Profile/Profile.jsx'
 
 function App() {
   return (
@@ -21,6 +21,7 @@ function App() {
         <Route path="/*" element={<Home />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/movies/*" element={<MoviesPage />} />
+
         {/* debug sandbox */}
         <Route path="debug/*" element={<DebugSandbox />} />
 
