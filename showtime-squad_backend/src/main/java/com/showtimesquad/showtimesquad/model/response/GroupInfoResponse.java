@@ -8,6 +8,9 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.showtimesquad.showtimesquad.model.Group;
 import com.showtimesquad.showtimesquad.model.User;
 
+/**
+ *  Response DTO for sending back messages to users
+ */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class GroupInfoResponse {
     String groupname;
@@ -20,10 +23,20 @@ public class GroupInfoResponse {
 
     List<String> groups;
 
+    /**
+     * For GET all groups route
+     * 
+     * @param allGroups
+     */
     public GroupInfoResponse(List<String> allGroups) {
         this.groups = allGroups;
     }
 
+    /**
+     * Generic version that suits most cases
+     * 
+     * @param group
+     */
     public GroupInfoResponse(Group group) {
         this.groupname = group.getGroupname();
         this.owner = group.getOwner().getUsername();
@@ -38,7 +51,8 @@ public class GroupInfoResponse {
     }
 
     /**
-     * Get partial data for niche cases
+     * Get partial data for niche cases, add booleans to args for more cases as to
+     * not clutter this file with constructors
      * 
      * @param group
      * @param args[0] is owner?
@@ -63,7 +77,6 @@ public class GroupInfoResponse {
     public void setGroups(List<String> allGroups) {
         this.groups = allGroups;
     }
-    
 
     public List<Integer> getNews() {
         return this.news;

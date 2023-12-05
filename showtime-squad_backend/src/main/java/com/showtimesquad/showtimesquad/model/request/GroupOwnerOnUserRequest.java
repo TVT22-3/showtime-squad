@@ -2,6 +2,9 @@ package com.showtimesquad.showtimesquad.model.request;
 
 import jakarta.validation.constraints.NotBlank;
 
+/**
+ * Request DTO for owner on user interaction
+ */
 public class GroupOwnerOnUserRequest extends GroupRequest {
 
     @NotBlank

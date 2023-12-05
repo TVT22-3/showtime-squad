@@ -49,6 +49,13 @@ public class Group {
         users.add(owner);
     }
 
+    /**
+     * Removes all news with the specified {@code id} (as in the value, not its own
+     * id)
+     * 
+     * @param newsIdToRemove
+     * @throws IllegalArgumentException when id is null or news don't exist
+     */
     public void removeNews(Integer newsIdToRemove) throws IllegalArgumentException {
         if (newsIdToRemove == null || this.news == null)
             throw new IllegalArgumentException();
@@ -61,14 +68,26 @@ public class Group {
         }
     }
 
+    /**
+     * Removes one news at specified index
+     * 
+     * @param indexToRemove
+     * @throws IndexOutOfBoundsException when news index or news does not exist
+     */
     public void removeNewsAtIndex(Integer indexToRemove) throws IndexOutOfBoundsException {
-        if (indexToRemove < 0 || indexToRemove >= this.news.size()) {
+        if (indexToRemove < 0 || this.news == null || indexToRemove >= this.news.size()) {
             throw new IndexOutOfBoundsException();
         }
 
         this.news.remove(indexToRemove);
     }
 
+    /**
+     * Adds news up to an array size of 10, after which it will start removing the
+     * oldest one when adding
+     * 
+     * @param newsToAdd
+     */
     public void addNews(Integer newsToAdd) {
         if (this.news == null) {
             // create new list
@@ -83,15 +102,13 @@ public class Group {
         this.news.add(newsToAdd);
     }
 
-    public Integer enqueueNews() {
-        if (!news.isEmpty()) {
-            return news.remove(0);
-        }
-        return null;
-    }
-
+    /**
+     * Removes and returns the oldest news
+     * 
+     * @return {@code null} when nothing was removed
+     */
     public Integer dequeueNews() {
-        if (!news.isEmpty()) {
+        if (this.news != null && !news.isEmpty()) {
             return news.remove(0);
         }
         return null;

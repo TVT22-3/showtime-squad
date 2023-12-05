@@ -2,6 +2,9 @@ package com.showtimesquad.showtimesquad.model.request;
 
 import jakarta.validation.constraints.NotBlank;
 
+/**
+ * Request DTO for generic interaction with groups
+ */
 public class GroupRequest {
 
     @NotBlank

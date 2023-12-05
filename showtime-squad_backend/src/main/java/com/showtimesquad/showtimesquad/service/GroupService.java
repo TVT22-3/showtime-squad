@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.showtimesquad.showtimesquad.repository.GroupRepository;
 
+// TODO: I don't if we should move to using service or not
 @Service
 public class GroupService {
 
