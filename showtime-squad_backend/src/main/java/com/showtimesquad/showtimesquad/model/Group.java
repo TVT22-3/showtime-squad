@@ -50,7 +50,7 @@ public class Group {
     }
 
     public void removeNews(Integer newsIdToRemove) throws IllegalArgumentException {
-        if (newsIdToRemove == null)
+        if (newsIdToRemove == null || this.news == null)
             throw new IllegalArgumentException();
 
         for (int i = 0; i < this.news.size(); i++) {

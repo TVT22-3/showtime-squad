@@ -334,7 +334,14 @@ public class GroupController {
                                                         "Only members can access this group"));
                 }
 
-                group.removeNews(newsId);
+                try {
+                        group.removeNews(newsId);
+                } catch (Exception e) {
+                        return ResponseEntity.status(HttpStatus.CONFLICT)
+                                        .body(new MessageResponse("News for this group might not exist"
+                                                        .formatted(newsId)));
+                }
+
                 groupRepository.save(group);
 
                 return ResponseEntity.status(HttpStatus.OK)
