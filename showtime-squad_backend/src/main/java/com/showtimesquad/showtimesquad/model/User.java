@@ -99,7 +99,7 @@ public class User {
         this.roles = roles;
     }
 
-    public String getProfilePicture(String profilePicture) {
+    public String getProfilePicture() {
       return profilePicture;
     }
 
