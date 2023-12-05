@@ -19,9 +19,10 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/*" element={<Home />} />
-        <Route path="/profile" element={<ProfilePage />} />
+        
         <Route path="/movies/*" element={<MoviesPage />} />
 
+        <Route path="/profile" element={<Profile />} />
         {/* debug sandbox */}
         <Route path="debug/*" element={<DebugSandbox />} />
 
