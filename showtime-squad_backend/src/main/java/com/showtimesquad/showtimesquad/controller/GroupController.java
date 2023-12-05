@@ -27,6 +27,7 @@ import com.showtimesquad.showtimesquad.repository.GroupRepository;
 import com.showtimesquad.showtimesquad.repository.UserRepository;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -256,7 +257,8 @@ public class GroupController {
 
                 if (group.getOwner().equals(remove)) {
                         return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                                        .body(new MessageResponse("Can not remove owner, use /delete instead"));
+                                        .body(new MessageResponse(
+                                                        "Can not remove owner, use DELETE to remove group instead"));
                 }
 
                 group.getUsers().remove(remove);
@@ -380,6 +382,32 @@ public class GroupController {
                 return ResponseEntity.status(HttpStatus.OK)
                                 .body(new MessageResponse("Successfully removed news at index '%s'"
                                                 .formatted(newsIndex)));
+        }
+
+        @DeleteMapping("/{groupname}")
+        public ResponseEntity<?> deleteGroup(
+                        @NotBlank @PathVariable String groupname,
+                        @AuthenticationPrincipal UserDetails userDetails) {
+
+                Optional<Group> groupOptional = groupRepository.findByGroupname(groupname);
+                if (!groupOptional.isPresent()) {
+                        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                                        .body(new MessageResponse("Group does not exists"));
+                }
+
+                Group group = groupOptional.get();
+                User user = userRepository.findByUsername(userDetails.getUsername()).get();
+
+                if (!group.getOwner().equals(user)) {
+                        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                                        .body(new MessageResponse("Only owner can remove group"));
+                }
+
+                groupRepository.delete(group);
+
+                return ResponseEntity.status(HttpStatus.OK)
+                                .body(new MessageResponse("Successfully removed group '%s'"
+                                                .formatted(groupname)));
         }
 
 }
