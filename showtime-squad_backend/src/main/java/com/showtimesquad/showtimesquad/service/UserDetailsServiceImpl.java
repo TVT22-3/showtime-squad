@@ -23,4 +23,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     return UserDetailsImpl.build(user);
   }
+
+  public String getUserProfilePictureByUsername(String username) {
+    User user = userRepository.findByUsername(username);
+    return user.getProfilePicture();
+  }
+
 }

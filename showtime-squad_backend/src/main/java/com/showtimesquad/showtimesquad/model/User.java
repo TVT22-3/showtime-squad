@@ -50,10 +50,11 @@ public class User {
   public User() {
   }
 
-  public User(String username, String email, String password) {
+  public User(String username, String email, String password, String profilePicture) {
     this.username = username;
     this.email = email;
     this.password = password;
+    this.profilePicture = profilePicture;
   }
 
   // getters and setters
@@ -98,7 +99,7 @@ public class User {
         this.roles = roles;
     }
 
-    public String getProfilePic(String profilePicture) {
+    public String getProfilePicture(String profilePicture) {
       return profilePicture;
     }
 

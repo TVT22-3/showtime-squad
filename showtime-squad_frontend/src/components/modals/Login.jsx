@@ -34,7 +34,7 @@ function Login({ toggleForms }) {
 
     if (formData.username !== '') {
       setUsernameError('')
-    } else {
+    } else {  
       setUsernameError('Username is required')
       setPasswordError('')
       return

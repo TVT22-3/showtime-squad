@@ -24,4 +24,10 @@ public class ProfileController {
             return "Unauthenticated user profile for " + username;
         }
     }
+
+    @GetMapping("/{username}/profilepicture")
+    public String getUserProfilePicture(@PathVariable String username) {
+
+        return ;
+    }
 }
