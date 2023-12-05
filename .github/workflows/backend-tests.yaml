@@ -25,6 +25,8 @@ jobs:
 
       CORS_FRONTEND_URL: ${{ vars.CORS_FRONTEND_URL }}
 
+      PROFILE_PICTURES: ${{ vars.PROFILE_PICTURES }}
+
     defaults:
       run:
         working-directory: showtime-squad_backend
