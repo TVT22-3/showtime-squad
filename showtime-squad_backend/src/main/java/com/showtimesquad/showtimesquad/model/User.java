@@ -32,19 +32,29 @@ public class User {
   @Size(max = 120)
   private String password;
 
+  @Column(name = "profile_pic")
+  @NotBlank
+  @Size(max = 120)
+  private String profilePicture;
+
   @ManyToMany(fetch = FetchType.LAZY)
   @JoinTable(name = "user_roles", 
              joinColumns = @JoinColumn(name = "user_id"),
              inverseJoinColumns = @JoinColumn(name = "role_id"))
   private Set<Role> roles = new HashSet<>();
 
+  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+  private Set<MovieReviews> movieReviews = new HashSet<>();
+
+
   public User() {
   }
 
-  public User(String username, String email, String password) {
+  public User(String username, String email, String password, String profilePicture) {
     this.username = username;
     this.email = email;
     this.password = password;
+    this.profilePicture = profilePicture;
   }
 
   // getters and setters
@@ -87,5 +97,13 @@ public class User {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public String getProfilePicture() {
+      return profilePicture;
+    }
+
+    public void setProfilePicture(String profilePicture) {
+        this.profilePicture = profilePicture;
     }
 }

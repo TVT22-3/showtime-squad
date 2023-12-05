@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.showtimesquad.showtimesquad.config.ProfilePictureConfig;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,7 @@ import com.showtimesquad.showtimesquad.repository.RoleRepository;
 import com.showtimesquad.showtimesquad.repository.UserRepository;
 import com.showtimesquad.showtimesquad.security.JwtUtils;
 import com.showtimesquad.showtimesquad.service.UserDetailsImpl;
+import com.showtimesquad.showtimesquad.config.ProfilePictureConfig;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -53,6 +55,9 @@ public class AuthController {
 
   @Autowired
   JwtUtils jwtUtils;
+
+  @Autowired
+  private ProfilePictureConfig profilePictureConfig;
 
   @PostMapping({ "/signin", "/login" })
   public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
@@ -86,11 +91,13 @@ public class AuthController {
     if (userRepository.existsByEmail(signUpRequest.getEmail())) {
       return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already in use!"));
     }
+    String randomProfilePicture = profilePictureConfig.getRandomProfilePicture();
 
     // Create new user's account
     User user = new User(signUpRequest.getUsername(),
         signUpRequest.getEmail(),
-        encoder.encode(signUpRequest.getPassword()));
+        encoder.encode(signUpRequest.getPassword()),
+            randomProfilePicture);
 
     Set<String> strRoles = signUpRequest.getRole();
     Set<Role> roles = new HashSet<>();
