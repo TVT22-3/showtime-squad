@@ -51,6 +51,7 @@ function Login({ toggleForms }) {
     try {
       const response = await fetch(`${apiUrl}/auth/login`, {
         method: 'POST',
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -88,7 +89,7 @@ function Login({ toggleForms }) {
   }
 
   return (
-    <form id="form" onSubmit={handleLogin}>
+    <form  data-testid="form" id="form" onSubmit={handleLogin}>
       <div className="container">
         <div className="header">
           <div className="text">Login</div>

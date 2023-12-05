@@ -113,6 +113,7 @@ function Register({ toggleForms }) {
             } else {
                 const errorData = await response.json()
                 console.error(errorData.message)
+                console.log(errorData.message)
                 setRegisterError(errorData.message)
                 // Handle registration failure, e.g., show error message to the user
             }
@@ -126,7 +127,7 @@ function Register({ toggleForms }) {
 
 
     return (
-        <form id="form" onSubmit={handleRegister}>
+        <form data-testid="form" id="form" onSubmit={handleRegister}>
             <div className="container">
                 <div className="header">
                     <div className="text">Register</div>
