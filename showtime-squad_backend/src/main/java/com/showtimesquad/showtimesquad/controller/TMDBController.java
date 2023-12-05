@@ -17,9 +17,9 @@ public class TMDBController {
     @Value("${TMDB_API_KEY}")
     private String apiKey;
 
-    @GetMapping("/movies")
-    public ResponseEntity<String> getMovies() {
-        String url = "https://api.themoviedb.org/3/discover/movie?api_key=" + apiKey + "&page=1";
+    @GetMapping("/")
+    public ResponseEntity<String> getMovies(@RequestParam(defaultValue = "1") int page) {
+        String url = "https://api.themoviedb.org/3/discover/movie?api_key=" + apiKey + "&page=" + page;
         ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
         return response;
     }
@@ -33,41 +33,53 @@ public class TMDBController {
     }
 
     @GetMapping(value = "/popular")
-    public ResponseEntity<String> getPopularMovies() {
-        String uri = "https://api.themoviedb.org/3/movie/popular?api_key=" + tmdbApiKey;
+    public ResponseEntity<String> getPopularMovies(@RequestParam(defaultValue = "1") int page) {
+        String uri = "https://api.themoviedb.org/3/movie/popular?api_key=" + apiKey + "&page=" + page;
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> response = restTemplate.getForEntity(uri, String.class);
         return response;
     }
 
-    @GetMapping(value = "/now_playing")
-    public ResponseEntity<String> getNowPlayingMovies() {
-        String uri = "https://api.themoviedb.org/3/movie/now_playing?api_key=" + tmdbApiKey;
+    @GetMapping(value = "/nowplaying")
+    public ResponseEntity<String> getNowPlayingMovies(@RequestParam(defaultValue = "1") int page) {
+        String uri = "https://api.themoviedb.org/3/movie/now_playing?api_key=" + apiKey + "&page=" + page;
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> response = restTemplate.getForEntity(uri, String.class);
         return response;
     }
 
     @GetMapping(value = "/upcoming")
-    public ResponseEntity<String> getUpcoming() {
-        String uri = "https://api.themoviedb.org/3/movie/upcoming?api_key=" + tmdbApiKey;
+    public ResponseEntity<String> getUpcoming(@RequestParam(defaultValue = "1") int page) {
+        String uri = "https://api.themoviedb.org/3/movie/upcoming?api_key=" + apiKey + "&page=" + page;
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> response = restTemplate.getForEntity(uri, String.class);
         return response;
     }
 
     @GetMapping(value = "/genre")
-    public ResponseEntity<String> getGenre(@RequestParam("genreId") String genreId) {
-        String uri = "https://api.themoviedb.org/3/discover/movie?api_key=" + tmdbApiKey + "&with_genres=" + genreId;
+    public ResponseEntity<String> getGenre(@RequestParam("genreId") String genreId,
+            @RequestParam(defaultValue = "1") int page) {
+        String uri = "https://api.themoviedb.org/3/discover/movie?api_key=" + apiKey + "&with_genres=" + genreId
+                + "&page=" + page;
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> response = restTemplate.getForEntity(uri, String.class);
         return response;
     }
 
     @GetMapping(value = "/search")
-    public ResponseEntity<String> searchMovies(@RequestParam("searchQuery") String searchQuery) {
+    public ResponseEntity<String> searchMovies(@RequestParam("searchQuery") String searchQuery,
+            @RequestParam(defaultValue = "1") int page) {
         // TODO: searchQuery parsing?
-        String uri = "https://api.themoviedb.org/3/search/movie?api_key=" + tmdbApiKey + "&query=" + searchQuery;
+        String uri = "https://api.themoviedb.org/3/search/movie?api_key=" + apiKey + "&query=" + searchQuery + "&page="
+                + page;
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> response = restTemplate.getForEntity(uri, String.class);
+        return response;
+    }
+
+    @GetMapping(value = "/toprated")
+    public ResponseEntity<String> getTopRated(@RequestParam(defaultValue = "1") int page) {
+        String uri = "https://api.themoviedb.org/3/movie/top_rated?api_key=" + apiKey + "&page=" + page;
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> response = restTemplate.getForEntity(uri, String.class);
         return response;
