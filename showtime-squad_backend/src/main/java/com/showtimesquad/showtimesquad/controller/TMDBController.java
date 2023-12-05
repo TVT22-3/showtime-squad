@@ -41,16 +41,20 @@ public class TMDBController {
     }
 
     @GetMapping(value = "/nowplaying")
-    public ResponseEntity<String> getNowPlayingMovies(@RequestParam(defaultValue = "1") int page) {
-        String uri = "https://api.themoviedb.org/3/movie/now_playing?api_key=" + apiKey + "&page=" + page;
+    public ResponseEntity<String> getNowPlayingMovies(@RequestParam(defaultValue = "1") int page,
+            @RequestParam("region") String region) {
+        String uri = "https://api.themoviedb.org/3/movie/now_playing?api_key=" + apiKey + "&region=" + region + "&page="
+                + page;
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> response = restTemplate.getForEntity(uri, String.class);
         return response;
     }
 
     @GetMapping(value = "/upcoming")
-    public ResponseEntity<String> getUpcoming(@RequestParam(defaultValue = "1") int page) {
-        String uri = "https://api.themoviedb.org/3/movie/upcoming?api_key=" + apiKey + "&page=" + page;
+    public ResponseEntity<String> getUpcoming(@RequestParam(defaultValue = "1") int page,
+            @RequestParam("region") String region) {
+        String uri = "https://api.themoviedb.org/3/movie/upcoming?api_key=" + apiKey + "&region=" + region + "&page="
+                + page;
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> response = restTemplate.getForEntity(uri, String.class);
         return response;
