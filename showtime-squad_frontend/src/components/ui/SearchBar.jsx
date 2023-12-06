@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import './SearchBar.scss';
 import { useSearchContext } from '../../context/SearchContext';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useFilterMoviesContext } from '../../context/FilterMoviesContext';
 
 function SearchBar() {
   const { updateSearchQuery } = useSearchContext();
+  const { switchMode } = useFilterMoviesContext();
   const [isScrolled, setIsScrolled] = useState(false);
   const [searchText, setSearchText] = useState('');
   const navigate = useNavigate();
@@ -48,6 +50,8 @@ function SearchBar() {
 
     // Update the search query
     updateSearchQuery(searchText);
+
+    switchMode('searchmovie');
     
   };
 

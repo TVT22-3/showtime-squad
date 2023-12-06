@@ -1,7 +1,7 @@
 // SearchContext.js
-import React, { createContext, useContext, useState } from 'react';
+import React, { useContext, useState } from 'react';
 
-const SearchContext = createContext();
+const SearchContext = React.createContext();
 
 export const useSearchContext = () => {
   const context = useContext(SearchContext);

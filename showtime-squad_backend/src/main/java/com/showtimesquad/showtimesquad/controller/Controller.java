@@ -23,14 +23,14 @@ public class Controller {
     @Value("${TMDB_API_KEY}")
     private String apiKey;
 
-    @GetMapping(value = "/movies", produces = MediaType.APPLICATION_JSON_VALUE)
-    private String getMovies(
-            @RequestParam(name = "query") String query,
-            @RequestParam(name = "page", defaultValue = "1") int page) {
-            System.out.println("Received query: " + query);
-        final String uri = "https://api.themoviedb.org/3/search/movie?query=" + query + "&page=" + page + "&region=US" + "&api_key=" + apiKey;
-        RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.getForObject(uri, String.class);
-    }
+    // @GetMapping(value = "/movies", produces = MediaType.APPLICATION_JSON_VALUE)
+    // private String getMovies(
+    //         @RequestParam(name = "query") String query,
+    //         @RequestParam(name = "page", defaultValue = "1") int page) {
+    //         System.out.println("Received query: " + query);
+    //     final String uri = "https://api.themoviedb.org/3/search/movie?query=" + query + "&page=" + page + "&region=US" + "&api_key=" + apiKey;
+    //     RestTemplate restTemplate = new RestTemplate();
+    //     return restTemplate.getForObject(uri, String.class);
+    // }
 
 }
