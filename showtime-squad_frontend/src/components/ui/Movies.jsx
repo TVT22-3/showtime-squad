@@ -22,7 +22,8 @@ const Movies = () => {
   const [loading, setLoading] = useState(false);
   const region = "FI";
   const loaderRef = useRef(null);
- 
+  const [pageReset, setPageReset] = useState(false);
+  const [hasMorePages, setHasMorePages] = useState(true);
 
   const fetchMovieData = async () => {
     try {
@@ -43,7 +44,6 @@ const Movies = () => {
           data = await fetchNowPlayingMovies(page, region); // Add the region parameter if needed
           break;
         case 'upcoming':
-          
           data = await fetchUpcomingMovies(page, region); // Add the region parameter if needed
           break;
         case 'toprated':
@@ -61,6 +61,8 @@ const Movies = () => {
           break;
       }
       const hasMorePages = data.page < data.total_pages;
+      setHasMorePages(hasMorePages);
+
 
       if(page === 1) {
         setMovieData(data.results);
@@ -80,10 +82,9 @@ const Movies = () => {
     }
   };
 
-  const handleScroll = () => {
-    const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
-    if (scrollTop + clientHeight >= scrollHeight - 20 && !loading) {
-      // Trigger fetching more movies when the user is close to the bottom
+  const handleObserver = (entries) => {
+    const target = entries[0];
+    if (target.isIntersecting && !loading) {
       if (movieData.length > 10) {
         setPage((prevPage) => prevPage + 1);
         fetchMovieData();
@@ -92,26 +93,34 @@ const Movies = () => {
   };
 
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
+    const observer = new IntersectionObserver(handleObserver, {
+      root: null,
+      rootMargin: '20px',
+      threshold: 1.0,
+    });
+
+    if (loaderRef.current) {
+      observer.observe(loaderRef.current);
+    }
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      observer.disconnect();
     };
-  }, [handleScroll]);
-
+  }, [loaderRef, handleObserver]);
 
   useEffect(() => {
-
-    console.log('Mode changed, resetting page to 1');
-
     setPage(1);
-    console.log(page)
     setMovieData([]);
-
-     fetchMovieData();
-    
-
+    setPageReset(!pageReset);
+    setHasMorePages(true); // Reset the state for more pages
   }, [searchQuery, currentMode, currentPayload]);
+
+  useEffect(() => {
+    if (pageReset) {
+      fetchMovieData();
+      setPageReset(!pageReset);
+    }
+  }, [page, pageReset]);
 
   return (
     <div className="movie-container">
@@ -124,13 +133,18 @@ const Movies = () => {
         </div>
       ))}
 
-      {loading && <p>Loading movies...</p>}
-      <div ref={loaderRef}></div>
+      <div className="text">
+
+      {loading && <p><i className='fa-solid fa-arrows-rotate'></i></p>}
+      
+      {!loading && !hasMorePages && <p>End.</p>}
+
+      </div>
+      
+      {hasMorePages && <div ref={loaderRef}></div>}
+
     </div>
   );
 };
 
 export default Movies;
-
-
-
