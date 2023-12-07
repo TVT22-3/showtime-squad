@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom"
 import { signal } from '@preact/signals-react'
 
 import { deleteRequest, getRequest } from "../../utils/GenericHTTPMethods"
+import GroupView from "./GroupView"
 
 const apiUrl = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL
 
@@ -19,6 +20,7 @@ function GroupList() {
     )
 }
 
+
 async function fetchGroups() {
     try {
         const response = await getRequest({ url: apiUrl + "/api/group/" })
@@ -27,10 +29,13 @@ async function fetchGroups() {
             const groups = Array.isArray(response.groups) ? response.groups : [response.groups];
 
             const groupList = groups.map(function (group, index) {
-                return <li key={index}>{group}</li>;
-            });
+                const showSig = signal(false);
+                const groupSig = signal();
 
-            console.log("in fetch:", groups)
+                return (
+                    <GroupView name={group} showSignal={showSig} groupSignal={groupSig} />
+                );
+            });
 
             return groupList;
         }
