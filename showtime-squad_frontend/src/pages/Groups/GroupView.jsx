@@ -38,9 +38,17 @@ function GroupView({ name = "", showSignal, groupSignal }) {
 }
 
 function Idklol({group}) {
+    if(!group) {
+        return (
+            <>
+                Not a member.
+            </>
+        )
+    }
+    
     return (
         <>
-            {!group || !group.groupname ? 'Error' : <>'Group name: ' {group.groupname}</> }
+            {!group.groupname ? 'Error' : <>'Group name: ' {group.groupname}</> }
         </>
     )
 }
