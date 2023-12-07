@@ -1,7 +1,8 @@
 import { Routes, Route } from "react-router-dom"
 import { signal } from '@preact/signals-react'
 
-import { deleteRequest, getRequest } from "../../utils/GenericHTTPMethods"
+import { deleteRequest, getRequest, postRequest } from "../../utils/GenericHTTPMethods"
+import { useUser } from '../../context/UserContext';
 
 const apiUrl = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL
 
@@ -10,13 +11,15 @@ function GroupView({ name = "", showSignal, groupSignal }) {
         throw new Error("Specified (individual) signals are mandatory")
     }
 
+    const { username } = useUser()
+
     async function handleShow() {
         showSignal.value = !showSignal.value
         if (showSignal.value === false) {
             return
         }
 
-        const group = await fetchGroup(name)
+        const group = await fetchGroup(name, username)
         if (!group) {
             console.error("Could not fetch group")
             return;
@@ -64,15 +67,46 @@ function Idklol({ group }) {
                 </ul>
             </section>
             <section className="group-news">news: {!group.news ? 'No news' : <>{group.news}</>}</section>
+            {group.joinRequests ? (
+                <section>
+                    join requests:
+                    <ul>
+                        {group.joinRequests.length < 1 ? <li>No requests</li> :
+                            (
+                                group.joinRequests.map((joiner, index) => {
+                                    return <li key={index}>{joiner}</li>
+                                })
+                            )}
+                    </ul>
+                </section>
+            ) : <></>}
         </>
     )
 }
 
-async function fetchGroup(name) {
+async function fetchGroup(name, username) {
     try {
         const response = await getRequest({ url: `${apiUrl}/api/group/${name}` })
         if (response && response.groupname) {
             // seems valid
+            if (username && response.owner && username == response.owner) {
+                //is owner
+                console.log("is owner!")
+                const joiners = await postRequest({
+                    url: `${apiUrl}/api/group/requests`,
+                    body: { groupname: response.groupname }
+                });
+
+                console.log("joiners: ", joiners)
+                if (joiners) {
+                    response.joinRequests = joiners.joinRequests;
+                } else {
+                    throw new Error("Could not fetch joiners")
+                }
+            }
+
+            console.log("____", response)
+
             return response;
         }
 

@@ -47,6 +47,8 @@ async function getRequest({ url, cookies = null }) {
 }
 
 async function postRequest({ url, cookies = null, body }) {
+    body = JSON.stringify(body) // TODO different content types, though we are only using json
+    
     try {
         const response = await fetch(url, {
             method: 'POST',
