@@ -1,31 +1,46 @@
 import { Routes, Route } from "react-router-dom"
+import { signal } from '@preact/signals-react'
 
-import { getRequest } from "../../utils/GenericHTTPMethods"
+import { deleteRequest, getRequest } from "../../utils/GenericHTTPMethods"
 
 const apiUrl = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL
+
+const groups = signal(["No groups"])
+groups.value = await fetchGroups()
 
 function GroupList() {
     // TODO: Implement
     console.log("component not properly implemented")
-
-    generateGroups()
-
     return (
         <>
             <div>asdasdasdasdasd</div>
+            <div>{groups.value}</div>
         </>
     )
 }
 
-async function generateGroups() {
-    await fetchGroups()
-    return (<div>qqqq</div>)
-}
-
 async function fetchGroups() {
-    console.log("ASDASD", apiUrl + "/api/group/")
-    const response = await getRequest(apiUrl + "/api/group/")
-    console.log(response)
+    try {
+        const response = await getRequest({ url: apiUrl + "/api/group/" })
+        if (response && response.groups) {
+            // handle singleton
+            const groups = Array.isArray(response.groups) ? response.groups : [response.groups];
+
+            const groupList = groups.map(function (group, index) {
+                return <li key={index}>{group}</li>;
+            });
+
+            console.log("in fetch:", groups)
+
+            return groupList;
+        }
+
+        return null;
+    } catch (error) {
+        console.error("Error fetching groups:", error);
+        // Handle error if fetchGroups fails
+        return null;
+    }
 }
 
 export default GroupList
