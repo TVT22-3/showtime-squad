@@ -1,31 +1,36 @@
 import "./Profile.scss";
 import { useUser } from "../../context/UserContext.jsx";
 import View from "./View.jsx";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 
 export default function ProfilePage() {
+  const apiUrl = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL;
   const { username } = useUser();
-  /*
-  const [profilePicture, setProfilePicture] = useState('');
-
+  const [profilePicture, setProfilePicture] = useState("");
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    const fetchProfilePicture = async() => {
+    const fetchProfilePicture = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/api/users/{username}/profilepicture`)
-        const data = await response.json()
-        setProfilePicture(data)
-      } catch(error) {
-        console.error('Error fetching profile picture', error)
+        const response = await fetch(
+          `${apiUrl}/api/users/${username}/profilepicture`,
+          { credentials: "include" }
+        );
+        const data = await response.text();
+        setProfilePicture(data);
+      } catch (error) {
+        console.error("Error fetching profile picture", error);
+      } finally {
+        setLoading(false);
       }
     };
-    fetchProfilePicture()
-  }, [username])
-  */
+    fetchProfilePicture();
+  }, [username]);
+
   return (
     <div id="profile">
       <div className="profile-container">
         <div className="profile-top">
-          <img src="https://images.unsplash.com/photo-1579783483458-83d02161294e?" alt="Profile" />
+          <img src={profilePicture} alt="Profile Picture" />
           <div className="description">
             <h2>{username}</h2>
             <p>
@@ -36,7 +41,7 @@ export default function ProfilePage() {
         </div>
 
         <div className="favorite-movies">
-            <View />
+          <View />
         </div>
 
         <div className="recent-reviews">
