@@ -19,7 +19,7 @@ function GroupView({ name = "", showSignal, groupSignal }) {
             return
         }
 
-        const group = await fetchGroup(name, username)
+        const group = await fetchGroupInfo(name, username)
         if (!group) {
             console.error("Could not fetch group")
             return;
@@ -84,13 +84,13 @@ function Idklol({ group }) {
     )
 }
 
-async function fetchGroup(name, username) {
+async function fetchGroupInfo(name, username) {
     try {
         const response = await getRequest({ url: `${apiUrl}/api/group/${name}` })
         if (response && response.groupname) {
-            // seems valid
+            // response seems valid
             if (username && response.owner && username == response.owner) {
-                //is owner
+                //is owner, get join requests
                 console.log("is owner!")
                 const joiners = await postRequest({
                     url: `${apiUrl}/api/group/requests`,
@@ -103,6 +103,10 @@ async function fetchGroup(name, username) {
                 } else {
                     throw new Error("Could not fetch joiners")
                 }
+            }
+
+            if(response.news && response.news.length > 0) {
+                // fetch news
             }
 
             console.log("____", response)
