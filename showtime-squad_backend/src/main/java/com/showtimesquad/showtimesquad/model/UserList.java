@@ -1,22 +1,22 @@
 package com.showtimesquad.showtimesquad.model;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+/**
+ * Represents a user list that contains a list of movies.
+ */
 @Entity
 @Table(name = "user_lists")
 public class UserList {
@@ -37,16 +37,92 @@ public class UserList {
     @JoinColumn(name = "group_name", nullable = true)
     private Group group;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "lists_movies", joinColumns = @JoinColumn(name = "lists_id"), inverseJoinColumns = @JoinColumn(name = "movie_ids"))
-    private Set<Movies> movies = new HashSet<>();
+    @Column(name = "movie_ids", columnDefinition = "List<Integer>")
+    private List<Integer> movieIds;
 
+    /**
+     * Default constructor.
+     */
     public UserList() {
     }
 
+    /**
+     * Constructor with list name and user.
+     * 
+     * @param listName The name of the list.
+     * @param user     The user associated with the list.
+     */
     public UserList(String listName, User user) {
         this.listName = listName;
         this.user = user;
     }
 
+    /**
+     * Constructor with list name and group.
+     * 
+     * @param listName The name of the list.
+     * @param group    The group associated with the list.
+     */
+    public UserList(String listName, Group group) {
+        this.listName = listName;
+        this.group = group;
+    }
+
+    /**
+     * Constructor with list name, user, and group.
+     * 
+     * @param listName The name of the list.
+     * @param user     The user associated with the list.
+     * @param group    The group associated with the list.
+     */
+    public UserList(String listName, User user, Group group) {
+        this.listName = listName;
+        this.user = user;
+        this.group = group;
+    }
+
+    /**
+     * Renames the list.
+     * 
+     * @param listName The new name for the list.
+     */
+    public void renameList(String listName) {
+        this.listName = listName;
+    }
+
+    /**
+     * Returns the name of the list.
+     * 
+     * @return The name of the list.
+     */
+    public String getListName() {
+        return this.listName;
+    }
+
+    /**
+     * Adds a movie to the list.
+     * 
+     * @param movieId The ID of the movie to add.
+     */
+    public void addMovie(Integer movieId) {
+        this.movieIds.add(movieId);
+    }
+
+    /**
+     * Removes a movie from the list.
+     * 
+     * @param movieId The ID of the movie to remove.
+     */
+    public void removeMovie(Integer movieId) {
+        this.movieIds.remove(movieId);
+    }
+
+    /**
+     * Returns the list of movie IDs.
+     * 
+     * @return The list of movie IDs.
+     */
+    public List<Integer> getMovieIds() {
+        return this.movieIds;
+    }
 }
