@@ -7,6 +7,8 @@ import { useUser } from '../../context/UserContext';
 import GroupView from './GroupView'
 import FunctionButton from '../../components/atoms/FunctionButton'
 
+import './GroupBlock.scss'
+
 const apiUrl = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL
 
 function GroupBlock({ name = "", showSignal, groupSignal }) {
@@ -34,8 +36,8 @@ function GroupBlock({ name = "", showSignal, groupSignal }) {
 
     return (
         <>
-            <section className="group-view">
-                <div className="">
+            <section className="group-block">
+                <div className="group-card">
                     {name} - {showSignal.value ? 'show please' : 'dont show'}
                     <FunctionButton onClick={handleShow} text={showSignal.value ? 'hide' : 'show'} />
                 </div>
@@ -45,8 +47,6 @@ function GroupBlock({ name = "", showSignal, groupSignal }) {
         </>
     )
 }
-
-
 
 async function fetchGroupInfo(name, username) {
     try {
