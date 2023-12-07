@@ -54,8 +54,8 @@
   "groups": {
     "title": "groups",
     "path": "/groups",
-    "guests": "/false",
-    "show": "user"
+    "guests": true,
+    "show": "both"
   },
   "profile": {
     "title": "profile",
