@@ -1,15 +1,18 @@
 // Movies.jsx
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './Movies.scss';
 import { useSearchContext } from '../../context/SearchContext';
 import { useFilterMoviesContext } from '../../context/FilterMoviesContext';
-import { fetchGenreMovies,
-         fetchNowPlayingMovies, 
-         fetchPopularMovies, 
-         fetchTopRatedMovies, 
-         fetchUpcomingMovies, 
-         fetchSearchMovies, 
-         standardFetchMovies } from '../../pages/Movies/FetchMovies';
+import {
+  fetchGenreMovies,
+  fetchNowPlayingMovies,
+  fetchPopularMovies,
+  fetchTopRatedMovies,
+  fetchUpcomingMovies,
+  fetchSearchMovies,
+  standardFetchMovies
+} from '../../pages/Movies/FetchMovies';
+
 
 const Movies = () => {
   const { searchQuery } = useSearchContext();
@@ -18,11 +21,19 @@ const Movies = () => {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const region = "FI";
+  const loaderRef = useRef(null);
+ 
 
   const fetchMovieData = async () => {
     try {
-      setLoading(true);
+
+      if (loading) {
+        return; // Do nothing if already loading
+      }
+
       let data;
+      setLoading(true);
+      
 
       switch (currentMode) {
         case 'popular':
@@ -32,6 +43,7 @@ const Movies = () => {
           data = await fetchNowPlayingMovies(page, region); // Add the region parameter if needed
           break;
         case 'upcoming':
+          
           data = await fetchUpcomingMovies(page, region); // Add the region parameter if needed
           break;
         case 'toprated':
@@ -48,53 +60,58 @@ const Movies = () => {
           data = await standardFetchMovies(page);
           break;
       }
-      const hasMorePages = data.page < Math.min(data.total_pages, 10);
+      const hasMorePages = data.page < data.total_pages;
 
-
-      if (page === 1) {
+      if(page === 1) {
         setMovieData(data.results);
-      } else {
-        setMovieData((prevData) => [...prevData, ...data.results]);
       }
 
-      if (hasMorePages) {
-        setPage((prevPage) => prevPage + 1);
-      } else {
-        console.log('No more pages available.');
-      }
-    } catch (error) {
+
+        if (hasMorePages && page > 1) {
+          // Concatenate new data with existing data
+          console.log("fetching more data")
+          setMovieData((prevData) => [...prevData, ...data.results]);
+        } else {
+          console.log('No more pages to fetch.');
+        }} catch (error) {
       console.error('Error fetching movie data:', error);
     } finally {
-      setLoading(false);
+        setLoading(false);
     }
   };
 
-  const handleUserRating = async (movieId, rating) => {
-    try {
-      await postUserRating(movieId, rating);
-      // You can update state or perform other actions after successful rating submission
-    } catch (error) {
-      console.error('Error submitting user rating:', error);
-    }
-  };
-
-  const handleMarkAsFavorite = async (movieId) => {
-    try {
-      await markAsFavorite(movieId);
-      // You can update state or perform other actions after successful favorite marking
-    } catch (error) {
-      console.error('Error marking movie as favorite:', error);
+  const handleScroll = () => {
+    const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
+    if (scrollTop + clientHeight >= scrollHeight - 20 && !loading) {
+      // Trigger fetching more movies when the user is close to the bottom
+      if (movieData.length > 10) {
+        setPage((prevPage) => prevPage + 1);
+        fetchMovieData();
+      }
     }
   };
 
   useEffect(() => {
-    setMovieData([]);
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [handleScroll]);
+
+
+  useEffect(() => {
+
+    console.log('Mode changed, resetting page to 1');
+
     setPage(1);
-  }, [searchQuery, currentMode, currentPayload]);
+    console.log(page)
+    setMovieData([]);
 
-  useEffect(() => {
-    fetchMovieData();
-  }, [searchQuery, page, currentMode, currentPayload]);
+     fetchMovieData();
+    
+
+  }, [searchQuery, currentMode, currentPayload]);
 
   return (
     <div className="movie-container">
@@ -108,6 +125,7 @@ const Movies = () => {
       ))}
 
       {loading && <p>Loading movies...</p>}
+      <div ref={loaderRef}></div>
     </div>
   );
 };
