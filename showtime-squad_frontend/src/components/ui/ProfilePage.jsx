@@ -1,15 +1,31 @@
 import "./Profile.scss";
 import { useUser } from "../../context/UserContext.jsx";
 import View from "./View.jsx";
+import { useEffect } from "react";
 
 export default function ProfilePage() {
   const { username } = useUser();
+  /*
+  const [profilePicture, setProfilePicture] = useState('');
 
+  useEffect(() => {
+    const fetchProfilePicture = async() => {
+      try {
+        const response = await fetch(`http://localhost:8080/api/users/{username}/profilepicture`)
+        const data = await response.json()
+        setProfilePicture(data)
+      } catch(error) {
+        console.error('Error fetching profile picture', error)
+      }
+    };
+    fetchProfilePicture()
+  }, [username])
+  */
   return (
     <div id="profile">
       <div className="profile-container">
         <div className="profile-top">
-          <img src="https://via.placeholder.com/100" alt="Profile" />
+          <img src="https://images.unsplash.com/photo-1579783483458-83d02161294e?" alt="Profile" />
           <div className="description">
             <h2>{username}</h2>
             <p>
