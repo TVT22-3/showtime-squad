@@ -23,7 +23,9 @@ function GroupView({ group }) {
                                 return (
                                     <li key={index} className='user member'>
                                         {user}
-                                        {<FunctionButton onClick={declineJoin} text='❌' />}
+                                        {user !== group.owner ?
+                                            <FunctionButton onClick={declineJoin} text='❌' />
+                                            : <></>}
                                     </li>
                                 )
                             })}
