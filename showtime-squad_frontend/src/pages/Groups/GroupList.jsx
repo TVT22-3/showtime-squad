@@ -2,7 +2,7 @@ import { Routes, Route } from "react-router-dom"
 import { signal } from '@preact/signals-react'
 
 import { deleteRequest, getRequest } from "../../utils/GenericHTTPMethods"
-import GroupView from "./GroupView"
+import GroupBlock from "./GroupBlock"
 
 const apiUrl = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL
 
@@ -33,7 +33,7 @@ async function fetchGroups() {
                 const groupSig = signal();
 
                 return (
-                    <GroupView key={index} name={group} showSignal={showSig} groupSignal={groupSig} />
+                    <GroupBlock key={index} name={group} showSignal={showSig} groupSignal={groupSig} />
                 );
             });
 
