@@ -1,0 +1,7 @@
+#group-list {
+    --_group-list-bg-primary: #333;
+    --_group-list-color-primary: #fff;
+
+    background-color: var(--primary-bg, var(--_group-list-bg-primary));
+    color: var(--primary-color, var(--_group-list-color-primary));
+}

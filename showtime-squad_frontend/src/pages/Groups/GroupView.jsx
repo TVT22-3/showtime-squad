@@ -5,14 +5,15 @@ function GroupView({ group }) {
     if (!group) {
         return (
             <div className='group-view'>
-                <p>Not a member.</p>
+                <div className='join-notice inline'>
+                    <p>Not a member. Request to join:</p> <FunctionButton onClick={requestToJoin} text='💪' />
+                </div>
             </div>
         )
     }
 
     return (
         <div className='group-view'>
-            <h4 className="group-name">Group name: {!group.groupname ? 'Error' : <>{group.groupname}</>}</h4>
             <h5 className="group-owner">owner: {!group.owner ? 'Error' : <>{group.owner}</>}</h5>
             <section className="group-members">
                 members:
@@ -21,7 +22,7 @@ function GroupView({ group }) {
                         <>
                             {group.users.map((user, index) => {
                                 return (
-                                    <li key={index} className='user member'>
+                                    <li key={index} className='user member inline'>
                                         {user}
                                         {user !== group.owner ?
                                             <FunctionButton onClick={declineJoin} text='❌' />
@@ -42,7 +43,7 @@ function GroupView({ group }) {
                             (
                                 group.joinRequests.map((joiner, index) => {
                                     return (
-                                        <li key={index} className='user joiner'>
+                                        <li key={index} className='user joiner inline'>
                                             {joiner}
                                             {<FunctionButton onClick={acceptJoin} text='✅' />}
                                             {<FunctionButton onClick={declineJoin} text='❌' />}
@@ -54,6 +55,10 @@ function GroupView({ group }) {
             ) : <></>}
         </div>
     )
+}
+
+function requestToJoin() {
+
 }
 
 function removeMember() {

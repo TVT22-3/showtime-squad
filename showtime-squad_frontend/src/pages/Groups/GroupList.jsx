@@ -3,23 +3,32 @@ import { signal } from '@preact/signals-react'
 
 import { deleteRequest, getRequest } from "../../utils/GenericHTTPMethods"
 import GroupBlock from "./GroupBlock"
+import CreateGroupModal from "./CreateGroupModal"
+
+import './GroupList.scss'
+import FunctionButton from "../../components/atoms/FunctionButton"
 
 const apiUrl = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL
 
 const groups = signal(["No groups"])
 groups.value = await fetchGroups()
 
+const openModal = signal(false)
+
 function GroupList() {
     // TODO: Implement
     console.log("component not properly implemented")
+
     return (
         <>
-            <div>asdasdasdasdasd</div>
-            <div>{groups.value}</div>
+            <div id="group-list">
+                <CreateGroupModal open={openModal}/>
+                <FunctionButton onClick={() => {openModal.value = !openModal.value}} text={'Create New ➕'} />
+                {groups.value}
+            </div>
         </>
     )
 }
-
 
 async function fetchGroups() {
     try {
