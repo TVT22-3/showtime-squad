@@ -33,7 +33,7 @@ async function fetchGroups() {
                 const groupSig = signal();
 
                 return (
-                    <GroupView name={group} showSignal={showSig} groupSignal={groupSig} />
+                    <GroupView key={index} name={group} showSignal={showSig} groupSignal={groupSig} />
                 );
             });
 

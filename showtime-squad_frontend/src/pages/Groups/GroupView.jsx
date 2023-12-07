@@ -12,7 +12,7 @@ function GroupView({ name = "", showSignal, groupSignal }) {
 
     async function handleShow() {
         showSignal.value = !showSignal.value
-        if(showSignal.value === false) {
+        if (showSignal.value === false) {
             return
         }
 
@@ -30,25 +30,40 @@ function GroupView({ name = "", showSignal, groupSignal }) {
         <>
             <section>
                 {name} - {showSignal.value ? 'show please' : 'dont show'}
-                {showSignal.value ? <Idklol group={groupSignal.value}/> : <></>}
                 <button onClick={handleShow}>Click me</button>
+
+                {showSignal.value ? <Idklol group={groupSignal.value} /> : <></>}
             </section>
         </>
     )
 }
 
-function Idklol({group}) {
-    if(!group) {
+function Idklol({ group }) {
+    if (!group) {
         return (
             <>
-                Not a member.
+                <p>Not a member.</p>
             </>
         )
     }
-    
+
     return (
         <>
-            {!group.groupname ? 'Error' : <>'Group name: ' {group.groupname}</> }
+            <h4 className="group-name">Group name: {!group.groupname ? 'Error' : <>{group.groupname}</>}</h4>
+            <h5 className="group-owner">owner: {!group.owner ? 'Error' : <>{group.owner}</>}</h5>
+            <section className="group-members">
+                members:
+                <ul>
+                    {!group.users ? 'Error' : (
+                        <>
+                            {group.users.map((user, index) => {
+                                return <li key={index}>{user}</li>
+                            })}
+                        </>
+                    )}
+                </ul>
+            </section>
+            <section className="group-news">news: {!group.news ? 'No news' : <>{group.news}</>}</section>
         </>
     )
 }
