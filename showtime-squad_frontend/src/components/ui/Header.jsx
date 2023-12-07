@@ -2,12 +2,10 @@ import NavBar from "../../components/ui/NavBar"
 import SearchBar from "../../components/ui/SearchBar"
 import Hero from "./Hero";
 
-function Header() {
+function Header({isFrontpage = true}) {
     //TODO: Implement
     console.log("component not properly implemented")
 
-    //TODO: Implement this boolean properly as a prop
-    let isFrontpage = true;
     return (
         <>
             <NavBar />
