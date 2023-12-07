@@ -1,7 +1,7 @@
-// import { useState } from 'react'
-// import reactLogo from './assets/react.svg'
-// import viteLogo from '/vite.svg'
-// import './App.css'
+//import { useState } from 'react'
+//import reactLogo from './assets/react.svg'
+//import viteLogo from '/vite.svg'
+//import './App.css'
 
 // src/App.jsx
 import React from 'react'
@@ -11,6 +11,7 @@ import MoviesPage from './pages/Home/MoviesPage.jsx'
 import DebugSandbox from './utils/sandbox/DebugSandbox.jsx'
 import Settings from './pages/Settings/Settings.jsx'
 import { UserProvider } from './context/UserContext.jsx'
+import Profile from './pages/Profile/Profile.jsx'
 
 function App() {
   return (
@@ -18,8 +19,10 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/*" element={<Home />} />
+        
         <Route path="/movies/*" element={<MoviesPage />} />
 
+        <Route path="/profile" element={<Profile />} />
         {/* debug sandbox */}
         <Route path="debug/*" element={<DebugSandbox />} />
 
