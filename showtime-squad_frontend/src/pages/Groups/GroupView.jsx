@@ -1,7 +1,7 @@
 import { signal } from '@preact/signals-react'
 
 import FunctionButton from '../../components/atoms/FunctionButton'
-import { postRequest } from '../../utils/GenericHTTPMethods'
+import { getRequest, postRequest } from '../../utils/GenericHTTPMethods'
 import './GroupView.scss'
 
 const apiUrl = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL
@@ -9,14 +9,19 @@ const apiUrl = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL
 function GroupView({ group, username }) {
 
     if (!group.owner) {
-        const joinSig = signal('')
         return (
             <div className='group-view'>
                 <div className='join-notice inline'>
                     <p>Not a member. Request to join:</p>
-                    <FunctionButton onClick={
-                        () => { requestToJoin({ groupname: group.groupname, signal: joinSig }) }
-                    } text='💪' displayError={joinSig} />
+                    {(() => {
+                        const joinSig = signal('');
+                        return (
+                            <FunctionButton onClick={async () => {
+                                await requestToJoin({ groupname: group.groupname, signal: joinSig })
+                            }}
+                                text='💪' displayError={joinSig} />
+                        )
+                    })()}
                 </div>
             </div>
         )
@@ -91,10 +96,26 @@ function GroupView({ group, username }) {
             ) : <></>}
 
             <section className="group-news">
-                news: {!group.news ? 'No news' : <>{group.news}</>}
+                news: {
+                    !group.news ? 'No news' :
+                        <>{
+                            group.news.map((news) => {
+                                return (
+                                    <li>
+                                        {news}
+                                    </li>
+                                )
+                            })
+                        }</>
+                }
             </section>
         </div>
     )
+}
+
+async function fetchNews({ id }) {
+    const response = await getRequest({ url: `https://www.finnkino.fi/xml/Events/?eventID=${id}` })
+    console.log("____", response)
 }
 
 async function requestToJoin({ groupname, signal }) {
