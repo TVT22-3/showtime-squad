@@ -1,5 +1,11 @@
 package com.showtimesquad.showtimesquad.model;
 
+/*
+ * This file is used for the UserList model. It contains 
+ * the UserList class, which represents a user generated
+ * list of movies.
+ */
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,10 +45,9 @@ public class UserList {
 
     @ManyToOne
     @JoinColumn(name = "group_name", nullable = true)
-    private Group group;
+    private Group groupname;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "user_lists_movies", joinColumns = @JoinColumn(name = "user_lists_id"), inverseJoinColumns = @JoinColumn(name = "movies_id"))
+    @Column(name = "movie_ids", columnDefinition = "integer[]")
     private List<Integer> movieIds;
 
     /**
@@ -63,26 +68,26 @@ public class UserList {
     /**
      * Constructor with list name and group.
      * 
-     * @param listName The name of the list.
-     * @param group    The group associated with the list.
+     * @param listName  The name of the list.
+     * @param groupname The group associated with the list.
      */
-    public UserList(String listName, Group group) {
+    public UserList(String listName, Group groupname) {
         this.listName = listName;
-        this.group = group;
+        this.groupname = groupname;
         this.movieIds = new ArrayList<>();
     }
 
     /**
      * Constructor with list name, user, and group.
      * 
-     * @param listName The name of the list.
-     * @param user     The user associated with the list.
-     * @param group    The group associated with the list.
+     * @param listName  The name of the list.
+     * @param user      The user associated with the list.
+     * @param groupname The group associated with the list.
      */
-    public UserList(String listName, User user, Group group) {
+    public UserList(String listName, User user, Group groupname) {
         this.listName = listName;
         this.user = user;
-        this.group = group;
+        this.groupname = groupname;
         this.movieIds = new ArrayList<>();
     }
 
@@ -130,4 +135,23 @@ public class UserList {
     public List<Integer> getMovieIds() {
         return this.movieIds;
     }
+
+    /**
+     * Sets the list of movie IDs.
+     * 
+     * @param movieIds The list of movie IDs.
+     */
+    public void setMovieIds(List<Integer> movieIds) {
+        this.movieIds = movieIds;
+    }
+
+    /**
+     * Returns the name of the group associated with the list.
+     * 
+     * @return groupname The name of the group associated with the list.
+     */
+    public String getGroupname() {
+        return this.groupname.getGroupname();
+    }
+
 }
