@@ -1,13 +1,17 @@
 package com.showtimesquad.showtimesquad.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
@@ -37,16 +41,14 @@ public class UserList {
     @JoinColumn(name = "group_name", nullable = true)
     private Group group;
 
-    @Column(name = "movie_ids", columnDefinition = "List<Integer>")
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "user_lists_movies", joinColumns = @JoinColumn(name = "user_lists_id"), inverseJoinColumns = @JoinColumn(name = "movies_id"))
     private List<Integer> movieIds;
 
     /**
-     * Default constructor.
-     */
-    public UserList() {
-    }
-
-    /**
+     * 
+     * Constructor with list name and user.
+     * /**
      * Constructor with list name and user.
      * 
      * @param listName The name of the list.
@@ -55,6 +57,7 @@ public class UserList {
     public UserList(String listName, User user) {
         this.listName = listName;
         this.user = user;
+        this.movieIds = new ArrayList<>();
     }
 
     /**
@@ -66,6 +69,7 @@ public class UserList {
     public UserList(String listName, Group group) {
         this.listName = listName;
         this.group = group;
+        this.movieIds = new ArrayList<>();
     }
 
     /**
@@ -79,6 +83,7 @@ public class UserList {
         this.listName = listName;
         this.user = user;
         this.group = group;
+        this.movieIds = new ArrayList<>();
     }
 
     /**
