@@ -34,11 +34,17 @@ export default function ProfilePage() {
     <div id="profile">
       <div className="profile-container">
         <div className="profile-top">
-          <img src={profilePicture} alt="Profile Picture" />
+          <img
+            src={profilePicture}
+            alt="Profile Picture"
+            height={150}
+            width={150}
+          />
           <div className="description">
             <h2>{displayUsername}</h2>
             <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua.
             </p>
           </div>
