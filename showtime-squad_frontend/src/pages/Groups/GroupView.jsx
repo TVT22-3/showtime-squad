@@ -27,11 +27,18 @@ function GroupView({ group, username }) {
                     {!group.users ? 'Error' : (
                         <>
                             {group.users.map((user, index) => {
+                                const removeSig = signal("")
                                 return (
                                     <li key={index} className='user member inline'>
                                         {user}
                                         {user !== group.owner && username == group.owner ?
-                                            <FunctionButton onClick={declineJoin} text='❌' />
+                                            <FunctionButton onClick={async () => {
+                                                const response = await removeMember({
+                                                    toRemove: user,
+                                                    groupname: group.groupname
+                                                })
+                                                removeSig.value = response.status < 400 ? 'Success!' : response.status
+                                            }} text='❌' displayError={removeSig} />
                                             : <></>}
                                     </li>
                                 )
@@ -60,7 +67,7 @@ function GroupView({ group, username }) {
                                                         groupname: group.groupname
                                                     })
                                                     acceptSig.value = response.status < 400 ? 'Success!' : response.status
-                                                }} text='✅' displayError={acceptSig}/>
+                                                }} text='✅' displayError={acceptSig} />
                                             }
                                             {
                                                 <FunctionButton onClick={async () => {
@@ -69,7 +76,7 @@ function GroupView({ group, username }) {
                                                         groupname: group.groupname
                                                     })
                                                     declineSig.value = response.status < 400 ? 'Success!' : response.status
-                                                }} text='❌' displayError={declineSig}/>
+                                                }} text='❌' displayError={declineSig} />
                                             }
                                         </li>)
                                 })
@@ -89,8 +96,12 @@ async function requestToJoin() {
 
 }
 
-async function removeMember() {
-
+async function removeMember({ toRemove, groupname }) {
+    const response = postRequest({
+        url: `${apiUrl}/api/group/remove`,
+        body: { another: toRemove, groupname: groupname }
+    });
+    return response;
 }
 
 async function acceptJoin({ joiner, groupname }) {
@@ -98,7 +109,6 @@ async function acceptJoin({ joiner, groupname }) {
         url: `${apiUrl}/api/group/accept`,
         body: { another: joiner, groupname: groupname }
     });
-    console.log("________", response)
     return response;
 }
 
