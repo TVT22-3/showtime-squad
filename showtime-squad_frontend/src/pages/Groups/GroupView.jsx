@@ -7,11 +7,16 @@ import './GroupView.scss'
 const apiUrl = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL
 
 function GroupView({ group, username }) {
-    if (!group) {
+
+    if (!group.owner) {
+        const joinSig = signal('')
         return (
             <div className='group-view'>
                 <div className='join-notice inline'>
-                    <p>Not a member. Request to join:</p> <FunctionButton onClick={requestToJoin} text='💪' />
+                    <p>Not a member. Request to join:</p>
+                    <FunctionButton onClick={
+                        () => { requestToJoin({ groupname: group.groupname, signal: joinSig }) }
+                    } text='💪' displayError={joinSig} />
                 </div>
             </div>
         )
@@ -92,12 +97,16 @@ function GroupView({ group, username }) {
     )
 }
 
-async function requestToJoin() {
-
+async function requestToJoin({ groupname, signal }) {
+    const response = await postRequest({
+        url: `${apiUrl}/api/group/join`,
+        body: { groupname: groupname }
+    });
+    signal.value = response.status < 400 ? 'Success!' : response.status
 }
 
 async function removeMember({ toRemove, groupname }) {
-    const response = postRequest({
+    const response = await postRequest({
         url: `${apiUrl}/api/group/remove`,
         body: { another: toRemove, groupname: groupname }
     });
@@ -105,7 +114,7 @@ async function removeMember({ toRemove, groupname }) {
 }
 
 async function acceptJoin({ joiner, groupname }) {
-    const response = postRequest({
+    const response = await postRequest({
         url: `${apiUrl}/api/group/accept`,
         body: { another: joiner, groupname: groupname }
     });
