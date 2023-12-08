@@ -25,8 +25,8 @@ function GroupView({ group, username }) {
                 </div>
             </div>
         )
-    }
-
+    } 
+    
     return (
         <div className='group-view'>
             <h5 className="group-owner">owner: {!group.owner ? 'Error' : <>{group.owner}</>}</h5>
@@ -81,7 +81,7 @@ function GroupView({ group, username }) {
                                             }
                                             {
                                                 <FunctionButton onClick={async () => {
-                                                    const response = await decline({
+                                                    const response = await declineJoin({
                                                         joiner: joiner,
                                                         groupname: group.groupname
                                                     })
@@ -98,15 +98,15 @@ function GroupView({ group, username }) {
             <section className="group-news">
                 news: {
                     !group.news ? 'No news' :
-                        <>{
-                            group.news.map((news) => {
+                        <ul>{
+                            group.news.map((news, index) => {
                                 return (
-                                    <li>
+                                    <li key={index}>
                                         {news}
                                     </li>
                                 )
                             })
-                        }</>
+                        }</ul>
                 }
             </section>
         </div>
