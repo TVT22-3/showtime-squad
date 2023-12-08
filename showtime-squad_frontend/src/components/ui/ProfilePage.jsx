@@ -2,17 +2,21 @@ import "./Profile.scss";
 import { useUser } from "../../context/UserContext.jsx";
 import View from "./View.jsx";
 import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 export default function ProfilePage() {
   const apiUrl = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL;
-  const { username } = useUser();
+  const { username: loggedInUsername } = useUser();
+  const { username: profileUsername } = useParams();
   const [profilePicture, setProfilePicture] = useState("");
   const [loading, setLoading] = useState(true);
+  const displayUsername = profileUsername || loggedInUsername;
+
   useEffect(() => {
     const fetchProfilePicture = async () => {
       try {
         const response = await fetch(
-          `${apiUrl}/api/users/${username}/profilepicture`,
+          `${apiUrl}/api/users/${displayUsername}/profilepicture`,
           { credentials: "include" }
         );
         const data = await response.text();
@@ -24,7 +28,7 @@ export default function ProfilePage() {
       }
     };
     fetchProfilePicture();
-  }, [username]);
+  }, [profileUsername, loggedInUsername]);
 
   return (
     <div id="profile">
@@ -32,7 +36,7 @@ export default function ProfilePage() {
         <div className="profile-top">
           <img src={profilePicture} alt="Profile Picture" />
           <div className="description">
-            <h2>{username}</h2>
+            <h2>{displayUsername}</h2>
             <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua.

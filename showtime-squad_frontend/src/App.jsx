@@ -22,7 +22,7 @@ function App() {
         
         <Route path="/movies/*" element={<MoviesPage />} />
 
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/profile/:username?" element={<Profile />} />
         {/* debug sandbox */}
         <Route path="debug/*" element={<DebugSandbox />} />
 
