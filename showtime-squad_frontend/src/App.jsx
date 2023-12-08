@@ -7,14 +7,18 @@
 import React from 'react'
 import { BrowserRouter as BrowserRouter, Route, Routes } from 'react-router-dom'
 import Home from './pages/Home/Home.jsx'
-import MoviesPage from './pages/Home/MoviesPage.jsx'
+import MoviesPage from './pages/Movies/MoviesPage.jsx'
 import DebugSandbox from './utils/sandbox/DebugSandbox.jsx'
 import Settings from './pages/Settings/Settings.jsx'
 import { UserProvider } from './context/UserContext.jsx'
 import Profile from './pages/Profile/Profile.jsx'
+import { SearchProvider } from './context/SearchContext.jsx'
+import { FilterMoviesProvider } from './context/FilterMoviesContext.jsx'
 
 function App() {
   return (
+    <FilterMoviesProvider>
+    <SearchProvider>
     <UserProvider>
     <BrowserRouter>
       <Routes>
@@ -31,6 +35,8 @@ function App() {
       </Routes>
     </BrowserRouter>
     </UserProvider>
+    </SearchProvider>
+    </FilterMoviesProvider>
   )
 }
 

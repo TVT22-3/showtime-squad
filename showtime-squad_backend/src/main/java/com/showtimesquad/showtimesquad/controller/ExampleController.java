@@ -28,5 +28,6 @@ public class ExampleController {
         final String uri = "https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=" + page + "&region=US" + "&api_key=" + apiKey;
         RestTemplate restTemplate = new RestTemplate();
         return restTemplate.getForObject(uri, String.class);
-    }
+     }
+
 }
