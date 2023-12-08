@@ -1,52 +1,126 @@
+// Movies.jsx
 import React, { useState, useEffect, useRef } from 'react';
-import './Movies.scss'; // Import the SCSS file
+import './Movies.scss';
+import { useSearchContext } from '../../context/SearchContext';
+import { useFilterMoviesContext } from '../../context/FilterMoviesContext';
+import {
+  fetchGenreMovies,
+  fetchNowPlayingMovies,
+  fetchPopularMovies,
+  fetchTopRatedMovies,
+  fetchUpcomingMovies,
+  fetchSearchMovies,
+  standardFetchMovies
+} from '../../pages/Movies/FetchMovies';
+
 
 const Movies = () => {
-  const apiUrl = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL
+  const { searchQuery } = useSearchContext();
+  const { currentMode, currentPayload } = useFilterMoviesContext();
   const [movieData, setMovieData] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
-
+  const region = "FI";
   const loaderRef = useRef(null);
+  const [pageReset, setPageReset] = useState(false);
+  const [hasMorePages, setHasMorePages] = useState(true);
 
-  useEffect(() => {
-    const fetchMovieData = async () => {
-      setLoading(true);
+  const fetchMovieData = async () => {
+    try {
 
-      try {
-        const response = await fetch(`${apiUrl}/movies?page=${page}`);
-        const data = await response.json();
-        const hasMorePages = data.page < data.total_pages;
-
-        if (hasMorePages) {
-          setMovieData((prevData) => [...prevData, ...data.results]);
-          setPage((prevPage) => prevPage + 1);
-        } else {
-          console.log('No more pages available.');
-        }
-      } catch (error) {
-        console.error('Error fetching movie data:', error);
+      if (loading) {
+        return; // Do nothing if already loading
       }
-    
-      setLoading(false);
-    };
 
-    const observer = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting) {
+      let data;
+      setLoading(true);
+      
+
+      switch (currentMode) {
+        case 'popular':
+          data = await fetchPopularMovies(page);
+          break;
+        case 'nowplaying':
+          data = await fetchNowPlayingMovies(page, region); // Add the region parameter if needed
+          break;
+        case 'upcoming':
+          data = await fetchUpcomingMovies(page, region); // Add the region parameter if needed
+          break;
+        case 'toprated':
+          data = await fetchTopRatedMovies(page);
+          break;
+        case 'genre':
+          const genreId = currentPayload.id;
+          data = await fetchGenreMovies(genreId, page);
+          break;
+        case 'searchmovie':
+          data = await fetchSearchMovies(searchQuery, page);
+          break;
+        default:
+          data = await standardFetchMovies(page);
+          break;
+      }
+      const hasMorePages = data.page < data.total_pages;
+      setHasMorePages(hasMorePages);
+
+
+      if(page === 1) {
+        setMovieData(data.results);
+      }
+
+
+        if (hasMorePages && page > 1) {
+          // Concatenate new data with existing data
+          console.log("fetching more data")
+          setMovieData((prevData) => [...prevData, ...data.results]);
+        } else {
+          console.log('No more pages to fetch.');
+        }} catch (error) {
+      console.error('Error fetching movie data:', error);
+    } finally {
+        setLoading(false);
+    }
+  };
+
+  const handleObserver = (entries) => {
+    const target = entries[0];
+    if (target.isIntersecting && !loading) {
+      if (movieData.length > 10) {
+        setPage((prevPage) => prevPage + 1);
         fetchMovieData();
       }
-    }, { threshold: 1 });
+    }
+  };
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(handleObserver, {
+      root: null,
+      rootMargin: '20px',
+      threshold: 1.0,
+    });
 
     if (loaderRef.current) {
       observer.observe(loaderRef.current);
     }
 
     return () => {
-      if (loaderRef.current) {
-        observer.unobserve(loaderRef.current);
-      }
+      observer.disconnect();
     };
-  }, [page]); // Dependency on page to trigger fetch when page changes
+  }, [loaderRef, handleObserver]);
+
+  useEffect(() => {
+    setPage(1);
+    setMovieData([]);
+    setPageReset(!pageReset);
+    setHasMorePages(true); // Reset the state for more pages
+  }, [searchQuery, currentMode, currentPayload]);
+
+  useEffect(() => {
+    if (pageReset) {
+      fetchMovieData();
+      setPageReset(!pageReset);
+    }
+  }, [page, pageReset]);
 
   return (
     <div className="movie-container">
@@ -59,12 +133,18 @@ const Movies = () => {
         </div>
       ))}
 
-      {loading && <p>Loading more movies...</p>}
+      <div className="text">
 
-      <div ref={loaderRef}></div>
+      {loading && <p><i className='fa-solid fa-arrows-rotate'></i></p>}
+      
+      {!loading && !hasMorePages && <p>End.</p>}
+
+      </div>
+      
+      {hasMorePages && <div ref={loaderRef}></div>}
+
     </div>
   );
 };
 
 export default Movies;
-
