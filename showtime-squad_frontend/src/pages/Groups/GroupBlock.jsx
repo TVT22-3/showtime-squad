@@ -42,7 +42,7 @@ function GroupBlock({ name = "", showSignal, groupSignal }) {
                     <FunctionButton onClick={handleShow} text={showSignal.value ? 'hide' : 'show'} />
                 </div>
 
-                {showSignal.value ? <GroupView group={groupSignal.value} /> : <></>}
+                {showSignal.value ? <GroupView group={groupSignal.value} username={username} /> : <></>}
             </section>
         </>
     )
