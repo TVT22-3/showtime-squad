@@ -8,14 +8,13 @@ import LoginRegisterHandler from "../../components/ui/LoginRegisterHandler"
 function Profile() {
     // TODO: Implement
     console.log("component not properly implemented")
-
     return (
         <>
             <Header />
             <ProfilePage />
-            <Routes>
+            {/*<Routes>
                 <Route path="/login" element={<LoginRegisterHandler />} />
-            </Routes>
+    </Routes>*/}
             <Footer sitemap={Sitemap} loggedIn={true} />
         </>
     )

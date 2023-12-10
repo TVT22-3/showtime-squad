@@ -9,8 +9,6 @@
     max-width: 1280px;
     margin: 0 auto;
     padding: 25px;
-    border: white;
-    border-style: solid;
 
     .profile-top {
       display: flex;
@@ -25,14 +23,12 @@
         width: 150px;
         height: 150px;
         object-fit: cover;
-
       }
 
       .description {
         color: white;
         max-width: 1000px;
-        border: white;
-        border-style: solid;
+
         h2 {
           margin-bottom: 15px;
           font-size: 24px;
@@ -40,10 +36,9 @@
 
         p {
           font-size: 16px;
-        } 
-      } 
+        }
+      }
     }
-    
 
     .favorite-movies,
     .recent-reviews {
