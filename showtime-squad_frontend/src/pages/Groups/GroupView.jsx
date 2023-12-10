@@ -4,6 +4,7 @@ import FunctionButton from '../../components/atoms/FunctionButton'
 import { getRequest, postRequest, getXML } from '../../utils/GenericHTTPMethods'
 import './GroupView.scss'
 import NewsBlock from '../../components/containers/NewsBlock'
+import AddNewsModal from './AddNewsModal'
 
 const apiUrl = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL
 
@@ -97,7 +98,40 @@ function GroupView({ group, username }) {
             ) : <></>}
 
             <section className="group-news">
-                news: {
+                <div className='news-notice inline'>
+                    <p>news:</p>
+                    {(() => {
+                        const openModal = signal(false)
+                        const newsInfo = signal('')
+
+                        async function fetchAllNews({ signal }) {
+                            const response = await getXML({ url: `https://www.finnkino.fi/xml/Events/` })
+
+                            const eventTitles = [];
+                            const titleNodes = await response.xml.querySelectorAll('Title');
+                            const eventIdNodes = await response.xml.querySelectorAll('ID');
+
+                            for (let i = 0; i < titleNodes.length; i++) {
+                                const title = titleNodes[i];
+                                const eventID = eventIdNodes[i];
+
+                                eventTitles.push({ eventID, title });
+                            }
+                            
+                            signal.value = eventTitles
+                        }
+
+                        fetchAllNews({ signal: newsInfo })
+
+                        return (
+                            <>
+                                <AddNewsModal open={openModal} newsInfo={newsInfo} groupname={group.groupname} />
+                                <FunctionButton onClick={() => { openModal.value = !openModal.value }} text={'Add News 📋'} />
+                            </>)
+                    })()
+                    }
+                </div>
+                {
                     !group.news ? 'No news' :
                         <ul>{
                             group.news.map((news, index) => {
@@ -111,8 +145,6 @@ function GroupView({ group, username }) {
                                     const eventURL = await response.xml.querySelector('EventURL');
                                     const eventSynopsis = await response.xml.querySelector('ShortSynopsis');
 
-                                    console.log('Content of eventTag:', eventURL);
-
                                     const newsPackage = {
                                         title: eventTitle ? eventTitle.innerHTML : '???',
                                         url: eventURL ? eventURL.innerHTML : '#',
@@ -124,7 +156,7 @@ function GroupView({ group, username }) {
                                 fetchNews({ id: news, signal: newsInfo })
 
                                 return (<div key={index}>
-                                    <NewsBlock  news={news} signal={newsInfo} />
+                                    <NewsBlock news={news} signal={newsInfo} />
 
                                     <FunctionButton onClick={async () => {
                                         const response = await removeNews({
@@ -144,7 +176,6 @@ function GroupView({ group, username }) {
 }
 
 async function removeNews({ news, groupname }) {
-    console.log('clicked remove news!!', news , groupname)
     const response = await postRequest({
         url: `${apiUrl}/api/group/news/remove-index`,
         body: { news: news, groupname: groupname }
