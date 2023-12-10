@@ -79,7 +79,7 @@ public class Group {
             throw new IndexOutOfBoundsException();
         }
 
-        this.news.remove(indexToRemove);
+        this.news.remove(this.news.get(indexToRemove));
     }
 
     /**
