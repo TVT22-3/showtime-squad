@@ -10,6 +10,11 @@ async function handleResponse(response, requestType) {
             // response is json
             const jsonResponse = await response.json()
             Object.assign(responseData, jsonResponse)
+        } else if (contentType && contentType.includes('xml')) {
+            const xmlText = await response.text();
+            const parser = new DOMParser();
+            const xmlDoc = parser.parseFromString(xmlText, 'application/xml');
+            responseData.xml = xmlDoc;
         } else if (contentType && contentType.includes('text')) {
             // response is text
             const textResponse = await response.text()
@@ -24,6 +29,22 @@ async function handleResponse(response, requestType) {
 
     return responseData
 }
+async function getXML({ url, cookies = null }) {
+    try {
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/xml'
+            },
+        })
+
+        const responseData = await handleResponse(response, 'GET')
+
+        return responseData
+    } catch (error) {
+        console.error('Error during GET:', error)
+    }
+}
 
 async function getRequest({ url, cookies = null }) {
     // TODO: kinda barebones
@@ -34,6 +55,7 @@ async function getRequest({ url, cookies = null }) {
             headers: {
                 'Content-Type': 'application/json',
                 'Cookie': cookies,
+                'Access-Control-Allow-Origin': '*'
             },
         })
 
@@ -48,7 +70,7 @@ async function getRequest({ url, cookies = null }) {
 
 async function postRequest({ url, cookies = null, body }) {
     body = JSON.stringify(body) // TODO different content types, though we are only using json
-    
+
     try {
         const response = await fetch(url, {
             method: 'POST',
@@ -94,4 +116,4 @@ async function deleteRequest({ url, cookies }) {
 
 
 
-export { getRequest, postRequest, putRequest, deleteRequest }
+export { getRequest, postRequest, putRequest, deleteRequest, getXML }

@@ -1,8 +1,9 @@
 import { signal } from '@preact/signals-react'
 
 import FunctionButton from '../../components/atoms/FunctionButton'
-import { getRequest, postRequest } from '../../utils/GenericHTTPMethods'
+import { getRequest, postRequest, getXML } from '../../utils/GenericHTTPMethods'
 import './GroupView.scss'
+import NewsBlock from '../../components/containers/NewsBlock'
 
 const apiUrl = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL
 
@@ -25,8 +26,8 @@ function GroupView({ group, username }) {
                 </div>
             </div>
         )
-    } 
-    
+    }
+
     return (
         <div className='group-view'>
             <h5 className="group-owner">owner: {!group.owner ? 'Error' : <>{group.owner}</>}</h5>
@@ -100,10 +101,39 @@ function GroupView({ group, username }) {
                     !group.news ? 'No news' :
                         <ul>{
                             group.news.map((news, index) => {
-                                return (
-                                    <li key={index}>
-                                        {news}
-                                    </li>
+                                const newsInfo = signal('')
+                                const removeNewsSig = signal('')
+
+                                async function fetchNews({ id, signal }) {
+                                    const response = await getXML({ url: `https://www.finnkino.fi/xml/Events/?eventID=${id}` })
+
+                                    const eventTitle = await response.xml.querySelector('Title');
+                                    const eventURL = await response.xml.querySelector('EventURL');
+                                    const eventSynopsis = await response.xml.querySelector('ShortSynopsis');
+
+                                    console.log('Content of eventTag:', eventURL);
+
+                                    const newsPackage = {
+                                        title: eventTitle ? eventTitle.innerHTML : '???',
+                                        url: eventURL ? eventURL.innerHTML : '#',
+                                        synopsis: eventSynopsis ? eventSynopsis.innerHTML : '...'
+                                    }
+                                    signal.value = newsPackage
+                                }
+
+                                fetchNews({ id: news, signal: newsInfo })
+
+                                return (<div key={index}>
+                                    <NewsBlock  news={news} signal={newsInfo} />
+
+                                    <FunctionButton onClick={async () => {
+                                        const response = await removeNews({
+                                            news: index,
+                                            groupname: group.groupname
+                                        })
+                                        removeNewsSig.value = response.status < 400 ? 'Success!' : response.status
+                                    }} text='❌' displayError={removeNewsSig} />
+                                </div>
                                 )
                             })
                         }</ul>
@@ -113,9 +143,13 @@ function GroupView({ group, username }) {
     )
 }
 
-async function fetchNews({ id }) {
-    const response = await getRequest({ url: `https://www.finnkino.fi/xml/Events/?eventID=${id}` })
-    console.log("____", response)
+async function removeNews({ news, groupname }) {
+    console.log('clicked remove news!!', news , groupname)
+    const response = await postRequest({
+        url: `${apiUrl}/api/group/news/remove-index`,
+        body: { news: news, groupname: groupname }
+    });
+    return response;
 }
 
 async function requestToJoin({ groupname, signal }) {
