@@ -5,6 +5,7 @@ import { getRequest, postRequest, getXML } from '../../utils/GenericHTTPMethods'
 import './GroupView.scss'
 import NewsBlock from '../../components/containers/NewsBlock'
 import AddNewsModal from './AddNewsModal'
+import GroupNews from './GroupNews'
 
 const apiUrl = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL
 
@@ -97,7 +98,8 @@ function GroupView({ group, username }) {
                 </section>
             ) : <></>}
 
-            <section className="group-news">
+            <GroupNews group={group} />
+            {/* <section className="group-news">
                 <div className='news-notice inline'>
                     <p>news:</p>
                     {(() => {
@@ -155,7 +157,7 @@ function GroupView({ group, username }) {
 
                                 fetchNews({ id: news, signal: newsInfo })
 
-                                return (<div key={index}>
+                                return (<li key={index}>
                                     <NewsBlock news={news} signal={newsInfo} />
 
                                     <FunctionButton onClick={async () => {
@@ -165,12 +167,12 @@ function GroupView({ group, username }) {
                                         })
                                         removeNewsSig.value = response.status < 400 ? 'Success!' : response.status
                                     }} text='❌' displayError={removeNewsSig} />
-                                </div>
+                                </li>
                                 )
                             })
                         }</ul>
                 }
-            </section>
+            </section> */}
         </div>
     )
 }
