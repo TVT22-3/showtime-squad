@@ -2,6 +2,17 @@
     --_group-list-bg-primary: #333;
     --_group-list-color-primary: #fff;
 
-    background-color: var(--primary-bg, var(--_group-list-bg-primary));
-    color: var(--primary-color, var(--_group-list-color-primary));
+    .group-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        padding: 20px;
+
+        background-color: var(--primary-bg, var(--_group-list-bg-primary));
+        color: var(--primary-color, var(--_group-list-color-primary));
+
+        .show {
+            grid-column: span 3;
+        }
+    }
 }

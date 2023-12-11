@@ -1,7 +1,14 @@
 .group-block {
+    padding: 20px;
+    text-align: center;
+
+    background-color: #ffffff11;
+
+    border-radius: 5px;
 
     .group-card {
         display: flex;
         align-items: center;
+        justify-content: space-between;
     }
 }

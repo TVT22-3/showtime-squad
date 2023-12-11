@@ -21,7 +21,10 @@ function GroupList() {
             <div id="group-list">
                 <CreateGroupModal open={openModal} />
                 <FunctionButton onClick={() => { openModal.value = !openModal.value }} text={'Create New ➕'} />
-                {groups.value}
+                
+                <div class='group-grid'>
+                    {groups.value}
+                </div>
             </div>
         </>
     )
