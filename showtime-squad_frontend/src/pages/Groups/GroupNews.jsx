@@ -48,6 +48,8 @@ function GroupNews({ group }) {
                 !group.news ? 'No news' :
                     <ul>{
                         group.news.toReversed().map((news, index) => {
+                            const invertedIndex = group.news.length - 1 - index;
+
                             const newsInfo = signal('')
                             const removeNewsSig = signal('')
 
@@ -73,7 +75,7 @@ function GroupNews({ group }) {
 
                                 <FunctionButton onClick={async () => {
                                     const response = await removeNews({
-                                        news: index,
+                                        news: invertedIndex,
                                         groupname: group.groupname
                                     })
                                     removeNewsSig.value = response.status < 400 ? 'Success!' : response.status
