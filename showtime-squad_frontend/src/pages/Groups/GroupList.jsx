@@ -1,7 +1,6 @@
-import { Routes, Route } from "react-router-dom"
 import { signal } from '@preact/signals-react'
 
-import { deleteRequest, getRequest } from "../../utils/GenericHTTPMethods"
+import { getRequest } from "../../utils/GenericHTTPMethods"
 import GroupBlock from "./GroupBlock"
 import CreateGroupModal from "./CreateGroupModal"
 
@@ -16,14 +15,12 @@ groups.value = await fetchGroups()
 const openModal = signal(false)
 
 function GroupList() {
-    // TODO: Implement
-    console.log("component not properly implemented")
 
     return (
         <>
             <div id="group-list">
-                <CreateGroupModal open={openModal}/>
-                <FunctionButton onClick={() => {openModal.value = !openModal.value}} text={'Create New ➕'} />
+                <CreateGroupModal open={openModal} />
+                <FunctionButton onClick={() => { openModal.value = !openModal.value }} text={'Create New ➕'} />
                 {groups.value}
             </div>
         </>

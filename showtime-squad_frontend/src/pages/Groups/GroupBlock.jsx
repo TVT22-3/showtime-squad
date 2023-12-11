@@ -1,7 +1,4 @@
-import { Routes, Route } from "react-router-dom"
-import { signal } from '@preact/signals-react'
-
-import { deleteRequest, getRequest, postRequest } from "../../utils/GenericHTTPMethods"
+import {  getRequest, postRequest } from "../../utils/GenericHTTPMethods"
 import { useUser } from '../../context/UserContext';
 
 import GroupView from './GroupView'
@@ -30,7 +27,6 @@ function GroupBlock({ name = "", showSignal, groupSignal }) {
             return;
         }
 
-        console.log(group)
         groupSignal.value = group
     }
 
@@ -62,13 +58,11 @@ async function fetchGroupInfo(name, username) {
             // response seems valid
             if (username && response.owner && username == response.owner) {
                 //is owner, get join requests
-                console.log("is owner!")
                 const joiners = await postRequest({
                     url: `${apiUrl}/api/group/requests`,
                     body: { groupname: response.groupname }
                 });
 
-                console.log("joiners: ", joiners)
                 if (joiners) {
                     response.joinRequests = joiners.joinRequests;
                 } else {
@@ -79,8 +73,6 @@ async function fetchGroupInfo(name, username) {
             if (response.news && response.news.length > 0) {
                 // fetch news
             }
-
-            console.log("____", response)
 
             return response;
         }

@@ -7,6 +7,13 @@ const apiUrl = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL
 
 function GroupJoiners({ group }) {
 
+    if (!group.joinRequests) {
+        // user is not the owner
+        return (
+            <></>
+        )
+    }
+
     return (
         <section className='group-joiners'>
             <p>join requests:</p>
