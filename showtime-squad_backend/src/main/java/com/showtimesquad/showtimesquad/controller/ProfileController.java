@@ -46,4 +46,7 @@ public class ProfileController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @GetMapping("/getPublicInfo/{username}")
+
 }
