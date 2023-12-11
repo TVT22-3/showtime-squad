@@ -9,23 +9,26 @@ function GroupMembers({ group, username }) {
 
     return (
         <section className="group-members">
-            members:
-            <ul>
+            <p>members:</p>
+            <ul className="grid-user-list">
                 {!group.users ? 'Error' : (
                     <>
                         {group.users.map((user, index) => {
                             const removeSig = signal("")
                             return (
                                 <li key={index} className='user member inline'>
-                                    {user}
+                                    <p className="name">{user}</p>
+
                                     {user !== group.owner && username == group.owner ?
-                                        <FunctionButton onClick={async () => {
-                                            const response = await removeMember({
-                                                toRemove: user,
-                                                groupname: group.groupname
-                                            })
-                                            removeSig.value = response.status < 400 ? 'Success!' : response.status
-                                        }} text='❌' displayError={removeSig} />
+                                        <div className="action-buttons">
+                                            <FunctionButton onClick={async () => {
+                                                const response = await removeMember({
+                                                    toRemove: user,
+                                                    groupname: group.groupname
+                                                })
+                                                removeSig.value = response.status < 400 ? 'Success!' : response.status
+                                            }} text='❌' displayError={removeSig} />
+                                        </div>
                                         : <></>}
                                 </li>
                             )

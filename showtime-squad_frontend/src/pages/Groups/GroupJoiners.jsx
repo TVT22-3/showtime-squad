@@ -17,7 +17,7 @@ function GroupJoiners({ group }) {
     return (
         <section className='group-joiners'>
             <p>join requests:</p>
-            <ul>
+            <ul className="grid-user-list">
                 {group.joinRequests.length < 1 ? <li>No requests</li> :
                     (
                         group.joinRequests.map((joiner, index) => {
@@ -25,7 +25,9 @@ function GroupJoiners({ group }) {
                             const declineSig = signal("")
                             return (
                                 <li key={index} className='user joiner inline'>
-                                    {joiner}
+                                    <p className="name">{joiner}</p>
+                                    
+                                    <div className="action-buttons">
                                     {
                                         <FunctionButton onClick={async () => {
                                             const response = await acceptJoin({
@@ -44,6 +46,7 @@ function GroupJoiners({ group }) {
                                             declineSig.value = response.status < 400 ? 'Success!' : response.status
                                         }} text='❌' displayError={declineSig} />
                                     }
+                                    </div>
                                 </li>)
                         })
                     )}

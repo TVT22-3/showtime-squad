@@ -1,4 +1,6 @@
 .group-block {
+    overflow: hidden;
+
     padding: 20px;
     text-align: center;
 
@@ -10,5 +12,9 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+
+        .group-name {
+            overflow: hidden;
+        }
     }
 }

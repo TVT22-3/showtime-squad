@@ -1,11 +1,11 @@
-import { getXML } from '../../utils/GenericHTTPMethods';
+import './NewsBlock.scss'
 
 function NewsBlock({ signal }) {
 
     return (
-        <div>
+        <div className='news-block'>
             <h6>{signal.value.title ? signal.value.title : '???'}</h6>
-            <p>{signal.value.synopsis ? signal.value.synopsis : '...'}</p>
+            <p className='news-content'>{signal.value.synopsis ? signal.value.synopsis : '...'}</p>
             <a href={signal.value.url ? signal.value.url : '#'}>Read more...</a>
         </div>
     )

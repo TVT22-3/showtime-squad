@@ -1,0 +1,11 @@
+.news-block {
+
+    background-color: #ffffff11;
+
+    .news-content {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        -webkit-line-clamp: 3;
+    }
+}

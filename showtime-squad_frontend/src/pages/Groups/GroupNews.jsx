@@ -5,34 +5,19 @@ import NewsBlock from "../../components/containers/NewsBlock"
 import AddNewsModal from "./AddNewsModal"
 import FunctionButton from "../../components/atoms/FunctionButton"
 
+import './GroupNews.scss'
+
 const apiUrl = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL
 
 function GroupNews({ group }) {
 
     return (
         <section className="group-news">
+            <p>news:</p>
             <div className='news-notice inline'>
-                <p>news:</p>
                 {(() => {
                     const openModal = signal(false)
                     const newsInfo = signal('')
-
-                    // async function fetchAllNews({ signal }) {
-                    //     const response = await getXML({ url: `https://www.finnkino.fi/xml/Events/` })
-
-                    //     const eventTitles = [];
-                    //     const titleNodes = await response.xml.querySelectorAll('Title');
-                    //     const eventIdNodes = await response.xml.querySelectorAll('ID');
-
-                    //     for (let i = 0; i < titleNodes.length; i++) {
-                    //         const title = titleNodes[i];
-                    //         const eventID = eventIdNodes[i];
-
-                    //         eventTitles.push({ eventID, title });
-                    //     }
-
-                    //     signal.value = eventTitles
-                    // }
 
                     fetchAllNews({ signal: newsInfo })
 
@@ -46,27 +31,12 @@ function GroupNews({ group }) {
             </div>
             {
                 !group.news ? 'No news' :
-                    <ul>{
+                    <ul className="group-news-grid">{
                         group.news.toReversed().map((news, index) => {
                             const invertedIndex = group.news.length - 1 - index;
 
                             const newsInfo = signal('')
                             const removeNewsSig = signal('')
-
-                            // async function fetchNews({ id, signal }) {
-                            //     const response = await getXML({ url: `https://www.finnkino.fi/xml/Events/?eventID=${id}` })
-
-                            //     const eventTitle = await response.xml.querySelector('Title');
-                            //     const eventURL = await response.xml.querySelector('EventURL');
-                            //     const eventSynopsis = await response.xml.querySelector('ShortSynopsis');
-
-                            //     const newsPackage = {
-                            //         title: eventTitle ? eventTitle.innerHTML : '???',
-                            //         url: eventURL ? eventURL.innerHTML : '#',
-                            //         synopsis: eventSynopsis ? eventSynopsis.innerHTML : '...'
-                            //     }
-                            //     signal.value = newsPackage
-                            // }
 
                             fetchNews({ id: news, signal: newsInfo })
 
