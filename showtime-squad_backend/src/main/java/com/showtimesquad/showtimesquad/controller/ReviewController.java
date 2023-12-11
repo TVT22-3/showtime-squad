@@ -30,11 +30,11 @@ public class ReviewController {
     public ResponseEntity<MovieReviewsResponse> createReview(@RequestBody MovieReviewsRequest movieReviewsRequest) {
         try {
             // Validate the request if necessary
-            if (movieReviewsRequest.getReviewStars() == null || 
-            movieReviewsRequest.getUserId() == null ||
-             movieReviewsRequest.getMovieApi() == null ||
-             movieReviewsRequest.getReviewStars() < 0 ||
-             movieReviewsRequest.getReviewStars() > 5) {
+            if (movieReviewsRequest.getReviewStars() == null ||
+                    movieReviewsRequest.getUserId() == null ||
+                    movieReviewsRequest.getMovieApi() == null ||
+                    movieReviewsRequest.getReviewStars() < 0 ||
+                    movieReviewsRequest.getReviewStars() > 5) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
 
@@ -57,8 +57,7 @@ public class ReviewController {
                     movieReviews.getUser().getId(),
                     movieReviews.getMovieApi(),
                     movieReviews.getReviewStars(),
-                    movieReviews.getReviewText()
-            );
+                    movieReviews.getReviewText());
 
             return new ResponseEntity<>(finalMovieReviewsResponse, HttpStatus.CREATED);
         } catch (Exception e) {
@@ -68,25 +67,24 @@ public class ReviewController {
 
     @GetMapping("/")
     public ResponseEntity<List<MovieReviewsResponse>> getReviewsByMovieApi(@RequestParam("movieId") Integer movieApi) {
-    try {
+        try {
 
-        // Fetch the reviews from the repository
-        List<MovieReviews> movieReviewsList = reviewRepository.findByMovieApi(movieApi);
+            // Fetch the reviews from the repository
+            List<MovieReviews> movieReviewsList = reviewRepository.findByMovieApi(movieApi);
 
-        // Convert and return the response
-        List<MovieReviewsResponse> responseList = movieReviewsList.stream()
-                .map(movieReviews -> new MovieReviewsResponse(
-                        movieReviews.getId(),
-                        movieReviews.getUser().getId(),
-                        movieReviews.getMovieApi(),
-                        movieReviews.getReviewStars(),
-                        movieReviews.getReviewText()
-                ))
-                .collect(Collectors.toList());
+            // Convert and return the response
+            List<MovieReviewsResponse> responseList = movieReviewsList.stream()
+                    .map(movieReviews -> new MovieReviewsResponse(
+                            movieReviews.getId(),
+                            movieReviews.getUser().getId(),
+                            movieReviews.getMovieApi(),
+                            movieReviews.getReviewStars(),
+                            movieReviews.getReviewText()))
+                    .collect(Collectors.toList());
 
-        return new ResponseEntity<>(responseList, HttpStatus.OK);
-    } catch (Exception e) {
-        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(responseList, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
-}
 }
