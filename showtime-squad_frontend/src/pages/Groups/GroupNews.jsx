@@ -17,22 +17,22 @@ function GroupNews({ group }) {
                     const openModal = signal(false)
                     const newsInfo = signal('')
 
-                    async function fetchAllNews({ signal }) {
-                        const response = await getXML({ url: `https://www.finnkino.fi/xml/Events/` })
+                    // async function fetchAllNews({ signal }) {
+                    //     const response = await getXML({ url: `https://www.finnkino.fi/xml/Events/` })
 
-                        const eventTitles = [];
-                        const titleNodes = await response.xml.querySelectorAll('Title');
-                        const eventIdNodes = await response.xml.querySelectorAll('ID');
+                    //     const eventTitles = [];
+                    //     const titleNodes = await response.xml.querySelectorAll('Title');
+                    //     const eventIdNodes = await response.xml.querySelectorAll('ID');
 
-                        for (let i = 0; i < titleNodes.length; i++) {
-                            const title = titleNodes[i];
-                            const eventID = eventIdNodes[i];
+                    //     for (let i = 0; i < titleNodes.length; i++) {
+                    //         const title = titleNodes[i];
+                    //         const eventID = eventIdNodes[i];
 
-                            eventTitles.push({ eventID, title });
-                        }
+                    //         eventTitles.push({ eventID, title });
+                    //     }
 
-                        signal.value = eventTitles
-                    }
+                    //     signal.value = eventTitles
+                    // }
 
                     fetchAllNews({ signal: newsInfo })
 
@@ -51,20 +51,20 @@ function GroupNews({ group }) {
                             const newsInfo = signal('')
                             const removeNewsSig = signal('')
 
-                            async function fetchNews({ id, signal }) {
-                                const response = await getXML({ url: `https://www.finnkino.fi/xml/Events/?eventID=${id}` })
+                            // async function fetchNews({ id, signal }) {
+                            //     const response = await getXML({ url: `https://www.finnkino.fi/xml/Events/?eventID=${id}` })
 
-                                const eventTitle = await response.xml.querySelector('Title');
-                                const eventURL = await response.xml.querySelector('EventURL');
-                                const eventSynopsis = await response.xml.querySelector('ShortSynopsis');
+                            //     const eventTitle = await response.xml.querySelector('Title');
+                            //     const eventURL = await response.xml.querySelector('EventURL');
+                            //     const eventSynopsis = await response.xml.querySelector('ShortSynopsis');
 
-                                const newsPackage = {
-                                    title: eventTitle ? eventTitle.innerHTML : '???',
-                                    url: eventURL ? eventURL.innerHTML : '#',
-                                    synopsis: eventSynopsis ? eventSynopsis.innerHTML : '...'
-                                }
-                                signal.value = newsPackage
-                            }
+                            //     const newsPackage = {
+                            //         title: eventTitle ? eventTitle.innerHTML : '???',
+                            //         url: eventURL ? eventURL.innerHTML : '#',
+                            //         synopsis: eventSynopsis ? eventSynopsis.innerHTML : '...'
+                            //     }
+                            //     signal.value = newsPackage
+                            // }
 
                             fetchNews({ id: news, signal: newsInfo })
 
@@ -85,6 +85,38 @@ function GroupNews({ group }) {
             }
         </section>
     )
+}
+
+async function fetchAllNews({ signal }) {
+    const response = await getXML({ url: `https://www.finnkino.fi/xml/Events/` })
+
+    const eventTitles = [];
+    const titleNodes = await response.xml.querySelectorAll('Title');
+    const eventIdNodes = await response.xml.querySelectorAll('ID');
+
+    for (let i = 0; i < titleNodes.length; i++) {
+        const title = titleNodes[i];
+        const eventID = eventIdNodes[i];
+
+        eventTitles.push({ eventID, title });
+    }
+
+    signal.value = eventTitles
+}
+
+async function fetchNews({ id, signal }) {
+    const response = await getXML({ url: `https://www.finnkino.fi/xml/Events/?eventID=${id}` })
+
+    const eventTitle = await response.xml.querySelector('Title');
+    const eventURL = await response.xml.querySelector('EventURL');
+    const eventSynopsis = await response.xml.querySelector('ShortSynopsis');
+
+    const newsPackage = {
+        title: eventTitle ? eventTitle.innerHTML : '???',
+        url: eventURL ? eventURL.innerHTML : '#',
+        synopsis: eventSynopsis ? eventSynopsis.innerHTML : '...'
+    }
+    signal.value = newsPackage
 }
 
 async function removeNews({ news, groupname }) {
