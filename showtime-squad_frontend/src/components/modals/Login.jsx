@@ -11,7 +11,7 @@ function Login({ toggleForms }) {
   const navigate = useNavigate()
   const { setLoggedInUser } = useUser()
   const { setLoginStatus } = useLoginStatus()
-  const { login } = useAuth();
+  const { login } = useAuth()
 
   const [formData, setFormData] = useState({
     username: '',
@@ -65,7 +65,6 @@ function Login({ toggleForms }) {
       if (response.ok) {
         const responseData = await response.json()
         const { username, id } = responseData
-        console.log(responseData)
         login(id)
         setLoggedInUser(username)
         setLoginStatus(true)

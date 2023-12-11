@@ -30,7 +30,11 @@ public class ReviewController {
     public ResponseEntity<MovieReviewsResponse> createReview(@RequestBody MovieReviewsRequest movieReviewsRequest) {
         try {
             // Validate the request if necessary
-            if (movieReviewsRequest.getReviewStars() == null || movieReviewsRequest.getUserId() == null || movieReviewsRequest.getMovieApi() == null) {
+            if (movieReviewsRequest.getReviewStars() == null || 
+            movieReviewsRequest.getUserId() == null ||
+             movieReviewsRequest.getMovieApi() == null ||
+             movieReviewsRequest.getReviewStars() < 0 ||
+             movieReviewsRequest.getReviewStars() > 5) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
 
@@ -62,8 +66,8 @@ public class ReviewController {
         }
     }
 
-   @GetMapping("/{movies_api_id}")
-public ResponseEntity<List<MovieReviewsResponse>> getReviewsByMovieApi(@PathVariable("movies_api_id") Integer movieApi) {
+    @GetMapping("/")
+    public ResponseEntity<List<MovieReviewsResponse>> getReviewsByMovieApi(@RequestParam("movieId") Integer movieApi) {
     try {
 
         // Fetch the reviews from the repository
