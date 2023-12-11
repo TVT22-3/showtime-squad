@@ -1,17 +1,24 @@
 import React, { useState, useEffect } from 'react';
+import { useAuth } from '../../context/AuthContext';
+import "./Movies.scss";
 
-const MovieReview = ({ movieId }) => {
-  const [review, setReview] = useState(null);
+const MovieReview = ({ movie, movieId }) => {
+  const { userId } = useAuth();
+  const apiUrl = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL;
+
+  const [review, setReview] = useState('');
   const [newReviewStars, setNewReviewStars] = useState('');
   const [newReviewText, setNewReviewText] = useState('');
 
   useEffect(() => {
     const fetchReview = async () => {
       try {
-        const response = await fetch(`/api/reviews/${movieId}`);
+        const response = await fetch(`${apiUrl}/api/review/${movieId}`);
         if (response.ok) {
           const data = await response.json();
           setReview(data);
+          console.log("data info:" + data)
+          console.log("review info:" + review)
         } else {
           console.error('Error fetching review:', response.statusText);
         }
@@ -27,13 +34,13 @@ const MovieReview = ({ movieId }) => {
     e.preventDefault();
 
     try {
-      const response = await fetch('/api/reviews', {
+      const response = await fetch(`${apiUrl}/api/review/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          userId: 1, // Replace with the actual user ID
+          userId: userId,
           movieApi: movieId,
           reviewStars: parseInt(newReviewStars, 10),
           reviewText: newReviewText,
@@ -41,10 +48,10 @@ const MovieReview = ({ movieId }) => {
       });
 
       if (response.ok) {
-        // Refresh the review after a successful POST
+        console.log("response ok");
         setNewReviewStars('');
         setNewReviewText('');
-        fetchReview();
+        
       } else {
         console.error('Error submitting review:', response.statusText);
       }
@@ -53,20 +60,35 @@ const MovieReview = ({ movieId }) => {
     }
   };
 
-  return (
+  const renderMovieDetails = () => (
     <div>
-      {review ? (
-        <div>
-          <h2>Review for Movie {movieId}</h2>
-          <p>Stars: {review.reviewStars}</p>
-          <p>Review Text: {review.reviewText}</p>
-        </div>
-      ) : (
-        <p>Loading review...</p>
-      )}
+      <h2>Movie Details</h2>
+      <p>Title: {movie.title}</p>
+      <p>Release Date: {movie.release_date}</p>
+      <p>Overview: {movie.overview}</p>
+      <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt={movie.title} />
+    </div>
+  );
 
+  const renderReviewSection = () => (
+    <div>
       <hr />
+      <h2>Reviews for Movie {movie.title}</h2>
+      {review.map((review, index) => (
+          <li key={index}>
+            <p>Stars: {review.reviewStars}</p>
+            <p>Review Text: {review.reviewText}</p>
+            {/* Add more details as needed */}
+          </li>
+        ))}
+    </div>
+  );
 
+  return (
+    <div className="movieDetails">
+      {renderMovieDetails()}
+      {review ? renderReviewSection() : <p>Loading review...</p>}
+      <hr />
       <h2>Submit a Review</h2>
       <form onSubmit={handleReviewSubmit}>
         <label>
@@ -93,4 +115,5 @@ const MovieReview = ({ movieId }) => {
 };
 
 export default MovieReview;
+
 

@@ -1,6 +1,7 @@
 // Movies.jsx
 import React, { useState, useEffect, useRef } from 'react';
 import './Movies.scss';
+import MovieReview from './MovieReview';
 import { useSearchContext } from '../../context/SearchContext';
 import { useFilterMoviesContext } from '../../context/FilterMoviesContext';
 import {
@@ -24,6 +25,7 @@ const Movies = () => {
   const loaderRef = useRef(null);
   const [pageReset, setPageReset] = useState(false);
   const [hasMorePages, setHasMorePages] = useState(true);
+  const [selectedMovie, setSelectedMovie] = useState(null);
 
   const fetchMovieData = async () => {
     try {
@@ -122,27 +124,37 @@ const Movies = () => {
     }
   }, [page, pageReset]);
 
+  // Function to handle movie card click
+  const handleMovieClick = (movie) => {
+    setSelectedMovie(movie);
+  };
+
   return (
     <div className="movie-container">
-      {movieData.map((movie) => (
-        <div key={`${movie.id}-${movie.title}`} className="movie-card">
-          <p>{movie.title}</p>
-          <p>Release Date: {movie.release_date}</p>
-          <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt={movie.title} />
-          {/* Add more details as needed */}
-        </div>
-      ))}
+      {/* Render MovieReview if a movie is selected, otherwise render movie cards */}
+      {selectedMovie ? (
+       <MovieReview movie={selectedMovie} movieId={selectedMovie ? selectedMovie.id : null} />
+      ) : (
+        movieData.map((movie) => (
+          <div
+            key={`${movie.id}-${movie.title}`}
+            className="movie-card"
+            onClick={() => handleMovieClick(movie)}
+          >
+            <p>{movie.title}</p>
+            <p>Release Date: {movie.release_date}</p>
+            <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt={movie.title} />
+            {/* Add more details as needed */}
+          </div>
+        ))
+      )}
 
       <div className="text">
-
-      {loading && <p><i className='fa-solid fa-arrows-rotate'></i></p>}
-      
-      {!loading && !hasMorePages && <p>End.</p>}
-
+        {loading && <p><i className='fa-solid fa-arrows-rotate'></i></p>}
+        {!loading && !hasMorePages && <p>End.</p>}
       </div>
-      
-      {hasMorePages && <div ref={loaderRef}></div>}
 
+      {hasMorePages && !selectedMovie && <div ref={loaderRef}></div>}
     </div>
   );
 };

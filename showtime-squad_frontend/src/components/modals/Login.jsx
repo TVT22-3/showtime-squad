@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useUser, useLoginStatus } from '../../context/UserContext.jsx'
+import { useAuth } from '../../context/AuthContext.jsx'
 import './LoginRegister.scss'
 
 function Login({ toggleForms }) {
@@ -10,6 +11,7 @@ function Login({ toggleForms }) {
   const navigate = useNavigate()
   const { setLoggedInUser } = useUser()
   const { setLoginStatus } = useLoginStatus()
+  const { login } = useAuth();
 
   const [formData, setFormData] = useState({
     username: '',
@@ -62,7 +64,9 @@ function Login({ toggleForms }) {
 
       if (response.ok) {
         const responseData = await response.json()
-        const { username } = responseData
+        const { username, id } = responseData
+        console.log(responseData)
+        login(id)
         setLoggedInUser(username)
         setLoginStatus(true)
 

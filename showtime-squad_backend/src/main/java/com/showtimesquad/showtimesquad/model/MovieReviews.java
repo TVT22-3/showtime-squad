@@ -13,17 +13,57 @@ public class MovieReviews {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    public Long getId() {
+        return id;
+}
+
+public void setId(Long id) {
+        this.id = id;
+}
+
+@ManyToOne
     @JoinColumn(name = "users_id", nullable = false)
     private User user;
 
-    @Column(name = "movies_api_id", nullable = false)
+    public User getUser() {
+        return user;
+}
+
+public void setUser(User user) {
+        this.user = user;
+}
+
+@Column(name = "movies_api_id", nullable = false)
     private Integer movieApi;
 
-    @Column(name = "review_stars")
+    public Integer getMovieApi() {
+        return movieApi;
+}
+
+public void setMovieApi(Integer movieApi) {
+        this.movieApi = movieApi;
+}
+
+@Column(name = "review_stars")
     private Integer reviewStars;
 
-    @Column(name = "review_text", columnDefinition = "TEXT")
+    public Integer getReviewStars() {
+        return reviewStars;
+}
+
+public void setReviewStars(Integer reviewStars) {
+        this.reviewStars = reviewStars;
+}
+
+@Column(name = "review_text", columnDefinition = "TEXT")
     private String reviewText;
+
+public String getReviewText() {
+        return reviewText;
+}
+
+public void setReviewText(String reviewText) {
+        this.reviewText = reviewText;
+}
 
 }
