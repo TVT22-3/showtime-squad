@@ -7,6 +7,7 @@ import NewsBlock from '../../components/containers/NewsBlock'
 import AddNewsModal from './AddNewsModal'
 import GroupNews from './GroupNews'
 import GroupJoiners from './GroupJoiners'
+import GroupMembers from './GroupMembers'
 
 const apiUrl = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL
 
@@ -35,7 +36,8 @@ function GroupView({ group, username }) {
         <div className='group-view'>
             <h5 className="group-owner">owner: {!group.owner ? 'Error' : <>{group.owner}</>}</h5>
 
-            <section className="group-members">
+            <GroupMembers group={group} username={username} />
+            {/* <section className="group-members">
                 members:
                 <ul>
                     {!group.users ? 'Error' : (
@@ -60,7 +62,7 @@ function GroupView({ group, username }) {
                         </>
                     )}
                 </ul>
-            </section>
+            </section> */}
 
             {group.joinRequests ? (
                 <GroupJoiners group={group} />
