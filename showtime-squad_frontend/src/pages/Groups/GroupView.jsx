@@ -6,6 +6,7 @@ import './GroupView.scss'
 import NewsBlock from '../../components/containers/NewsBlock'
 import AddNewsModal from './AddNewsModal'
 import GroupNews from './GroupNews'
+import GroupJoiners from './GroupJoiners'
 
 const apiUrl = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL
 
@@ -62,40 +63,41 @@ function GroupView({ group, username }) {
             </section>
 
             {group.joinRequests ? (
-                <section className='group-joiners'>
-                    join requests:
-                    <ul>
-                        {group.joinRequests.length < 1 ? <li>No requests</li> :
-                            (
-                                group.joinRequests.map((joiner, index) => {
-                                    const acceptSig = signal("")
-                                    const declineSig = signal("")
-                                    return (
-                                        <li key={index} className='user joiner inline'>
-                                            {joiner}
-                                            {
-                                                <FunctionButton onClick={async () => {
-                                                    const response = await acceptJoin({
-                                                        joiner: joiner,
-                                                        groupname: group.groupname
-                                                    })
-                                                    acceptSig.value = response.status < 400 ? 'Success!' : response.status
-                                                }} text='✅' displayError={acceptSig} />
-                                            }
-                                            {
-                                                <FunctionButton onClick={async () => {
-                                                    const response = await declineJoin({
-                                                        joiner: joiner,
-                                                        groupname: group.groupname
-                                                    })
-                                                    declineSig.value = response.status < 400 ? 'Success!' : response.status
-                                                }} text='❌' displayError={declineSig} />
-                                            }
-                                        </li>)
-                                })
-                            )}
-                    </ul>
-                </section>
+                <GroupJoiners group={group} />
+                // <section className='group-joiners'>
+                //     join requests:
+                //     <ul>
+                //         {group.joinRequests.length < 1 ? <li>No requests</li> :
+                //             (
+                //                 group.joinRequests.map((joiner, index) => {
+                //                     const acceptSig = signal("")
+                //                     const declineSig = signal("")
+                //                     return (
+                //                         <li key={index} className='user joiner inline'>
+                //                             {joiner}
+                //                             {
+                //                                 <FunctionButton onClick={async () => {
+                //                                     const response = await acceptJoin({
+                //                                         joiner: joiner,
+                //                                         groupname: group.groupname
+                //                                     })
+                //                                     acceptSig.value = response.status < 400 ? 'Success!' : response.status
+                //                                 }} text='✅' displayError={acceptSig} />
+                //                             }
+                //                             {
+                //                                 <FunctionButton onClick={async () => {
+                //                                     const response = await declineJoin({
+                //                                         joiner: joiner,
+                //                                         groupname: group.groupname
+                //                                     })
+                //                                     declineSig.value = response.status < 400 ? 'Success!' : response.status
+                //                                 }} text='❌' displayError={declineSig} />
+                //                             }
+                //                         </li>)
+                //                 })
+                //             )}
+                //     </ul>
+                // </section>
             ) : <></>}
 
             <GroupNews group={group} />
