@@ -8,6 +8,7 @@ import AddNewsModal from './AddNewsModal'
 import GroupNews from './GroupNews'
 import GroupJoiners from './GroupJoiners'
 import GroupMembers from './GroupMembers'
+import GroupJoinBlock from './GroupJoinBlock'
 
 const apiUrl = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL
 
@@ -16,7 +17,8 @@ function GroupView({ group, username }) {
     if (!group.owner) {
         return (
             <div className='group-view'>
-                <div className='join-notice inline'>
+                <GroupJoinBlock group={group} />
+                {/* <div className='join-notice inline'>
                     <p>Not a member. Request to join:</p>
                     {(() => {
                         const joinSig = signal('');
@@ -27,7 +29,7 @@ function GroupView({ group, username }) {
                                 text='💪' displayError={joinSig} />
                         )
                     })()}
-                </div>
+                </div> */}
             </div>
         )
     }
