@@ -1,5 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 
+const apiUrl = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL
+
 // Create a context to manage user-related state
 const UserContext = React.createContext();
 
@@ -31,6 +33,44 @@ const UserProvider = ({ children }) => {
     sessionStorage.setItem("loginStatus", JSON.stringify(loginStatus));
   }, [loginStatus]);
 
+  const handleLogout = () => {
+    setUsername("");  // Clear username
+    setLoginStatus(false);  // Set login status to false
+    sessionStorage.removeItem("username");
+    sessionStorage.removeItem("loginStatus");
+    alert("You have been signed out")
+  };
+
+  // Use useEffect to perform the logout when the component mounts
+  useEffect(() => {
+    const performLogout = async () => {
+      const path = window.location.pathname;
+      if (path === "/logout") {
+        try {
+          const response = await fetch(apiUrl, {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          });
+
+          if (response.ok) {
+            console.log("Logout successful");
+            handleLogout();
+          } else {
+            console.error("Logout failed with status:", response.status);
+          }
+        } catch (error) {
+          console.error('Error logging out:', error);
+        }
+      }
+    };
+
+    performLogout(); // Call the async function here
+
+  }, []);
+
   // Provide the user-related data to its descendants through the context
   return (
     <UserContext.Provider
@@ -39,6 +79,7 @@ const UserProvider = ({ children }) => {
         setLoggedInUser,
         loginStatus,
         setLoginStatus: setLoginStatusWrapper,
+        handleLogout,
       }}
     >
       {children}

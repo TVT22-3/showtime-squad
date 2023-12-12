@@ -1,7 +1,7 @@
 // ModeContext.js
-import React, { useContext, useState } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 
-const FilterMoviesContext = React.createContext();
+const FilterMoviesContext = createContext();
 
 export const FilterMoviesProvider = ({ children }) => {
   const [currentMode, setCurrentMode] = useState('search');
