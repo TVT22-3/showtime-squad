@@ -11,7 +11,6 @@ const TvSeriesReview = ({ tvSeries, tvSeriesId }) => {
     const [newReviewText, setNewReviewText] = useState('')
     const [showSubmitOk, setShowSubmitOk] = useState(false)
     const [showSubmitFail, setShowSubmitFail] = useState(false)
-    console.log(tvSeries);
 
     const fetchReview = async () => {
         try {
