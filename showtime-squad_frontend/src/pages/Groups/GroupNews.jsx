@@ -63,15 +63,14 @@ async function fetchAllNews({ signal }) {
     const response = await getXML({ url: `https://www.finnkino.fi/xml/Events/` })
 
     const eventTitles = [];
-    const titleNodes = await response.xml.querySelectorAll('Title');
-    const eventIdNodes = await response.xml.querySelectorAll('ID');
+    const eventNodes = await response.xml.querySelectorAll('Event');
 
-    for (let i = 0; i < titleNodes.length; i++) {
-        const title = titleNodes[i];
-        const eventID = eventIdNodes[i];
+    eventNodes.forEach((eventNode) => {
+        const title = eventNode.querySelector('Title')
+        const eventID = eventNode.querySelector('ID')
 
-        eventTitles.push({ eventID, title });
-    }
+        eventTitles.push({ eventID, title })
+    })
 
     signal.value = eventTitles
 }
