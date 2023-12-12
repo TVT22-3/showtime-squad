@@ -1,5 +1,6 @@
 package com.showtimesquad.showtimesquad.controller;
 
+import com.showtimesquad.showtimesquad.service.UserDetailsImpl;
 import com.showtimesquad.showtimesquad.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -44,11 +45,10 @@ public class ProfileController {
         try {
             userDetailsService.loadUserByUsername(username);
             return ResponseEntity.ok("User exists");
-        } catch(UsernameNotFoundException e) {
+        } catch (UsernameNotFoundException e) {
             return ResponseEntity.notFound().build();
         }
     }
-
 
     @GetMapping("/{username}/profilepicture")
     public ResponseEntity<String> getUserProfilePicture(@PathVariable String username) {
