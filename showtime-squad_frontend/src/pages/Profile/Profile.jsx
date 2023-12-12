@@ -5,19 +5,20 @@ import ProfilePage from "../../components/ui/ProfilePage";
 import Sitemap from "../../data/sitemap.json";
 import LoginRegisterHandler from "../../components/ui/LoginRegisterHandler";
 import { useState, useEffect } from "react";
+import { useUser } from "../../context/UserContext";
 
 function Profile() {
   // TODO: Implement
   console.log("component not properly implemented");
 
-  const { username } = useParams;
+  const { username } = useParams() || useUser();
   const [userExists, setUserExists] = useState(false);
 
   useEffect(() => {
     // Make an API call to check if the user exists in the database
     const checkUserExists = async () => {
       try {
-        const response = await fetch(`/api/users/${username}/exists`);
+        const response = await fetch(`/api/users/${username}`);
         if (response.ok) {
           setUserExists(true);
         } else {
