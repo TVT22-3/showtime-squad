@@ -4,12 +4,16 @@ import com.showtimesquad.showtimesquad.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Optional;
 
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -34,6 +38,17 @@ public class ProfileController {
             return "Unauthenticated user profile for " + username;
         }
     }
+
+    @GetMapping("/{username}/exists")
+    public ResponseEntity<String> checkUserExists(@PathVariable String username) {
+        try {
+            userDetailsService.loadUserByUsername(username);
+            return ResponseEntity.ok("User exists");
+        } catch(UsernameNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 
     @GetMapping("/{username}/profilepicture")
     public ResponseEntity<String> getUserProfilePicture(@PathVariable String username) {

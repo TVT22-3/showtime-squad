@@ -12,6 +12,11 @@ export default function ProfilePage() {
   const [loading, setLoading] = useState(true);
   const displayUsername = profileUsername || loggedInUsername;
 
+  const useProfileData = (username) => {
+    const [userData, setUserData] = useState(null);
+    const [userExists, setUserExists] = useState(false);
+  }
+
   useEffect(() => {
     const fetchProfilePicture = async () => {
       try {
