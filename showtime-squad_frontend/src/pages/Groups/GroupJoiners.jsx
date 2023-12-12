@@ -17,7 +17,7 @@ function GroupJoiners({ group }) {
 
     return (
         <section className='group-joiners'>
-            <p>join requests:</p>
+            <h4>Join requests:</h4>
             {group.joinRequests.length < 1 ? <>No requests</> :
                 <ul className="grid-user-list">{
                     group.joinRequests.map((joiner, index) => {

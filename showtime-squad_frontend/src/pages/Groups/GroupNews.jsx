@@ -13,7 +13,7 @@ function GroupNews({ group }) {
 
     return (
         <section className="group-news">
-            <p>news:</p>
+            <h4>News:</h4>
             <div className='news-notice inline'>
                 {(() => {
                     const openModal = signal(false)

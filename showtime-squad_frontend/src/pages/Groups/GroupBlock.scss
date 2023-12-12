@@ -13,8 +13,20 @@
         align-items: center;
         justify-content: space-between;
 
+        min-height: 4rem;
+        margin: 0;
+
         .group-name {
             overflow: hidden;
+            flex: auto;
+            margin: 0;
+
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            -webkit-line-clamp: 2;
+
+            overflow-wrap: break-word;
         }
     }
 }

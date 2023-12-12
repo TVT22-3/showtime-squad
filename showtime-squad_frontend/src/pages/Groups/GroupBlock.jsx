@@ -34,7 +34,7 @@ function GroupBlock({ name = "", showSignal, groupSignal }) {
         <>
             <section className={`group-block ${showSignal.value ? 'show' : 'hide'}`}>
                 <div className="group-card">
-                    <h4 className="group-name">{name}</h4>
+                    <h3 className="group-name">{name}</h3>
                     <FunctionButton onClick={handleShow} text={showSignal.value ? 'hide' : 'show'} />
                 </div>
 

@@ -11,7 +11,7 @@ function GroupMembers({ group, username }) {
 
     return (
         <section className="group-members">
-            <p>members:</p>
+            <h4>Members:</h4>
             <ul className="grid-user-list">
                 {!group.users ? 'Error' : (
                     <>

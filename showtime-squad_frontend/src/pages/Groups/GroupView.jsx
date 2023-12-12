@@ -17,8 +17,8 @@ function GroupView({ group, username }) {
 
     return (
         <div className='group-view'>
-            <h5 className="group-owner">owner: {!group.owner ? 'Error' :
-                <a href={`profile/${group.owner}`}>{group.owner}</a>}</h5>
+            <h4 className="group-owner">Owner: {!group.owner ? 'Error' :
+                <a href={`profile/${group.owner}`}>{group.owner}</a>}</h4>
 
             <GroupMembers group={group} username={username} />
 

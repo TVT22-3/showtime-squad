@@ -2,6 +2,8 @@
     --_group-list-bg-primary: #333;
     --_group-list-color-primary: #fff;
 
+    padding: 1rem;
+
     background-color: var(--bg-primary, var(--_group-list-bg-primary));
 
     .group-grid {
@@ -17,8 +19,6 @@
         }
 
         gap: 30px;
-
-        padding-block: 20px;
 
         background-color: var(--primary-bg, var(--_group-list-bg-primary));
         color: var(--primary-color, var(--_group-list-color-primary));

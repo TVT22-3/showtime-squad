@@ -13,6 +13,8 @@
         color: var(--custom-button-color, var(--_default-button-color));
 
         font-size: calc(var(--custom-button-size, var(--_default-button-size)) / 2);
+
+        filter: drop-shadow(2px 4px 6px #00000011);
     }
 
 
