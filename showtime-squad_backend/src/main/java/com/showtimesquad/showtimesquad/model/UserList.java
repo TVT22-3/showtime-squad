@@ -150,8 +150,12 @@ public class UserList {
      * 
      * @return groupname The name of the group associated with the list.
      */
-    public String getGroupname() {
-        return this.groupname.getGroupname();
+    public Group getGroup() {
+        return this.groupname;
+    }
+
+    public Object getUser() {
+        return null;
     }
 
 }

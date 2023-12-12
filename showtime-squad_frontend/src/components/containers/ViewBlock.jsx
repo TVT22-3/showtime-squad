@@ -1,14 +1,21 @@
+/* global process */
 import './ViewBlock.scss'
 import MovieBlocks from './MovieBlocks.jsx'
 import NestedOptionsMenu from '../atoms/NestedOptionsMenu.jsx'
 import viewEditOptions from "../../data/viewEditOptions.json"
 import viewRemoveOptions from "../../data/viewRemoveOptions.json"
+import userList from '../../../../showtime-squad_backend/src/data/userList.java'
 
+import React, { useEffect, useState } from 'react'
 import { useOptionsButtonContext } from '../../context/OptionsButtonContext.jsx'
+
 
 function ViewBlock() {
     //TODO: Implement
+
+    const baseUrl = process.env.VITE_REACT_APP_BACKEND_BASE_URL
     console.log("component not properly implemented")
+    const groupName = 
 
     const { clickedButton, clickedCategory, clickedOption } = useOptionsButtonContext()
 
