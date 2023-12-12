@@ -40,7 +40,7 @@ function GroupNews({ group }) {
 
                             fetchNews({ id: news, signal: newsInfo })
 
-                            return (<li key={index}>
+                            return (<li key={index} className="news-item">
                                 <NewsBlock news={news} signal={newsInfo} />
 
                                 <FunctionButton onClick={async () => {
