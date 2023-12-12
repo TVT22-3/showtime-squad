@@ -1,4 +1,28 @@
 .group-view {
+    --_groups-bg-very-light: #666;
+    --_groups-primary-color: #fff;
+    --_highlight: red;
+
+    a {
+        color: var(--primary-color, var(--_groups-primary-color));
+
+        &:hover {
+            color: var(--highlight, var(--_highlight));
+        }
+    }
+
+    section {
+        margin-block: 1rem;
+        padding: 1rem;
+
+        background-color: #ffffff11;
+
+        border-radius: 5px;
+
+        h4 {
+            margin-block: 0;
+        }
+    }
 
     .inline {
         display: flex;
@@ -35,5 +59,9 @@
         .name {
             overflow: hidden;
         }
+    }
+
+    .function-button-wrapper {
+        --custom-button-bg: var(--primary-bg-very-light, var(--_groups-bg-very-light));
     }
 }
