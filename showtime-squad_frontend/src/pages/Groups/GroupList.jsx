@@ -18,14 +18,16 @@ function GroupList() {
 
     return (
         <>
-            <div id="group-list">
-                <CreateGroupModal open={openModal} />
-                <FunctionButton onClick={() => { openModal.value = !openModal.value }} text={'Create New ➕'} />
-                
-                <div class='group-grid'>
-                    {groups.value}
+            <main id="group-list">
+                <div className='max-wrapper'>
+                    <CreateGroupModal open={openModal} />
+                    <FunctionButton onClick={() => { openModal.value = !openModal.value }} text={'Create New ➕'} />
+
+                    <div class='group-grid'>
+                        {groups.value}
+                    </div>
                 </div>
-            </div>
+            </main>
         </>
     )
 }

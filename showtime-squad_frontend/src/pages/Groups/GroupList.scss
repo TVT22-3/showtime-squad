@@ -2,17 +2,37 @@
     --_group-list-bg-primary: #333;
     --_group-list-color-primary: #fff;
 
+    background-color: var(--bg-primary, var(--_group-list-bg-primary));
+
     .group-grid {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        gap: 20px;
-        padding: 20px;
+
+        @media only screen and (max-width: 900px) {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        @media only screen and (max-width: 600px) {
+            grid-template-columns: repeat(1, 1fr);
+        }
+
+        gap: 30px;
+
+        padding-block: 20px;
 
         background-color: var(--primary-bg, var(--_group-list-bg-primary));
         color: var(--primary-color, var(--_group-list-color-primary));
 
         .show {
             grid-column: span 3;
+
+            @media only screen and (max-width: 900px) {
+                grid-column: span 2;
+            }
+
+            @media only screen and (max-width: 600px) {
+                grid-column: span 1;
+            }
         }
     }
 }
