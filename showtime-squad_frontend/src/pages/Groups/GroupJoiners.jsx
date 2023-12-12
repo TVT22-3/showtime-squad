@@ -57,11 +57,13 @@ function GroupJoiners({ group }) {
 }
 
 async function acceptJoin({ joiner, groupname }) {
-    const response = await postRequest({
-        url: `${apiUrl}/api/group/accept`,
-        body: { another: joiner, groupname: groupname }
-    });
-    return response;
+    if (confirm(`Do you wish to accept user '${joiner}' into the group?`))  {
+        const response = await postRequest({
+            url: `${apiUrl}/api/group/accept`,
+            body: { another: joiner, groupname: groupname }
+        });
+        return response;
+    } 
 }
 
 async function declineJoin({ joiner, groupname }) {

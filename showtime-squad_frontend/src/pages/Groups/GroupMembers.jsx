@@ -43,11 +43,16 @@ function GroupMembers({ group, username }) {
 }
 
 async function removeMember({ toRemove, groupname }) {
-    const response = await postRequest({
-        url: `${apiUrl}/api/group/remove`,
-        body: { another: toRemove, groupname: groupname }
-    });
-    return response;
+    if (confirm(`Do you wish to remove user '${toRemove}'?`)) {
+        const response = await postRequest({
+            url: `${apiUrl}/api/group/remove`,
+            body: { another: toRemove, groupname: groupname }
+        });
+        return response;
+    } else {
+        // const response = { status: -1 }
+        // return response
+    }
 }
 
 export default GroupMembers

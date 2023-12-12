@@ -30,7 +30,7 @@ function GroupNews({ group }) {
                 }
             </div>
             {
-                !group.news ? 'No news' :
+                !group.news || group.news.length < 1 ? 'No news' :
                     <ul className="group-news-grid">{
                         group.news.toReversed().map((news, index) => {
                             const invertedIndex = group.news.length - 1 - index;
@@ -91,11 +91,13 @@ async function fetchNews({ id, signal }) {
 }
 
 async function removeNews({ news, groupname }) {
-    const response = await postRequest({
-        url: `${apiUrl}/api/group/news/remove-index`,
-        body: { news: news, groupname: groupname }
-    });
-    return response;
+    if (confirm(`Do you wish to remove news at index '${news}'?`)) {
+        const response = await postRequest({
+            url: `${apiUrl}/api/group/news/remove-index`,
+            body: { news: news, groupname: groupname }
+        });
+        return response;
+    }
 }
 
 export default GroupNews
