@@ -43,16 +43,14 @@
 
         }
 
-        // select every 1,4,7... element, that has a direct sibling with .show
+        // select every 2,5,8... element, that has a direct next sibling with .show
         .group-block.hide:nth-child(3n-1):has(+ .group-block.show),
-        // also select every element that has previous conditions fulfilled as a next sibling
+        // also select every element that has a direct next sibling with previous conditions fulfilled
         .group-block.hide:has(+ .group-block.hide:nth-child(3n-1) +.group-block.show) {
-            // background-color: lightseagreen;
             grid-column: span 3;
         }
 
         .group-block.hide:nth-child(3n-2):has(+ .group-block.show) {
-            // background-color: lightcoral;
             grid-column: span 6;
         }
     }

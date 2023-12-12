@@ -10,7 +10,7 @@ import FunctionButton from "../../components/atoms/FunctionButton"
 const apiUrl = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL
 
 const groups = signal("No groups")
-{(async ()=>{groups.value = await fetchGroups()})()}
+{ (async () => { groups.value = await fetchGroups() })() }
 
 const openModal = signal(false)
 
@@ -23,7 +23,7 @@ function GroupList() {
                     <CreateGroupModal open={openModal} />
                     <FunctionButton onClick={() => { openModal.value = !openModal.value }} text={'Create New ➕'} />
 
-                    <div class='group-grid'>
+                    <div className='group-grid'>
                         {groups.value}
                     </div>
                 </div>
@@ -39,12 +39,15 @@ async function fetchGroups() {
             // handle singleton
             const groups = Array.isArray(response.groups) ? response.groups : [response.groups];
 
+            const showSigList = {}
             const groupList = groups.map(function (group, index) {
                 const showSig = signal(false);
                 const groupSig = signal();
 
+                showSigList[index] = showSig
+
                 return (
-                    <GroupBlock key={index} name={group} showSignal={showSig} groupSignal={groupSig} />
+                    <GroupBlock key={index} name={group} showSignal={showSigList} groupSignal={groupSig} index={index}/>
                 );
             });
 

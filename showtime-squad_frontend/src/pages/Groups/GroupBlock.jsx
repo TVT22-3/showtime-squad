@@ -7,10 +7,12 @@ import GroupView from './GroupView'
 import FunctionButton from '../../components/atoms/FunctionButton'
 
 import './GroupBlock.scss'
+import { hashToIndex } from "../../utils/HashFunction";
 
 const apiUrl = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL
+const GROUP_STYLES_AMOUNT = 6
 
-function GroupBlock({ name = "", showSignal, groupSignal }) {
+function GroupBlock({ name = "", showSignal, groupSignal, index }) {
     if (showSignal == null || groupSignal == null) {
         throw new Error("Specified (individual) signals are mandatory")
     }
@@ -19,19 +21,23 @@ function GroupBlock({ name = "", showSignal, groupSignal }) {
 
     const epicElementRef = useRef(null);
 
-    async function handleShow() {
-        showSignal.value = !showSignal.value
-        if (showSignal.value === false) {
-            setTimeout(() => {
-                const elementHeight = epicElementRef.current.clientHeight;
+    async function changeShowStates() {
+        showSignal[index].value = !showSignal[index].value
 
-                window.scroll({
-                    top: window.scrollY - elementHeight,
-                    behavior: 'smooth',
-                });
-            }, 5);
-            //   TODO: this timer is kinda scuffed
-            // we have to wait otherwise it will just scroll based on old height 
+        for (const key in showSignal) {
+            if (key != index && showSignal[key].value === true) {
+                showSignal[key].value = false;
+            }
+        }
+    }
+
+    async function handleListUpdate() {
+        const elementHeight = epicElementRef.current.clientHeight;
+        if (showSignal[index].value === false) {
+            window.scroll({
+                top: window.scrollY - elementHeight,
+                behavior: 'smooth',
+            });
             return
         }
 
@@ -50,13 +56,20 @@ function GroupBlock({ name = "", showSignal, groupSignal }) {
 
     return (
         <>
-            <section className={`group-block ${showSignal.value ? 'show' : 'hide'}`} ref={epicElementRef}>
+            <section className={
+                `group-block ${showSignal[index].value ? 'show' : 'hide'}` +
+                ` group-style-${hashToIndex(name, GROUP_STYLES_AMOUNT)}`}
+                ref={epicElementRef}>
                 <div className="group-card">
                     <h3 className="group-name">{name}</h3>
-                    <FunctionButton onClick={handleShow} text={showSignal.value ? 'hide' : 'show'} />
+
+                    <FunctionButton onClick={async () => {
+                        await changeShowStates()
+                        handleListUpdate()
+                    }} text={showSignal[index].value ? '🎥' : '🎥'} />
                 </div>
 
-                {showSignal.value ?
+                {showSignal[index].value ?
                     <GroupView
                         group={
                             groupSignal.value ? groupSignal.value : { groupname: name }

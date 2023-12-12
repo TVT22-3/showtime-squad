@@ -1,4 +1,17 @@
+@mixin groupStyle($styleNumber, $bgColor) {
+    &.group-style-#{$styleNumber} .group-card .function-button {
+        background-color: var(--_hash-style-#{$bgColor});
+    }
+}
+
 .group-block {
+    --_hash-style-0: #eb4141;
+    --_hash-style-1: #266ae0;
+    --_hash-style-2: #ff9602;
+    --_hash-style-3: #9d3bc0;
+    --_hash-style-4: #09c089;
+    --_hash-style-5: #39b310;
+
     overflow: hidden;
 
     padding: 20px;
@@ -28,5 +41,18 @@
 
             overflow-wrap: break-word;
         }
+
+        .function-button {
+            width: 4rem;
+            height: 4rem;
+            border-radius: 50%;
+        }
     }
+
+    @include groupStyle(0, 0);
+    @include groupStyle(1, 1);
+    @include groupStyle(2, 2);
+    @include groupStyle(3, 3);
+    @include groupStyle(4, 4);
+    @include groupStyle(5, 5);
 }
