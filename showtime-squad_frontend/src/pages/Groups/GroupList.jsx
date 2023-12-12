@@ -9,8 +9,8 @@ import FunctionButton from "../../components/atoms/FunctionButton"
 
 const apiUrl = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL
 
-const groups = signal(["No groups"])
-groups.value = await fetchGroups()
+const groups = signal("No groups")
+{(async ()=>{groups.value = await fetchGroups()})()}
 
 const openModal = signal(false)
 
