@@ -1,5 +1,7 @@
-import {  getRequest, postRequest } from "../../utils/GenericHTTPMethods"
+import { getRequest, postRequest } from "../../utils/GenericHTTPMethods"
 import { useUser } from '../../context/UserContext';
+
+import React, { useRef } from 'react';
 
 import GroupView from './GroupView'
 import FunctionButton from '../../components/atoms/FunctionButton'
@@ -15,10 +17,26 @@ function GroupBlock({ name = "", showSignal, groupSignal }) {
 
     const { username } = useUser()
 
+    const epicElementRef = useRef(null);
+
     async function handleShow() {
         showSignal.value = !showSignal.value
         if (showSignal.value === false) {
+            setTimeout(() => {
+                const elementHeight = epicElementRef.current.clientHeight;
+
+                window.scroll({
+                    top: window.scrollY - elementHeight,
+                    behavior: 'smooth',
+                });
+            }, 5);
+            //   TODO: this timer is kinda scuffed
+            // we have to wait otherwise it will just scroll based on old height 
             return
+        }
+
+        if (epicElementRef.current) {
+            epicElementRef.current.scrollIntoView({ behavior: 'smooth' });
         }
 
         const group = await fetchGroupInfo(name, username)
@@ -32,7 +50,7 @@ function GroupBlock({ name = "", showSignal, groupSignal }) {
 
     return (
         <>
-            <section className={`group-block ${showSignal.value ? 'show' : 'hide'}`}>
+            <section className={`group-block ${showSignal.value ? 'show' : 'hide'}`} ref={epicElementRef}>
                 <div className="group-card">
                     <h3 className="group-name">{name}</h3>
                     <FunctionButton onClick={handleShow} text={showSignal.value ? 'hide' : 'show'} />
