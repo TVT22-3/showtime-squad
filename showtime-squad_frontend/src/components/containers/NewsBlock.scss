@@ -1,4 +1,6 @@
 .news-block {
+    padding-inline: 1rem;
+
     background-color: #ffffff11;
 
     border-radius: 20px 5px;
@@ -20,15 +22,10 @@
             align-items: center;
             margin: 0;
     
-            
-            // margin-block: unset;
-    
             font-size: 1rem;
             text-wrap: balance;
         }
     }
-
-    
 
     .news-content {
         display: -webkit-box;

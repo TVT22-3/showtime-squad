@@ -1,6 +1,4 @@
 .group-news {
-    --_button-size: 2rem;
-    --_news-block-bg-light: #555;
 
     .group-news-grid {
         display: grid;
@@ -16,7 +14,7 @@
 
         }
 
-        gap: 20px;
+        gap: 3rem;
         padding: 20px;
 
         .news-item {
@@ -24,19 +22,17 @@
             position: relative;
 
             .function-button-wrapper {
+                --custom-button-size: 2rem;
+                --custom-button-bg: #555;
+
                 position: absolute;
-                top: calc(0rem - var(--_button-size) / 2);
-                right: calc(0rem - var(--_button-size) / 2);
+                top: calc(0rem - var(--custom-button-size) / 2);
+                right: calc(0rem - var(--custom-button-size) / 2);
 
                 button {
-                    width: var(--_button-size);
-                    height: var(--_button-size);
+                    // background-color: var(--primary-bg-light, var(--_news-block-bg-light));
 
-                    padding: 0;
-
-                    background-color: var(--primary-bg-light, var(--_news-block-bg-light));
-
-                    font-size: calc(var(--_button-size) / 2);
+                    // font-size: calc(var(--_button-size) / 2);
                 }
             }
         }
