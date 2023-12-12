@@ -5,6 +5,7 @@ import { render, screen, act, fireEvent } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { UserProvider } from "../../../context/UserContext.jsx";
 import Login from '../Login.jsx';
+import { AuthProvider } from '../../../context/AuthContext.jsx';
 
 // Test suite for the Login component
 describe('Login component', () => {
@@ -12,9 +13,11 @@ describe('Login component', () => {
   beforeEach(() => {
     render(
       <BrowserRouter>
+      <AuthProvider>
         <UserProvider>
           <Login />
         </UserProvider>
+        </AuthProvider>
       </BrowserRouter>
     );
   });

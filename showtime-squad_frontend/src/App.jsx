@@ -14,9 +14,11 @@ import { UserProvider } from './context/UserContext.jsx'
 import Profile from './pages/Profile/Profile.jsx'
 import { SearchProvider } from './context/SearchContext.jsx'
 import { FilterMoviesProvider } from './context/FilterMoviesContext.jsx'
+import { AuthProvider } from './context/AuthContext.jsx';
 
 function App() {
   return (
+    <AuthProvider>
     <FilterMoviesProvider>
     <SearchProvider>
     <UserProvider>
@@ -37,6 +39,7 @@ function App() {
     </UserProvider>
     </SearchProvider>
     </FilterMoviesProvider>
+    </AuthProvider>
   )
 }
 
