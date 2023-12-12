@@ -1,0 +1,17 @@
+.group-joiners {
+    .joiner{
+        position: relative;
+
+        .action-buttons {
+            --custom-button-size: 2rem;
+
+            position: absolute;
+
+            right: calc(0rem - var(--custom-button-size) / 2);
+
+            .function-button-wrapper {
+                margin-block: 0.5rem;
+            }
+        }
+    }
+}

@@ -1,11 +1,11 @@
 .group-view {
-    // display: grid;
-    // grid-template-columns: repeat(3, 1fr);
 
     .inline {
         display: flex;
         align-items: center;
         justify-content: center;
+
+        gap: 1rem;
     }
 
     .grid-user-list {
@@ -28,8 +28,6 @@
     }
 
     .user {
-        overflow: hidden;
-
         background-color: #ffffff11;
         border-radius: 5px;
 

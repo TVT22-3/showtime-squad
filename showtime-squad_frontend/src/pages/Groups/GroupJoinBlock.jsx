@@ -9,14 +9,14 @@ function GroupJoinBlock({ group }) {
 
     return (
         <div className='join-notice inline'>
-            <p>Not a member. Request to join:</p>
+            <p>Not a member.</p>
             {(() => {
                 const joinSig = signal('');
                 return (
                     <FunctionButton onClick={async () => {
                         await requestToJoin({ groupname: group.groupname, signal: joinSig })
                     }}
-                        text='💪' displayError={joinSig} />
+                        text='Request to join 💪' displayError={joinSig} />
                 )
             })()}
         </div>

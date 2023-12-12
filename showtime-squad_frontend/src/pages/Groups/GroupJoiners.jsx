@@ -2,6 +2,7 @@ import { signal } from "@preact/signals-react"
 import { postRequest } from "../../utils/GenericHTTPMethods"
 
 import FunctionButton from "../../components/atoms/FunctionButton"
+import './GroupJoiners.scss'
 
 const apiUrl = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL
 
@@ -17,17 +18,16 @@ function GroupJoiners({ group }) {
     return (
         <section className='group-joiners'>
             <p>join requests:</p>
-            <ul className="grid-user-list">
-                {group.joinRequests.length < 1 ? <li>No requests</li> :
-                    (
-                        group.joinRequests.map((joiner, index) => {
-                            const acceptSig = signal("")
-                            const declineSig = signal("")
-                            return (
-                                <li key={index} className='user joiner inline'>
-                                    <p className="name">{joiner}</p>
-                                    
-                                    <div className="action-buttons">
+            {group.joinRequests.length < 1 ? <>No requests</> :
+                <ul className="grid-user-list">{
+                    group.joinRequests.map((joiner, index) => {
+                        const acceptSig = signal("")
+                        const declineSig = signal("")
+                        return (
+                            <li key={index} className='user joiner inline'>
+                                <p className="name">{joiner}</p>
+
+                                <div className="action-buttons">
                                     {
                                         <FunctionButton onClick={async () => {
                                             const response = await acceptJoin({
@@ -46,11 +46,12 @@ function GroupJoiners({ group }) {
                                             declineSig.value = response.status < 400 ? 'Success!' : response.status
                                         }} text='❌' displayError={declineSig} />
                                     }
-                                    </div>
-                                </li>)
-                        })
-                    )}
-            </ul>
+                                </div>
+                            </li>
+                        )
+                    })
+                } </ul>
+            }
         </section>
     )
 }
