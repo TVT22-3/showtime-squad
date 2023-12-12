@@ -1,6 +1,5 @@
 // path: showtime-squad_frontend/src/components/ui/NavBar.jsx
 import './FilterBar.scss';
-import React, { useState } from 'react';
 
 import { useFilterMoviesContext } from '../../context/FilterMoviesContext';
 

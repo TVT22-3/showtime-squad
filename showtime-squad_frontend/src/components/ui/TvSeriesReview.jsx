@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useAuth } from '../../context/AuthContext'
 import "./MovieReview.scss"
 
-const MovieReview = ({ movie, movieId }) => {
+const TvSeriesReview = ({ tvSeries, tvSeriesId }) => {
     const { userId } = useAuth()
     const apiUrl = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL
 
@@ -11,10 +11,11 @@ const MovieReview = ({ movie, movieId }) => {
     const [newReviewText, setNewReviewText] = useState('')
     const [showSubmitOk, setShowSubmitOk] = useState(false)
     const [showSubmitFail, setShowSubmitFail] = useState(false)
+    console.log(tvSeries);
 
     const fetchReview = async () => {
         try {
-            const response = await fetch(`${apiUrl}/api/review/?movieId=${movieId}`)
+            const response = await fetch(`${apiUrl}/api/review/?movieId=${tvSeriesId}`)
             if (response.ok) {
                 const data = await response.json()
                 setReview(data)
@@ -31,7 +32,7 @@ const MovieReview = ({ movie, movieId }) => {
     useEffect(() => {
         // Fetch reviews when the component mounts
         fetchReview()
-    }, [movieId])
+    }, [tvSeriesId])
 
     const handleReviewSubmit = async (e) => {
         e.preventDefault()
@@ -44,7 +45,7 @@ const MovieReview = ({ movie, movieId }) => {
                 },
                 body: JSON.stringify({
                     userId: userId,
-                    movieApi: movieId,
+                    movieApi: tvSeriesId,
                     reviewStars: parseInt(newReviewStars, 10),
                     reviewText: newReviewText,
                 }),
@@ -77,17 +78,17 @@ const MovieReview = ({ movie, movieId }) => {
 
     const renderMovieDetails = () => (
         <div>
-            <h2>Movie Details</h2>
-            <p>Title: {movie.title}</p>
-            <p>Release Date: {movie.release_date}</p>
-            <p>Overview: {movie.overview}</p>
-            <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt={movie.title} />
+            <h2>Series Details</h2>
+            <p>Title: {tvSeries.name}</p>
+            <p>First air date: {tvSeries.first_air_date || "TBA"}</p>
+            <p>Overview: {tvSeries.overview}</p>
+            <img src={`https://image.tmdb.org/t/p/w500${tvSeries.poster_path}`} alt={tvSeries.name} />
         </div>
     )
 
     const renderReviewSection = () => (
         <div>
-            <h2>Reviews for Movie {movie.title}</h2>
+            <h2>Reviews for {tvSeries.name}</h2>
             {review.length > 0 ? (
                 review.map((review, index) => (
                     <li key={index}>
@@ -139,4 +140,4 @@ const MovieReview = ({ movie, movieId }) => {
     )
 }
 
-export default MovieReview
+export default TvSeriesReview

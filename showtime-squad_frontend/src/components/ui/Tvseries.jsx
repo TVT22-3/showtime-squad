@@ -1,33 +1,33 @@
-// Movies.jsx
+// TvSeriess.jsx
 import React, { useState, useEffect, useRef } from 'react'
 import './Movies.scss'
-import MovieReview from './MovieReview'
+import TvSeriesReview from './TvSeriesReview'
 import { useSearchContext } from '../../context/SearchContext'
 import { useFilterMoviesContext } from '../../context/FilterMoviesContext'
 import {
-  fetchGenreMovies,
-  fetchNowPlayingMovies,
-  fetchPopularMovies,
-  fetchTopRatedMovies,
-  fetchUpcomingMovies,
-  fetchSearchMovies,
-  standardFetchMovies
-} from '../../pages/Movies/FetchMovies'
+  fetchTvSeriesGenre,
+  fetchTvSeriesOnTheAir,
+  fetchPopularTvSeries,
+  fetchTopRatedTvSeries,
+  fetchTvSeriesAiringToday,
+  fetchSearchTvSeries,
+  standardFetchTvSeries
+} from '../../pages/TvSeries/FetchTvSeries'
 
 
-const Movies = () => {
+const TvSeries = () => {
   const { searchQuery } = useSearchContext()
   const { currentMode, currentPayload } = useFilterMoviesContext()
-  const [movieData, setMovieData] = useState([])
+  const [TvSeriesData, setTvSeriesData] = useState([])
   const [page, setPage] = useState(1)
   const [loading, setLoading] = useState(false)
   const region = "FI"
   const loaderRef = useRef(null)
   const [pageReset, setPageReset] = useState(false)
   const [hasMorePages, setHasMorePages] = useState(true)
-  const [selectedMovie, setSelectedMovie] = useState(null)
+  const [selectedTvSeries, setSelectedTvSeries] = useState(null)
 
-  const fetchMovieData = async () => {
+  const fetchTvSeriesData = async () => {
     try {
 
       if (loading) {
@@ -37,29 +37,29 @@ const Movies = () => {
       let data
       setLoading(true)
 
-      setSelectedMovie(null)
+      setSelectedTvSeries(null)
       switch (currentMode) {
         case 'popular':
-          data = await fetchPopularMovies(page)
+          data = await fetchPopularTvSeries(page)
           break
-        case 'nowplaying':
-          data = await fetchNowPlayingMovies(page, region) // Add the region parameter if needed
+        case 'ontheair':
+          data = await fetchTvSeriesOnTheAir(page, region) // Add the region parameter if needed
           break
-        case 'upcoming':
-          data = await fetchUpcomingMovies(page, region) // Add the region parameter if needed
+        case 'airingtoday':
+          data = await fetchTvSeriesAiringToday(page, region) // Add the region parameter if needed
           break
         case 'toprated':
-          data = await fetchTopRatedMovies(page)
+          data = await fetchTopRatedTvSeries(page)
           break
         case 'genre':
           const genreId = currentPayload.id
-          data = await fetchGenreMovies(genreId, page)
+          data = await fetchTvSeriesGenre(genreId, page)
           break
-        case 'movies':
-          data = await fetchSearchMovies(searchQuery, page)
+        case 'tv-series':
+          data = await fetchSearchTvSeries(searchQuery, page)
           break
         default:
-          data = await standardFetchMovies(page)
+          data = await standardFetchTvSeries(page)
           break
       }
       const hasMorePages = data.page < data.total_pages
@@ -67,19 +67,19 @@ const Movies = () => {
 
 
       if (page === 1) {
-        setMovieData(data.results)
+        setTvSeriesData(data.results)
       }
 
 
       if (hasMorePages && page > 1) {
         // Concatenate new data with existing data
         console.log("fetching more data")
-        setMovieData((prevData) => [...prevData, ...data.results])
+        setTvSeriesData((prevData) => [...prevData, ...data.results])
       } else {
         console.log('No more pages to fetch.')
       }
     } catch (error) {
-      console.error('Error fetching movie data:', error)
+      console.error('Error fetching TvSeries data:', error)
     } finally {
       setLoading(false)
     }
@@ -88,9 +88,9 @@ const Movies = () => {
   const handleObserver = (entries) => {
     const target = entries[0]
     if (target.isIntersecting && !loading) {
-      if (movieData.length > 10) {
+      if (TvSeriesData.length > 10) {
         setPage((prevPage) => prevPage + 1)
-        fetchMovieData()
+        fetchTvSeriesData()
       }
     }
   }
@@ -113,48 +113,48 @@ const Movies = () => {
 
   useEffect(() => {
     setPage(1)
-    setMovieData([])
+    setTvSeriesData([])
     setPageReset(!pageReset)
     setHasMorePages(true) // Reset the state for more pages
   }, [searchQuery, currentMode, currentPayload])
 
   useEffect(() => {
     if (pageReset) {
-      fetchMovieData()
+      fetchTvSeriesData()
       setPageReset(!pageReset)
     }
   }, [page, pageReset])
 
-  // Function to handle movie card click
-  const handleMovieClick = (movie) => {
-    setSelectedMovie(movie)
+  // Function to handle TvSeries card click
+  const handleTvSeriesClick = (tvSeries) => {
+    setSelectedTvSeries(tvSeries)
     window.scrollTo({ top: 920, behavior: 'smooth' })
   }
 
   const handleClearButtonClick = () => {
-    setSelectedMovie(null)
+    setSelectedTvSeries(null)
   }
 
   return (
     <div className="movie-container">
       {/* Render MovieReview if a movie is selected, otherwise render movie cards */}
-      {selectedMovie ? (
+      {selectedTvSeries ? (
         <div>
           <button className="clear-button" onClick={handleClearButtonClick}>
-            Back to Movies ←
+            Back to Tv series ←
           </button>
-          <MovieReview movie={selectedMovie} movieId={selectedMovie ? selectedMovie.id : null} />
+          <TvSeriesReview tvSeries={selectedTvSeries} tvSeriesId={selectedTvSeries ? selectedTvSeries.id : null} />
         </div>
       ) : (
-        movieData.map((movie) => (
+        TvSeriesData.map((tvSeries) => (
           <div
-            key={`${movie.id}-${movie.title}`}
+            key={`${tvSeries.id}-${tvSeries.name}`}
             className="movie-card"
-            onClick={() => handleMovieClick(movie)}
+            onClick={() => handleTvSeriesClick(tvSeries)}
           >
-            <p>{movie.title}</p>
-            <p>Release Date: {movie.release_date}</p>
-            <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt={movie.title} />
+            <p>{tvSeries.name}</p>
+            <p>First air date: {tvSeries.first_air_date || "TBA"}</p>
+            <img src={`https://image.tmdb.org/t/p/w500${tvSeries.poster_path}`} alt={tvSeries.name} />
             {/* Add more details as needed */}
           </div>
         ))
@@ -165,9 +165,9 @@ const Movies = () => {
         {!loading && !hasMorePages && <p>End.</p>}
       </div>
 
-      {hasMorePages && !selectedMovie && <div ref={loaderRef}></div>}
+      {hasMorePages && !selectedTvSeries && <div ref={loaderRef}></div>}
     </div>
   )
 }
 
-export default Movies
+export default TvSeries

@@ -70,6 +70,7 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/").permitAll()
                         .requestMatchers("/movies/**").permitAll()
+                        .requestMatchers("/tv/**").permitAll()
                         .requestMatchers("/hel*").permitAll()
                         .requestMatchers("/api/auth/**", "/auth/**").permitAll()
                         .requestMatchers("/api/test/**").permitAll()

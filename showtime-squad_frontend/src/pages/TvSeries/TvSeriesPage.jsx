@@ -3,18 +3,18 @@ import Footer from "../../components/ui/Footer"
 import Header from "../../components/ui/Header"
 import Sitemap from "../../data/sitemap.json"
 import LoginRegisterHandler from "../../components/ui/LoginRegisterHandler"
-import FilterBar from "../../components/ui/FilterBar"
-import Movies from "../../components/ui/Movies"
+import FilterBarTv from "../../components/ui/FilterBarTv"
+import Tvseries from "../../components/ui/Tvseries"
 
-function MoviesPage() {
+function TvSeriesPage() {
     // TODO: Implement
     console.log("component not properly implemented")
 
     return (
         <>
             <Header />
-            <FilterBar />
-            <Movies />
+            <FilterBarTv />
+            <Tvseries />
             <Routes>
                 <Route path="/login" element={<LoginRegisterHandler />} />
             </Routes>
@@ -23,4 +23,4 @@ function MoviesPage() {
     )
 }
 
-export default MoviesPage
+export default TvSeriesPage

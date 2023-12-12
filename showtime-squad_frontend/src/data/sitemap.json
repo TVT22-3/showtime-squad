@@ -31,6 +31,20 @@
       }
     }
   },
+  "tv-series": {
+    "title": "tv series",
+    "path": "/tv-series",
+    "guests": true,
+    "show": "both",
+    "subpages": {
+      "favorites": {
+        "title": "favorites",
+        "path": "/favorites",
+        "guests": false,
+        "show": "user"
+      }
+    }
+  },
   "news": {
     "title": "news",
     "path": "/news",
