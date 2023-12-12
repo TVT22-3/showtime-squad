@@ -19,7 +19,7 @@ function GroupMembers({ group, username }) {
                             const removeSig = signal("")
                             return (
                                 <li key={index} className='user member inline'>
-                                    <p className="name">{user}</p>
+                                    <p className="name"><a href={`profile/${user}`}>{user}</a></p>
 
                                     {user !== group.owner && username == group.owner ?
                                         <div className="action-buttons">

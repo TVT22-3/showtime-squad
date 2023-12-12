@@ -25,7 +25,7 @@ function GroupJoiners({ group }) {
                         const declineSig = signal("")
                         return (
                             <li key={index} className='user joiner inline'>
-                                <p className="name">{joiner}</p>
+                                <p className="name"><a href={`profile/${joiner}`}>{joiner}</a></p>
 
                                 <div className="action-buttons">
                                     {
@@ -57,13 +57,13 @@ function GroupJoiners({ group }) {
 }
 
 async function acceptJoin({ joiner, groupname }) {
-    if (confirm(`Do you wish to accept user '${joiner}' into the group?`))  {
+    if (confirm(`Do you wish to accept user '${joiner}' into the group?`)) {
         const response = await postRequest({
             url: `${apiUrl}/api/group/accept`,
             body: { another: joiner, groupname: groupname }
         });
         return response;
-    } 
+    }
 }
 
 async function declineJoin({ joiner, groupname }) {
