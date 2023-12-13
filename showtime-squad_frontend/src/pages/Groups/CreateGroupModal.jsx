@@ -6,14 +6,15 @@ import './CreateGroupModal.scss'
 import { postRequest } from '../../utils/GenericHTTPMethods'
 const apiUrl = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL
 
-const inputField = signal('')
+const nameField = signal('')
+const descriptionField = signal('')
 const errorMessage = signal('');
 
 function CreateGroupModal({ open }) {
 
-    const handleInput = (event) => {
-        inputField.value = event.target.value
-    };
+    const handleInput = (signal, event) => {
+        signal.value = event.target.value
+    }
 
     function modalShutdown() {
         setTimeout(() => {
@@ -24,12 +25,14 @@ function CreateGroupModal({ open }) {
     return (
         <dialog id="create-group-modal" className="create-group-modal modal" open={open.value}>
             <div className='flex-wrapper'>
-                <h6>Give group name:</h6>
+                <label htmlFor="">Group Name:</label>
+                <input type="text" value={nameField.value} onInput={(event) => { handleInput(nameField, event) }} />
 
-                <input type="text" value={inputField.value} onInput={handleInput} />
+                <label htmlFor="">Description:</label>
+                <textarea rows="3" type="text" value={descriptionField.value} onInput={(event) => { handleInput(descriptionField, event) }} />
                 <FunctionButton
                     onClick={async () => {
-                        if (await createGroup(inputField.value)) {
+                        if (await createGroup({ groupname: nameField.value, description: descriptionField.value })) {
                             modalShutdown()
                         }
                     }}
@@ -40,8 +43,11 @@ function CreateGroupModal({ open }) {
     )
 }
 
-async function createGroup(groupname) {
-    const response = await postRequest({ url: `${apiUrl}/api/group/create`, body: { groupname: groupname } });
+async function createGroup({ groupname, description }) {
+    const response = await postRequest({
+        url: `${apiUrl}/api/group/create`,
+        body: { groupname: groupname, description: description }
+    })
     const isOk = response.status < 400
     errorMessage.value = isOk ? 'Success!' : response.status
     return isOk

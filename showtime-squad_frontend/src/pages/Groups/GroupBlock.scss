@@ -29,9 +29,23 @@
         min-height: 4rem;
         margin: 0;
 
-        .group-name {
+        .group-heading {
             overflow: hidden;
             flex: auto;
+        }
+
+        .group-name {
+            margin: 0;
+
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            -webkit-line-clamp: 2;
+
+            overflow-wrap: break-word;
+        }
+
+        .group-description {
             margin: 0;
 
             display: -webkit-box;

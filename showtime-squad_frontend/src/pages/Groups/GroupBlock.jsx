@@ -12,7 +12,7 @@ import { hashToIndex } from "../../utils/HashFunction";
 const apiUrl = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL
 const GROUP_STYLES_AMOUNT = 6
 
-function GroupBlock({ name = "", showSignal, groupSignal, index }) {
+function GroupBlock({ name = "", description = "", showSignal, groupSignal, index }) {
     if (showSignal == null || groupSignal == null) {
         throw new Error("Specified (individual) signals are mandatory")
     }
@@ -61,7 +61,11 @@ function GroupBlock({ name = "", showSignal, groupSignal, index }) {
                 ` group-style-${hashToIndex(name, GROUP_STYLES_AMOUNT)}`}
                 ref={epicElementRef}>
                 <div className="group-card">
+                <hgroup className="group-heading">
                     <h3 className="group-name">{name}</h3>
+                    <p className="group-description">{description}</p>
+                </hgroup>
+
 
                     <FunctionButton onClick={async () => {
                         await changeShowStates()

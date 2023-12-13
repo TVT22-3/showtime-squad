@@ -35,9 +35,9 @@ function GroupList() {
 async function fetchGroups() {
     try {
         const response = await getRequest({ url: apiUrl + "/api/group/" })
-        if (response && response.groups) {
+        if (response && response.groupsWithInfo) {
             // handle singleton
-            const groups = Array.isArray(response.groups) ? response.groups : [response.groups];
+            const groups = Array.isArray(response.groupsWithInfo) ? response.groupsWithInfo : [response.groupsWithInfo];
 
             const showSigList = {}
             const groupList = groups.map(function (group, index) {
@@ -47,7 +47,8 @@ async function fetchGroups() {
                 showSigList[index] = showSig
 
                 return (
-                    <GroupBlock key={index} name={group} showSignal={showSigList} groupSignal={groupSig} index={index}/>
+                    <GroupBlock key={index} name={group.groupname} description={group.description}
+                    showSignal={showSigList} groupSignal={groupSig} index={index}/>
                 );
             });
 
