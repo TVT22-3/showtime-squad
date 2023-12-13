@@ -30,7 +30,7 @@ import com.showtimesquad.showtimesquad.repository.UserRepository;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping(value = "/api/lists")
+@RequestMapping(value = { "/api/lists", "/list" })
 public class ListController {
 
     @Autowired
@@ -42,9 +42,7 @@ public class ListController {
     @Autowired
     GroupRepository groupRepository;
 
-    @GetMapping(
-
-    "/")
+    @GetMapping("/")
     public ResponseEntity<?> getAll() {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(listRepository.findAll());
