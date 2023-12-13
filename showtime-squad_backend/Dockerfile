@@ -22,7 +22,7 @@ FROM openjdk:17-jdk-slim
 WORKDIR /app
 
 # Copy the built JAR file from the Maven build stage to the container
-COPY --from=build /app/target/showtimesquad-0.0.1-SNAPSHOT.jar ./
+COPY --from=build /app/target/showtimesquad-0.0.1-SNAPSHOT.jar ./app.jar
 
 # Set the command to run the application with environment variables
 ENTRYPOINT [ "java", "-jar", "/app.jar" ]
