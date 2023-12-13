@@ -1,9 +1,17 @@
 import { render, screen } from '@testing-library/react'
 import Footer from '../Footer.jsx'
 import actualSitemap from '../../../data/sitemap.json'
+import { UserProvider } from "../../../context/UserContext.jsx";
+import { AuthProvider } from '../../../context/AuthContext.jsx';
 
 test('render Footer without any props', () => {
-    render(<Footer />)
+    render(
+    <AuthProvider>
+    <UserProvider>
+      <Footer />
+    </UserProvider>
+    </AuthProvider>
+  )
 
     const footerElement = screen.getByRole('contentinfo')
 
@@ -12,7 +20,13 @@ test('render Footer without any props', () => {
 })
 
 test('render Footer with sitemap.json as guest', () => {
-    render(<Footer sitemap={actualSitemap} loggedIn={false} />)
+    render(
+    <AuthProvider>
+    <UserProvider test={false}>
+    <Footer sitemap={actualSitemap} />
+    </UserProvider>
+    </AuthProvider>
+    )
 
     const footerElement = screen.getByRole('contentinfo')
 
@@ -31,7 +45,13 @@ test('render Footer with sitemap.json as guest', () => {
 })
 
 test('render Footer with sitemap.json as user', () => {
-    render(<Footer sitemap={actualSitemap} loggedIn={true} />)
+    render(
+        <AuthProvider>
+        <UserProvider test={true}>
+        <Footer sitemap={actualSitemap} />
+        </UserProvider>
+        </AuthProvider>
+        )
 
     const footerElement = screen.getByRole('contentinfo')
 
@@ -49,11 +69,11 @@ test('render Footer with sitemap.json as user', () => {
     })
 })
 
-function recursivelyIterateThroughPages(pages, loggedIn, assertions) {
+function recursivelyIterateThroughPages(pages, loginStatus, assertions) {
     Object.entries(pages).forEach(([key, page]) => {
         // guard clause to check if user is logged in
         if (page.show &&
-            (!loggedIn && page.show === 'user') || (loggedIn && page.show === 'guest')) {
+            (!loginStatus && page.show === 'user') || (loginStatus && page.show === 'guest')) {
             return
         }
 
@@ -61,7 +81,7 @@ function recursivelyIterateThroughPages(pages, loggedIn, assertions) {
         if (page.subpages) {
             // recurse into subpages
             return (
-                recursivelyIterateThroughPages(page.subpages, loggedIn, assertions)
+                recursivelyIterateThroughPages(page.subpages, loginStatus, assertions)
             )
         } else {
             // recursion stops when no more subpages are met

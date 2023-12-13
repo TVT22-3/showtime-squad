@@ -75,7 +75,7 @@ function Settings() {
                 />
             </main>
 
-            <Footer sitemap={Sitemap} loggedIn={true} />
+            <Footer sitemap={Sitemap} />
         </>
     )
 }

@@ -4,7 +4,7 @@ import React, { createContext, useContext, useState } from 'react';
 const FilterMoviesContext = createContext();
 
 export const FilterMoviesProvider = ({ children }) => {
-  const [currentMode, setCurrentMode] = useState('search');
+  const [currentMode, setCurrentMode] = useState(null);
   const [currentPayload, setCurrentPayload] = useState(null);
 
   const switchMode = (mode, payload = null) => {
@@ -12,7 +12,6 @@ export const FilterMoviesProvider = ({ children }) => {
     setCurrentPayload(payload);
   };
 
-  console.log('Current Mode:', currentMode);
 
   return (
     <FilterMoviesContext.Provider value={{ currentMode, currentPayload, switchMode }}>

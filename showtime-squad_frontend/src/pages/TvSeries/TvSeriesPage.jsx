@@ -1,18 +1,20 @@
 import { Routes, Route } from "react-router-dom"
 import Footer from "../../components/ui/Footer"
 import Header from "../../components/ui/Header"
-import ProfilePage from "../../components/ui/ProfilePage"
 import Sitemap from "../../data/sitemap.json"
 import LoginRegisterHandler from "../../components/ui/LoginRegisterHandler"
+import FilterBarTv from "../../components/ui/FilterBarTv"
+import Tvseries from "../../components/ui/Tvseries"
 
-function Profile() {
+function TvSeriesPage() {
     // TODO: Implement
     console.log("component not properly implemented")
 
     return (
         <>
             <Header />
-            <ProfilePage />
+            <FilterBarTv />
+            <Tvseries />
             <Routes>
                 <Route path="/login" element={<LoginRegisterHandler />} />
             </Routes>
@@ -21,4 +23,4 @@ function Profile() {
     )
 }
 
-export default Profile
+export default TvSeriesPage

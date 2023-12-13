@@ -2,7 +2,13 @@ import './Footer.scss'
 import gitHubLogo from '../../assets/logo/github-mark-white.svg'
 import discordLogo from '../../assets/logo/discord-clyde-white.svg'
 
-function Footer({ sitemap, loggedIn }) {
+import { useLoginStatus } from '../../context/UserContext';
+
+
+
+function Footer({ sitemap }) {
+
+    const { loginStatus } = useLoginStatus();
     //TODO: change this (guest) to use context when login system implemented
     console.log("component not properly implemented")
 
@@ -58,7 +64,7 @@ function Footer({ sitemap, loggedIn }) {
 
                 <div className='footer-item _sitemap'>
                     <h2>SITEMAP</h2>
-                    {sitemap ? generateNestedList(sitemap, loggedIn) : <>sitemap not found...</>}
+                    {sitemap ? generateNestedList(sitemap, loginStatus) : <>sitemap not found...</>}
                 </div>
 
                 <div className='footer-item _related'>
@@ -97,11 +103,11 @@ function Footer({ sitemap, loggedIn }) {
 //         },
 //     }
 // }
-function generateNestedList(pages, loggedIn) {
+function generateNestedList(pages, loginStatus) {
     const listItems = Object.entries(pages).map(([key, page]) => {
         // guard clause to check if user is logged in
         if (page.show &&
-            (!loggedIn && page.show === 'user') || (loggedIn && page.show === 'guest')) {
+            (!loginStatus && page.show === 'user') || (loginStatus && page.show === 'guest')) {
             return
         }
 
@@ -111,7 +117,7 @@ function generateNestedList(pages, loggedIn) {
             return (
                 <li key={key}>
                     <a href={page.path}>{page.title}</a>
-                    {generateNestedList(page.subpages, loggedIn)}
+                    {generateNestedList(page.subpages, loginStatus)}
                 </li>
             )
         } else {

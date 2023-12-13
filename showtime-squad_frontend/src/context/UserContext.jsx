@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
+import { useAuth } from './AuthContext';
 
 const apiUrl = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL
 
@@ -6,7 +7,9 @@ const apiUrl = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL
 const UserContext = React.createContext();
 
 // UserProvider is a component that provides user-related data to its descendants
-const UserProvider = ({ children }) => {
+const UserProvider = ({ children, test }) => {
+
+  const { logout } = useAuth()
   // State to store the username, retrieved from sessionStorage or an empty string if not present
   const [username, setUsername] = useState(
     sessionStorage.getItem("username") || ""
@@ -14,7 +17,7 @@ const UserProvider = ({ children }) => {
 
   // State to store the login status, retrieved from sessionStorage or false if not present
   const [loginStatus, setLoginStatus] = useState(
-    JSON.parse(sessionStorage.getItem("loginStatus")) || false
+    test !== undefined ? test : JSON.parse(sessionStorage.getItem("loginStatus")) || false
   );
 
   // Function to set the logged-in user, updating both state and sessionStorage
@@ -58,6 +61,7 @@ const UserProvider = ({ children }) => {
           if (response.ok) {
             console.log("Logout successful");
             handleLogout();
+            logout();
           } else {
             console.error("Logout failed with status:", response.status);
           }

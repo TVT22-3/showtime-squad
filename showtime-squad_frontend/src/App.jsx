@@ -16,6 +16,7 @@ import { SearchProvider } from './context/SearchContext.jsx'
 import { FilterMoviesProvider } from './context/FilterMoviesContext.jsx'
 import { AuthProvider } from './context/AuthContext.jsx';
 import Groups from './pages/Groups/Groups.jsx'
+import TvSeriesPage from './pages/TvSeries/TvSeriesPage.jsx'
 
 function App() {
   return (
@@ -28,6 +29,8 @@ function App() {
         <Route path="/*" element={<Home />} />
         
         <Route path="/movies/*" element={<MoviesPage />} />
+
+        <Route path="/tv-series/*" element={<TvSeriesPage />} />
 
         <Route path="/profile" element={<Profile />} />
         {/* debug sandbox */}

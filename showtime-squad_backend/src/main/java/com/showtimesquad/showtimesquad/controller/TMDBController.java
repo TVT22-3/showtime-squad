@@ -9,7 +9,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
-@RequestMapping("/movies")
+@RequestMapping({ "/movies", "/tv" })
 public class TMDBController {
 
     private final RestTemplate restTemplate = new RestTemplate();
@@ -86,6 +86,62 @@ public class TMDBController {
         String uri = "https://api.themoviedb.org/3/movie/top_rated?api_key=" + apiKey + "&page=" + page;
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> response = restTemplate.getForEntity(uri, String.class);
+        return response;
+    }
+
+    @GetMapping(value = "/series/search")
+    public ResponseEntity<String> searchTvSeries(@RequestParam("searchQuery") String searchQuery,
+            @RequestParam(defaultValue = "1") int page) {
+        // TODO: searchQuery parsing?
+        String uri = "https://api.themoviedb.org/3/search/tv?api_key=" + apiKey + "&query=" + searchQuery + "&page="
+                + page;
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> response = restTemplate.getForEntity(uri, String.class);
+        return response;
+    }
+
+    @GetMapping(value = "/series/airingtoday")
+    public ResponseEntity<String> getAiringTodayTvShows(@RequestParam(defaultValue = "1") int page) {
+        String uri = "https://api.themoviedb.org/3/tv/airing_today?api_key=" + apiKey + "&page=" + page;
+        ResponseEntity<String> response = restTemplate.getForEntity(uri, String.class);
+        return response;
+    }
+
+    @GetMapping(value = "/series/ontheair")
+    public ResponseEntity<String> getOnTheAirTvShows(@RequestParam(defaultValue = "1") int page) {
+        String uri = "https://api.themoviedb.org/3/tv/on_the_air?api_key=" + apiKey + "&page=" + page;
+        ResponseEntity<String> response = restTemplate.getForEntity(uri, String.class);
+        return response;
+    }
+
+    @GetMapping(value = "/series/popular")
+    public ResponseEntity<String> getPopularTvShows(@RequestParam(defaultValue = "1") int page) {
+        String uri = "https://api.themoviedb.org/3/tv/popular?api_key=" + apiKey + "&page=" + page;
+        ResponseEntity<String> response = restTemplate.getForEntity(uri, String.class);
+        return response;
+    }
+
+    @GetMapping(value = "/series/toprated")
+    public ResponseEntity<String> getTopRatedTvShows(@RequestParam(defaultValue = "1") int page) {
+        String uri = "https://api.themoviedb.org/3/tv/top_rated?api_key=" + apiKey + "&page=" + page;
+        ResponseEntity<String> response = restTemplate.getForEntity(uri, String.class);
+        return response;
+    }
+
+        @GetMapping(value = "/series/genre")
+    public ResponseEntity<String> getTvGenres(@RequestParam("genreId") String genreId,
+            @RequestParam(defaultValue = "1") int page) {
+        String uri = "https://api.themoviedb.org/3/discover/tv?api_key=" + apiKey + "&with_genres=" + genreId
+                + "&page=" + page;
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> response = restTemplate.getForEntity(uri, String.class);
+        return response;
+    }
+
+        @GetMapping("/series/")
+    public ResponseEntity<String> getTvSeries(@RequestParam(defaultValue = "1") int page) {
+        String url = "https://api.themoviedb.org/3/discover/tv?api_key=" + apiKey + "&page=" + page;
+        ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
         return response;
     }
 }
