@@ -94,10 +94,10 @@ public class ListController {
         return ResponseEntity.status(HttpStatus.OK).body(list);
     }
 
-    @PostMapping("/create")
+    @PostMapping("/create/group")
     public ResponseEntity<?> createGroupList(
             @RequestParam String listname,
-            String groupname,
+            @RequestParam String groupname,
             @AuthenticationPrincipal UserDetails userDetails) {
 
         if (userDetails == null) {
@@ -117,7 +117,7 @@ public class ListController {
         return ResponseEntity.status(HttpStatus.OK).body(list);
     }
 
-    @PostMapping("/create")
+    @PostMapping("/create/user/group")
     public ResponseEntity<?> createUserList(
             @RequestParam String listname,
             @RequestParam String username,
