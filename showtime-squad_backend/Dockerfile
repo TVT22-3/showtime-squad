@@ -4,7 +4,10 @@ FROM maven:3.8.4-openjdk-17-slim AS build
 WORKDIR /
 # Copy the pom.xml and the project files to the container
 COPY pom.xml .
+# Copy application.properties from /etc/secrets/ to /src/main/resources/ because I'm dumb
+COPY ./etc/secrets/application.properties ./src/main/resources/application.properties
 COPY src ./src
+
 # Build the application using Maven
 RUN mvn clean package -DskipTests
 
