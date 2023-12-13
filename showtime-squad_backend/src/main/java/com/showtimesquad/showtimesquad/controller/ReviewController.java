@@ -1,11 +1,13 @@
 package com.showtimesquad.showtimesquad.controller;
 
+import com.showtimesquad.showtimesquad.dto.MovieReviewResponseDTO;
 import com.showtimesquad.showtimesquad.model.MovieReviews;
 import com.showtimesquad.showtimesquad.model.User;
 import com.showtimesquad.showtimesquad.model.request.MovieReviewsRequest;
 import com.showtimesquad.showtimesquad.model.response.MovieReviewsResponse;
 import com.showtimesquad.showtimesquad.repository.ReviewRepository;
 import com.showtimesquad.showtimesquad.repository.UserRepository;
+import com.showtimesquad.showtimesquad.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,11 +21,13 @@ public class ReviewController {
 
     private final ReviewRepository reviewRepository;
     private final UserRepository userRepository;
+    private final ReviewService reviewService;
 
     @Autowired
-    public ReviewController(ReviewRepository reviewRepository, UserRepository userRepository) {
+    public ReviewController(ReviewRepository reviewRepository, UserRepository userRepository, ReviewService reviewService) {
         this.reviewRepository = reviewRepository;
         this.userRepository = userRepository;
+        this.reviewService = reviewService;
     }
 
     @PostMapping("/")
@@ -86,5 +90,11 @@ public class ReviewController {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @GetMapping("/user/{username}")
+    public ResponseEntity<List<MovieReviewResponseDTO>> getLastThreeReviewsByUser(@PathVariable String username) {
+        List<MovieReviewResponseDTO> reviews = reviewService.getLastThreeReviewsByUser(username);
+        return new ResponseEntity<>(reviews, HttpStatus.OK);
     }
 }

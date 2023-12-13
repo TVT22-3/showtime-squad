@@ -40,7 +40,6 @@ function Profile() {
     return <p>User not found</p>;
   }
 
-  // Render the profile page only if the user exists
   return (
     <>
       <Header />

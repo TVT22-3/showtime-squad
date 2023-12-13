@@ -1,6 +1,9 @@
 package com.showtimesquad.showtimesquad.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "movie_reviews",
@@ -66,4 +69,16 @@ public void setReviewText(String reviewText) {
         this.reviewText = reviewText;
 }
 
+@CreationTimestamp
+@Column(name = "created_at", updatable = false)
+    private LocalDateTime createdAt;
+
+public LocalDateTime getCreatedAt() {
+        return createdAt;
 }
+
+public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+}
+}
+
