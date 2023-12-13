@@ -4,18 +4,42 @@ import { postRequest } from '../../utils/GenericHTTPMethods'
 import FunctionButton from "../../components/atoms/FunctionButton"
 
 import './GroupMembers.scss'
+const usersSig = signal()
 
 const apiUrl = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL
 
 function GroupMembers({ group, username }) {
 
+    if (!usersSig.value) {
+        usersSig.value = group.users
+    }
+
+    async function removeMember({ toRemove, groupname }) {
+        if (confirm(`Do you wish to remove user '${toRemove}'?`)) {
+            const response = await postRequest({
+                url: `${apiUrl}/api/group/remove`,
+                body: { another: toRemove, groupname: groupname }
+            })
+
+            if(response.status < 400) {
+                //update signal
+                usersSig.value = usersSig.value.filter(item => item !== toRemove)
+            }
+
+            return response;
+        } else {
+            // const response = { status: -1 }
+            // return response
+        }
+    }
+
     return (
         <section className="group-members">
             <h4>Members:</h4>
             <ul className="grid-user-list">
-                {!group.users ? 'Error' : (
+                {!usersSig.value ? 'Error' : (
                     <>
-                        {group.users.map((user, index) => {
+                        {usersSig.value.map((user, index) => {
                             const removeSig = signal("")
                             return (
                                 <li key={index} className='user member inline'>
@@ -40,19 +64,6 @@ function GroupMembers({ group, username }) {
             </ul>
         </section>
     )
-}
-
-async function removeMember({ toRemove, groupname }) {
-    if (confirm(`Do you wish to remove user '${toRemove}'?`)) {
-        const response = await postRequest({
-            url: `${apiUrl}/api/group/remove`,
-            body: { another: toRemove, groupname: groupname }
-        });
-        return response;
-    } else {
-        // const response = { status: -1 }
-        // return response
-    }
 }
 
 export default GroupMembers

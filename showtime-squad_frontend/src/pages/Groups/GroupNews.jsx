@@ -17,13 +17,9 @@ function GroupNews({ group }) {
     }
 
     function removeNewsAtIndex({ index }) { // TODO:
-        console.log("remove index", index, ":", ...newsSig.value)
-        // groupSig.value = groupSig.value.filter((_, i) => i !== index);
-        // console.log("after:", ...groupSig.value)
         newsSig.value = newsSig.value.filter((_, i) => i !== index)
-        console.log("after:", ...newsSig.value)
     }
-    console.log("¤¤¤¤¤", newsSig.value)
+    
     return (
         <section className="group-news">
             <h4>News:</h4>
