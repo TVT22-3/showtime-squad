@@ -4,6 +4,8 @@ import { postRequest } from "../../utils/GenericHTTPMethods"
 import FunctionButton from "../../components/atoms/FunctionButton"
 import './GroupJoiners.scss'
 
+const joinerSig = signal()
+
 const apiUrl = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL
 
 function GroupJoiners({ group }) {
@@ -15,12 +17,37 @@ function GroupJoiners({ group }) {
         )
     }
 
+    if (!joinerSig.value) {
+        joinerSig.value = group.joinRequests
+    }
+
+
+    async function acceptJoin({ joiner, groupname }) {
+        if (confirm(`Do you wish to accept user '${joiner}' into the group?`)) {
+            const response = await postRequest({
+                url: `${apiUrl}/api/group/accept`,
+                body: { another: joiner, groupname: groupname }
+            })
+
+            if(response.status < 400) {
+                //update signal
+                joinerSig.value = joinerSig.value.filter(item => item !== joiner)
+            }
+
+            return response
+        }
+    }
+
+    async function declineJoin({ joiner, groupname }) {
+        console.error("UNIMPLEMENTED function 'declineJoin'")
+    }
+
     return (
         <section className='group-joiners'>
             <h4>Join requests:</h4>
-            {group.joinRequests.length < 1 ? <>No requests</> :
+            {joinerSig.value.length < 1 ? <>No requests</> :
                 <ul className="grid-user-list">{
-                    group.joinRequests.map((joiner, index) => {
+                    joinerSig.value.map((joiner, index) => {
                         const acceptSig = signal("")
                         const declineSig = signal("")
                         return (
@@ -54,20 +81,6 @@ function GroupJoiners({ group }) {
             }
         </section>
     )
-}
-
-async function acceptJoin({ joiner, groupname }) {
-    if (confirm(`Do you wish to accept user '${joiner}' into the group?`)) {
-        const response = await postRequest({
-            url: `${apiUrl}/api/group/accept`,
-            body: { another: joiner, groupname: groupname }
-        });
-        return response;
-    }
-}
-
-async function declineJoin({ joiner, groupname }) {
-    console.error("UNIMPLEMENTED function 'declineJoin'")
 }
 
 export default GroupJoiners
