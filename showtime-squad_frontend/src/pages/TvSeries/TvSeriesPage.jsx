@@ -18,7 +18,7 @@ function TvSeriesPage() {
             <Routes>
                 <Route path="/login" element={<LoginRegisterHandler />} />
             </Routes>
-            <Footer sitemap={Sitemap} loggedIn={false} />
+            <Footer sitemap={Sitemap} />
         </>
     )
 }
