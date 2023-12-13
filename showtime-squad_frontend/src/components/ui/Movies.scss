@@ -1,39 +1,86 @@
 .movie-container {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around; // Default for multiple movies
-  
-    .movie-card {
-      width: 250px;
-      margin: 20px;
-      padding: 10px;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      transition: transform 0.2s;
-  
-      img {
-        max-width: 100%;
-        height: auto;
-        border-radius: 4px;
-        
-      }
+  margin-top: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  font-family: 'Arial', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
 
-  
-      p {
-        margin: 8px 0;
-      }
+  .clear-button {
+    font-size: 25px;
+    margin-left: 20px;
+    position: sticky;
+    top: 0px;
+    border-radius: 0;
+    background-color: #646CFF;
+    z-index: 3;
+  }
+
+  .movie-card {
+    width: 250px;
+    margin: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+    cursor: pointer;
+
+    img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 4px;
+
     }
 
-    .movie-card:hover {
-        transform: scale(1.1);
-    }
-  
-    // Adjust the justification for a single movie
-    @media (max-width: 300px) {
-      justify-content: flex-start;
+
+    p {
+      margin: 8px 0;
     }
   }
-  
+
+  .movie-card:hover {
+    transform: scale(1.1);
+  }
+
+  .text {
+    width: 100%; // Ensure the text div takes up the full width
+    text-align: center; // Center the text
+    margin-top: 20px;
+    font-size: 26px;
+    font-weight: 700; // Add spacing between movies and text
+
+    p {
+      margin: 8px 0; // Adjust margin as needed
+    }
+  }
+
+  .fa-solid.fa-arrows-rotate {
+    animation: spin 2s infinite linear;
+    justify-content: center;
+    align-items: center;
+  }
+
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .movieDetails {
+    img {
+      height: 500px;
+    }
+  }
+
+  // Adjust the justification for a single movie
+  @media (max-width: 300px) {
+    justify-content: flex-start;
+  }
+}

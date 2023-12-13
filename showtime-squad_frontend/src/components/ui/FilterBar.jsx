@@ -1,60 +1,59 @@
 // path: showtime-squad_frontend/src/components/ui/NavBar.jsx
-import React from 'react'
-import './FilterBar.scss'
-import sitemap from '../../data/sitemap.json'
+import './FilterBar.scss';
+import React, { useState } from 'react';
 
-const sitemapArray = Object.values(sitemap)
+import { useFilterMoviesContext } from '../../context/FilterMoviesContext';
 
-function NavElement(sitemapKey) {
-  const show = sitemapKey.show
-  const subpages = hasKey(sitemapKey, "subpages")
+const genres = [
+  { id: 28, name: "action" },
+  { id: 12, name: "adventure" },
+  { id: 16, name: "animation" },
+  { id: 35, name: "comedy" },
+  { id: 80, name: "crime" },
+  { id: 99, name: "documentary" },
+  { id: 18, name: "drama" },
+  { id: 10751, name: "family" },
+  { id: 14, name: "fantasy" },
+  { id: 36, name: "history" },
+  { id: 27, name: "horror" },
+  { id: 10402, name: "music" },
+  { id: 9648, name: "mystery" },
+  { id: 10749, name: "romance" },
+  { id: 878, name: "science fiction" },
+  { id: 10770, name: "tv movie" },
+  { id: 53, name: "thriller" },
+  { id: 10752, name: "war" },
+  { id: 37, name: "western" }
+];
+
+const FilterBar = () => {
+  const { switchMode } = useFilterMoviesContext();
+
+  const handleGenreClick = (genre) => {
+    switchMode('genre', { id: genre.id, name: genre.name });
+  };
 
   return (
-    <li className={subpages ? 'dropdown' : ''}>
-      <a href={sitemapKey.path}>{sitemapKey.title}</a>
-      {subpages ?
-        <ul className='dropdown-content'>
-          {Object.values(sitemapKey.subpages).map((key) => (
-            SubElement(key)
+    <div id="filter-bar">
+      <button onClick={() => switchMode('popular')}>popular</button>
+      <button onClick={() => switchMode('nowplaying')}>now playing</button>
+      <button onClick={() => switchMode('upcoming')}>upcoming</button>
+      <button onClick={() => switchMode('toprated')}>top rated</button>
+
+      {/* Dropdown for genres */}
+      <div className="dropdown">
+        <span className="dropbtn">genres 🞃</span>
+        <div className="dropdown-content">
+          {genres.map(genre => (
+            <button key={genre.id} onClick={() => handleGenreClick(genre)}>
+              {genre.name}
+            </button>
           ))}
-        </ul> : null}
-    </li>
-  )
-}
+        </div>
+      </div>
+    </div>
+  );
+};
 
-function SubElement(submapKey) {
-  const show = submapKey.show
+export default FilterBar;
 
- 
-
-  return (
-    <li key={submapKey.title}>
-      <a href={submapKey.path}>{submapKey.title}</a>
-    </li>
-  )
-}
-
-function hasKey(obj, key) {
-  return Object.prototype.hasOwnProperty.call(obj, key)
-}
-
-function FilterBar() {
-  
-  const filteredSitemapArray = sitemapArray.filter(
-    (key) => key.title.toLowerCase() === 'top rated' || key.title.toLowerCase() === 'popular'
-  )
-
-  return (
-    <nav id='nav-bar'>
-      <ul className='nav-items'>
-        {filteredSitemapArray.map((key) => (
-          <React.Fragment key={key.title}>
-            {NavElement(key)}
-          </React.Fragment>
-        ))}
-      </ul>
-    </nav>
-  )
-}
-
-export default FilterBar
