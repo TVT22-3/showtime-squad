@@ -43,15 +43,32 @@
 
         }
 
-        // select every 2,5,8... element, that has a direct next sibling with .show
-        .group-block.hide:nth-child(3n-1):has(+ .group-block.show),
-        // also select every element that has a direct next sibling with previous conditions fulfilled
-        .group-block.hide:has(+ .group-block.hide:nth-child(3n-1) +.group-block.show) {
-            grid-column: span 3;
+
+
+        @media only screen and (min-width: 900px) {
+
+            // select every 2,5,8... element, that has a direct next sibling with .show
+            .group-block.hide:nth-child(3n-1):has(+ .group-block.show),
+            // also select every element that has a direct next sibling with previous conditions fulfilled
+            .group-block.hide:has(+ .group-block.hide:nth-child(3n-1) +.group-block.show) {
+                grid-column: span 3;
+            }
+
+            .group-block.hide:nth-child(3n-2):has(+ .group-block.show) {
+                grid-column: span 6;
+            }
         }
 
-        .group-block.hide:nth-child(3n-2):has(+ .group-block.show) {
-            grid-column: span 6;
+        @media only screen and (max-width: 900px) {
+            .group-block.hide:nth-child(2n-1):has(+ .group-block.show) {
+                grid-column: span 4;
+            }
+        }
+
+        @media only screen and (max-width: 600px) {
+            .group-block.hide:nth-child(2n-1):has(+ .group-block.show) {
+                grid-column: span 2;
+            }
         }
     }
 }
