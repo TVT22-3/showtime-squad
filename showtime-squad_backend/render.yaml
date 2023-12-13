@@ -1,0 +1,51 @@
+services:
+  - name: showtime-squad-app
+    env:
+      - key: TMDB_API_KEY
+        from: secret
+        name: _env
+        path: TMDB_API_KEY
+      - key: PROFILE_PICTURES
+        from: secret
+        name: _env
+        path: PROFILE_PICTURES
+      - key: SPRING_DATASOURCE_URL
+        from: secret
+        name: _env
+        path: SPRING_DATASOURCE_URL
+      - key: SPRING_DATASOURCE_USERNAME
+        from: secret
+        name: _env
+        path: SPRING_DATASOURCE_USERNAME
+      - key: SPRING_DATASOURCE_PASSWORD
+        from: secret
+        name: _env
+        path: SPRING_DATASOURCE_PASSWORD
+      - key: SPRING_JPA_HIBERNATE_DDL_AUTO
+        from: secret
+        name: _env
+        path: SPRING_JPA_HIBERNATE_DDL_AUTO
+      - key: SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT
+        from: secret
+        name: _env
+        path: SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT
+      - key: SPRING_DATASOURCE_DRIVER_CLASS_NAME
+        from: secret
+        name: _env
+        path: SPRING_DATASOURCE_DRIVER_CLASS_NAME
+      - key: SHOWTIMESQUAD_APP_JWTCOOKIENAME
+        from: secret
+        name: _env
+        path: SHOWTIMESQUAD_APP_JWTCOOKIENAME
+      - key: SHOWTIMESQUAD_APP_JWTSECRET
+        from: secret
+        name: _env
+        path: SHOWTIMESQUAD_APP_JWTSECRET
+      - key: SHOWTIMESQUAD_APP_JWTEXPIRATIONMS
+        from: secret
+        name: _env
+        path: SHOWTIMESQUAD_APP_JWTEXPIRATIONMS
+      - key: FRONTEND_URL
+        from: secret
+        name: _env
+        path: FRONTEND_URL
