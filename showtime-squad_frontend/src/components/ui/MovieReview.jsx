@@ -118,6 +118,9 @@ const MovieReview = ({ movie, movieId }) => {
                         value={newReviewStars}
                         onChange={(e) => setNewReviewStars(e.target.value)}
                         required
+                        min="0"
+                        max="5"
+                        pattern="[0-5]"
                     />
                 </label>
                 <br />
