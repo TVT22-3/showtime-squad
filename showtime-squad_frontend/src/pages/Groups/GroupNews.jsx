@@ -6,11 +6,24 @@ import AddNewsModal from "./AddNewsModal"
 import FunctionButton from "../../components/atoms/FunctionButton"
 
 import './GroupNews.scss'
+const newsSig = signal()
 
 const apiUrl = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL
 
 function GroupNews({ group }) {
 
+    if (!newsSig.value) {
+        newsSig.value = group.news
+    }
+
+    function removeNewsAtIndex({ index }) { // TODO:
+        console.log("remove index", index, ":", ...newsSig.value)
+        // groupSig.value = groupSig.value.filter((_, i) => i !== index);
+        // console.log("after:", ...groupSig.value)
+        newsSig.value = newsSig.value.filter((_, i) => i !== index)
+        console.log("after:", ...newsSig.value)
+    }
+    console.log("¤¤¤¤¤", newsSig.value)
     return (
         <section className="group-news">
             <h4>News:</h4>
@@ -30,10 +43,10 @@ function GroupNews({ group }) {
                 }
             </div>
             {
-                !group.news || group.news.length < 1 ? 'No news' :
+                !newsSig.value || newsSig.value.length < 1 ? 'No news' :
                     <ul className="group-news-grid">{
-                        group.news.toReversed().map((news, index) => {
-                            const invertedIndex = group.news.length - 1 - index;
+                        newsSig.value.toReversed().map((news, index) => {
+                            const invertedIndex = newsSig.value.length - 1 - index;
 
                             const newsInfo = signal('')
                             const removeNewsSig = signal('')
@@ -49,6 +62,10 @@ function GroupNews({ group }) {
                                         groupname: group.groupname
                                     })
                                     removeNewsSig.value = response.status < 400 ? 'Success!' : response.status
+
+                                    if (response.status < 400) {
+                                        removeNewsAtIndex({ index: invertedIndex })
+                                    }
                                 }} text='❌' displayError={removeNewsSig} />
                             </li>
                             )
