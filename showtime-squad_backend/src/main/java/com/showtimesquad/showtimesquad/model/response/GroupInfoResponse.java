@@ -2,6 +2,7 @@ package com.showtimesquad.showtimesquad.model.response;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -9,11 +10,12 @@ import com.showtimesquad.showtimesquad.model.Group;
 import com.showtimesquad.showtimesquad.model.User;
 
 /**
- *  Response DTO for sending back messages to users
+ * Response DTO for sending back messages to users
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class GroupInfoResponse {
     String groupname;
+    String description;
     String owner;
     String groupPic;
 
@@ -22,14 +24,19 @@ public class GroupInfoResponse {
     List<Integer> news;
 
     List<String> groups;
+    List<Map<String, String>> groupsWithInfo;
 
     /**
      * For GET all groups route
      * 
      * @param allGroups
      */
-    public GroupInfoResponse(List<String> allGroups) {
-        this.groups = allGroups;
+    // public GroupInfoResponse(List<String> allGroups) {
+    //     this.groups = allGroups;
+    // }
+
+    public GroupInfoResponse(List<Map<String, String>> groupsWithInfo) {
+        this.groupsWithInfo = groupsWithInfo;
     }
 
     /**
@@ -39,6 +46,7 @@ public class GroupInfoResponse {
      */
     public GroupInfoResponse(Group group) {
         this.groupname = group.getGroupname();
+        this.description = group.getDescription();
         this.owner = group.getOwner().getUsername();
         this.groupPic = group.getGroupPic();
 
@@ -69,6 +77,22 @@ public class GroupInfoResponse {
     }
 
     // getters and setters
+
+    public List<Map<String,String>> getGroupsWithInfo() {
+        return this.groupsWithInfo;
+    }
+
+    public void setGroupsWithInfo(List<Map<String,String>> groupsWithInfo) {
+        this.groupsWithInfo = groupsWithInfo;
+    }
+
+    public String getDescription() {
+        return this.description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public List<String> getGroups() {
         return this.groups;
