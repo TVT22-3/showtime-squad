@@ -65,6 +65,12 @@
       }
     }
   },
+  "groups": {
+    "title": "groups",
+    "path": "/groups",
+    "guests": true,
+    "show": "both"
+  },
   "profile": {
     "title": "profile",
     "path": "/profile",

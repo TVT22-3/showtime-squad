@@ -1,6 +1,7 @@
 package com.showtimesquad.showtimesquad.repository;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,4 +18,7 @@ public interface GroupRepository extends JpaRepository<Group, Long> {
 
   @Query("SELECT g.groupname FROM Group g")
   List<String> findAllGroupNames();
+
+  @Query(value = "SELECT group_name as groupname, group_description as description FROM groups", nativeQuery = true)
+  List<Map<String, String>> findAllGroupInfo();
 }

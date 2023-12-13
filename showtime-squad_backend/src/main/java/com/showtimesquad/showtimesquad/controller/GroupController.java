@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.showtimesquad.showtimesquad.model.Group;
 import com.showtimesquad.showtimesquad.model.User;
+import com.showtimesquad.showtimesquad.model.request.GroupCreateRequest;
 import com.showtimesquad.showtimesquad.model.request.GroupNewsRequest;
 import com.showtimesquad.showtimesquad.model.request.GroupOwnerOnUserRequest;
 import com.showtimesquad.showtimesquad.model.request.GroupRequest;
@@ -43,7 +44,7 @@ public class GroupController {
         @GetMapping("/")
         public ResponseEntity<?> getAll() {
                 return ResponseEntity.status(HttpStatus.OK)
-                                .body(new GroupInfoResponse(groupRepository.findAllGroupNames()));
+                                .body(new GroupInfoResponse(groupRepository.findAllGroupInfo()));
         }
 
         @GetMapping("/{groupname}")
@@ -77,7 +78,7 @@ public class GroupController {
 
         @PostMapping("/create")
         public ResponseEntity<?> createGroup(
-                        @Valid @RequestBody GroupRequest requestBody,
+                        @Valid @RequestBody GroupCreateRequest requestBody,
                         @AuthenticationPrincipal UserDetails userDetails) {
 
                 if (userDetails == null) {
@@ -88,6 +89,10 @@ public class GroupController {
 
                 String username = userDetails.getUsername();
                 String groupname = requestBody.getGroupname();
+                String description = requestBody.getDescription();
+                if(description == null) {
+                        description = "";
+                }
 
                 if (groupRepository.existsByGroupname(groupname)) {
                         return ResponseEntity.status(HttpStatus.CONFLICT)
@@ -98,7 +103,7 @@ public class GroupController {
                 Optional<User> userOptional = userRepository.findByUsername(username);
 
                 // create new group
-                Group group = new Group(groupname, userOptional.get());
+                Group group = new Group(groupname, description, userOptional.get());
                 groupRepository.save(group);
 
                 return ResponseEntity.status(HttpStatus.CREATED)
