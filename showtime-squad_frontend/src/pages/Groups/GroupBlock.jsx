@@ -33,7 +33,6 @@ function GroupBlock({ name = "", description = "", showSignal, groupSignal, inde
 
     async function handleListUpdate() {
         if (epicElementRef.current) {
-            console.log("___", epicElementRef.current)
             let headerOffset = 128
             let position = epicElementRef.current.getBoundingClientRect().top
             let offsetPosition = position + window.scrollY - headerOffset
@@ -78,6 +77,7 @@ function GroupBlock({ name = "", description = "", showSignal, groupSignal, inde
                             groupSignal.value ? groupSignal.value : { groupname: name }
                         }
                         username={username}
+                        groupSignal={groupSignal}
                     />
                     : <></>}
             </section>
