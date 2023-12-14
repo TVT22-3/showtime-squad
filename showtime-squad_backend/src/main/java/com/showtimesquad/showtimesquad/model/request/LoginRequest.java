@@ -1,5 +1,8 @@
 package com.showtimesquad.showtimesquad.model.request;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.validation.constraints.NotBlank;
 
 public class LoginRequest {
@@ -10,9 +13,12 @@ public class LoginRequest {
 	private String password;
 
 	public LoginRequest() {
-    }
+	}
 
-	public LoginRequest(String username, String password) {
+	@JsonCreator
+	public LoginRequest(
+			@JsonProperty("username") String username,
+			@JsonProperty("password") String password) {
 		this.username = username;
 		this.password = password;
 	}
