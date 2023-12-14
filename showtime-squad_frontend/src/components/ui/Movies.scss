@@ -9,10 +9,7 @@
   font-weight: 400;
 
   .clear-button {
-    font-size: 25px;
-    margin-left: 20px;
-    position: sticky;
-    top: 0px;
+    font-size: 26px;
     border-radius: 0;
     background-color: #646CFF;
     z-index: 3;
@@ -77,10 +74,5 @@
     img {
       height: 500px;
     }
-  }
-
-  // Adjust the justification for a single movie
-  @media (max-width: 300px) {
-    justify-content: flex-start;
   }
 }

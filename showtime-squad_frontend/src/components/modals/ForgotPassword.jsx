@@ -23,7 +23,6 @@ function ForgotPassword({ toggleForms }) {
       setEmailError('Email is required')
       return
     }
-    console.log('Sending Forgot Password Request to server!', email)
   }
 
   return (

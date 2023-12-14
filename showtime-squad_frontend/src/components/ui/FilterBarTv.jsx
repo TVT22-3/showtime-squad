@@ -30,10 +30,6 @@ const FilterBarTv = () => {
 
   return (
     <div id="filter-bar">
-      <button onClick={() => switchMode('popular')}>popular</button>
-      <button onClick={() => switchMode('ontheair')}>on the air</button>
-      <button onClick={() => switchMode('airingtoday')}>airing today</button>
-      <button onClick={() => switchMode('toprated')}>top rated</button>
 
       {/* Dropdown for genres */}
       <div className="dropdown">
@@ -46,6 +42,10 @@ const FilterBarTv = () => {
           ))}
         </div>
       </div>
+      <button onClick={() => switchMode('popular')}>popular</button>
+      <button onClick={() => switchMode('ontheair')}>on the air</button>
+      <button onClick={() => switchMode('airingtoday')}>airing today</button>
+      <button onClick={() => switchMode('toprated')}>top rated</button>
     </div>
   );
 };
