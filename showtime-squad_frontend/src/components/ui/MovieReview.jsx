@@ -18,8 +18,6 @@ const MovieReview = ({ movie, movieId }) => {
             if (response.ok) {
                 const data = await response.json()
                 setReview(data)
-                console.log("data info:" + data)
-                console.log("review info:" + review)
             } else {
                 console.error('Error fetching review:', response.statusText)
             }
@@ -39,6 +37,7 @@ const MovieReview = ({ movie, movieId }) => {
         try {
             const response = await fetch(`${apiUrl}/api/review/`, {
                 method: 'POST',
+                credentials: 'include',
                 headers: {
                     'Content-Type': 'application/json',
                 },
