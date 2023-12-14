@@ -1,33 +1,23 @@
 #search-bar {
     --_nav-bar-height: 4rem;
+    --_primary-color: #fff;
+    --_primary-color-light: #ccc;
+    --_primary-bg: #333;
+    --_primary-bg-light: #444;
+    --_primary-bg-mega-dark: #111;
 
-    z-index: 4;
+    z-index: 2;
 
     position: relative;
     display: flex;
     justify-content: center;
-    align-items: flex-start;
+    align-items: flex-end;
     top: 85dvh;
     height: 0;
-
-    // position: absolute;
-    // left: 50%;
-    // transform: translateX(-50%);
-    // bottom: 10dvh;
-    // transition: all 0.9s ease;
 
     .search-form {
         height: 2rem;
         display: flex;
-
-        &.scrolled {
-            position: fixed;
-            display: flex;
-            top: 0;
-            // align-items: center;
-
-            height: var(--nav-bar-height, var(--_nav-bar-height));
-        }
     }
 
     .search-selector {
@@ -49,13 +39,68 @@
         border-radius: 0px 5px 5px 0px;
     }
 
-    &.scrolled {
-        // position: fixed;
-        // display: flex;
-        // top: 0;
-        // height: var(--nav-height);
-        // align-items: center;
+    .scrolled {
+        position: fixed;
+        display: flex;
+        justify-content: center;
 
-        // height: var(--nav-bar-height, var(--_nav-bar-height));
+        top: var(--nav-bar-height, var(--_nav-bar-height));
+
+        width: 100%;
+        height: calc(var(--nav-bar-height, var(--_nav-bar-height)) / 2);
+
+        padding-block: 0.5rem;
+
+        background-color: var(--primary-bg-mega-dark, var(--_primary-bg-mega-dark));
+
+        animation-name: sliderHorizontal;
+        animation-duration: var(--animation-speed-fast, 500ms);
+        animation-direction: reverse;
+        animation-fill-mode: forwards;
+        animation-timing-function: ease-in-out;
+
+        &:before {
+            content: '';
+            position: absolute;
+
+            height: calc(var(--nav-bar-height, var(--_nav-bar-height)) / 2);
+            width: 100%;
+
+            background-color: var(--primary-bg-mega-dark, var(--_primary-bg-mega-dark));
+
+            animation-name: sliderHorizontal;
+            animation-duration: var(--animation-speed-normal, 1000ms);
+            animation-delay: var(--animation-speed-normal, 500ms);
+            animation-fill-mode: forwards;
+            animation-timing-function: ease-in-out;
+        }
+
+        @keyframes sliderHorizontal {
+            0% {
+                transform: translateX(0%);
+            }
+
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+
+        .search-selector {
+            background-color: #ffffff1c;
+            color: var(--primary-color-light, var(--_primary-color-light));
+        }
+
+        .search-input {
+            background-color: #ffffff22;
+            color: var(--primary-color-light, var(--_primary-color-light));
+
+            border-color: #ffffff22;
+        }
+
+        .search-button {
+            background-color: #ffffff1c;
+            color: var(--primary-color-light, var(--_primary-color-light));
+        }
+
     }
 }

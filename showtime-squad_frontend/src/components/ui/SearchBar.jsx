@@ -13,15 +13,12 @@ function SearchBar() {
   const navigate = useNavigate()
   const location = useLocation()
 
-  
-
   useEffect(() => {
     const handleScroll = () => {
       const navBar = document.getElementById('nav-bar');
       const searchBar = document.getElementById('search-bar');
      
       if (navBar && searchBar) {
-        console.log(navBar.getBoundingClientRect().bottom, searchBar.getBoundingClientRect().top)
         const navBarBottom = navBar.getBoundingClientRect().bottom;
         const searchBarTop = searchBar.getBoundingClientRect().top;
 
