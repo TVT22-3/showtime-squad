@@ -39,7 +39,6 @@ public class ReviewController {
 
             // Validate the request if necessary
             if (movieReviewsRequest.getReviewStars() == null ||
-               movieReviewsRequest.getUserId() == null ||
                     movieReviewsRequest.getMovieApi() == null ||
                     movieReviewsRequest.getReviewStars() < 0 ||
                     movieReviewsRequest.getReviewStars() > 5) {

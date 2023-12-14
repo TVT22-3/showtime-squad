@@ -3,7 +3,6 @@ import { useAuth } from '../../context/AuthContext'
 import "./MovieReview.scss"
 
 const TvSeriesReview = ({ tvSeries, tvSeriesId }) => {
-    const { userId } = useAuth()
     const apiUrl = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL
 
     const [review, setReview] = useState([])
@@ -42,7 +41,6 @@ const TvSeriesReview = ({ tvSeries, tvSeriesId }) => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    userId: userId,
                     movieApi: tvSeriesId,
                     reviewStars: parseInt(newReviewStars, 10),
                     reviewText: newReviewText,
