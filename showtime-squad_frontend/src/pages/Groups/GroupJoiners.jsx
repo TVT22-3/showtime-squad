@@ -4,8 +4,6 @@ import { postRequest } from "../../utils/GenericHTTPMethods"
 import FunctionButton from "../../components/atoms/FunctionButton"
 import './GroupJoiners.scss'
 
-const joinerSig = signal()
-
 const apiUrl = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL
 
 function GroupJoiners({ group }) {
@@ -17,7 +15,9 @@ function GroupJoiners({ group }) {
         )
     }
 
-    if (!joinerSig.value) {
+    let joinerSig
+    if (!joinerSig || !joinerSig.value) {
+        joinerSig = signal()
         joinerSig.value = group.joinRequests
     }
 

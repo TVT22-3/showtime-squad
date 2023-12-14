@@ -6,13 +6,14 @@ import AddNewsModal from "./AddNewsModal"
 import FunctionButton from "../../components/atoms/FunctionButton"
 
 import './GroupNews.scss'
-const newsSig = signal()
 
 const apiUrl = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL
 
 function GroupNews({ group }) {
 
-    if (!newsSig.value) {
+    let newsSig
+    if (!newsSig || !newsSig.value) {
+        newsSig = signal()
         newsSig.value = group.news
     }
 

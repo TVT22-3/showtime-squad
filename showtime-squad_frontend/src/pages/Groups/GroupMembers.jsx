@@ -4,13 +4,14 @@ import { postRequest } from '../../utils/GenericHTTPMethods'
 import FunctionButton from "../../components/atoms/FunctionButton"
 
 import './GroupMembers.scss'
-const usersSig = signal()
 
 const apiUrl = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL
 
 function GroupMembers({ group, username }) {
 
-    if (!usersSig.value) {
+    let usersSig
+    if (!usersSig || !usersSig.value) {
+        usersSig = signal()
         usersSig.value = group.users
     }
 
