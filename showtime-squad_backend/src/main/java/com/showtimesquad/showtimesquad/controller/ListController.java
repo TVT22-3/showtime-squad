@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -26,6 +25,7 @@ import com.showtimesquad.showtimesquad.model.Group;
 import com.showtimesquad.showtimesquad.model.User;
 import com.showtimesquad.showtimesquad.model.UserList;
 import com.showtimesquad.showtimesquad.model.request.UserListRequest;
+import com.showtimesquad.showtimesquad.model.response.ListInfoResponse;
 import com.showtimesquad.showtimesquad.model.response.MessageResponse;
 import com.showtimesquad.showtimesquad.repository.GroupRepository;
 import com.showtimesquad.showtimesquad.repository.ListRepository;
@@ -133,31 +133,38 @@ public class ListController {
 
         if (userDetails == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body(new MessageResponse("User not logged in"));
+                    .body(new MessageResponse("Bad Credentials"));
         }
 
-        Optional<User> userOptional = userRepository.findByUsername(listRequest.getUsername());
-        if (!userOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(new MessageResponse("User not found"));
-        }
+        String username = userDetails.getUsername();
+        String listname = listRequest.getListname();
+        String groupname = listRequest.getGroupname();
 
-        User user = userOptional.get();
-        Optional<Group> groupOptional = groupRepository.findByGroupname(listRequest.getGroupname());
+        UserList uList = null;
+        User user = userRepository.findByUsername(username).get();
+        Group group = null;
+        if (groupname.isBlank()) {
+            uList = new UserList(listname, user, group);
+            listRepository.save(uList);
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body(new MessageResponse("List created successfully"));
+        }
+        Optional<Group> groupOptional = groupRepository.findByGroupname(groupname);
         if (!groupOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(new MessageResponse("Group not found"));
         }
-        Group group = groupOptional.get();
-        UserList list = new UserList(listRequest.getListname(), user, group);
-        listRepository.save(list);
-        return ResponseEntity.status(HttpStatus.OK).body(list);
+
+        uList = new UserList(listname, user);
+        listRepository.save(uList);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(new MessageResponse(HttpStatus.CREATED.toString() + " List created successfully"));
     }
 
     @PutMapping("/{listname}/rename")
     public ResponseEntity<?> renameList(
             @PathVariable String listname,
-            @RequestParam String newname,
+            @RequestBody String newname,
             @AuthenticationPrincipal UserDetails userDetails) {
 
         if (userDetails == null) {
@@ -182,13 +189,14 @@ public class ListController {
 
         list.renameList(newname);
         listRepository.save(list);
-        return ResponseEntity.status(HttpStatus.OK).body(list);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new MessageResponse("List renamed successfully: " + list.getListName()));
     }
 
     @PutMapping("/{listname}/add")
     public ResponseEntity<?> addMovie(
             @PathVariable String listname,
-            @RequestParam Integer movieId,
+            @RequestBody String movieId,
             @AuthenticationPrincipal UserDetails userDetails) {
 
         if (userDetails == null) {
@@ -211,15 +219,16 @@ public class ListController {
                     .body(new MessageResponse("User does not have access to this list"));
         }
 
-        list.addMovie(movieId);
+        list.addMovie(Integer.parseInt(movieId));
         listRepository.save(list);
-        return ResponseEntity.status(HttpStatus.OK).body(list);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new MessageResponse("Movie added successfully, ID: " + movieId));
     }
 
     @PutMapping("/{listname}/remove")
     public ResponseEntity<?> removeMovie(
             @PathVariable String listname,
-            @RequestParam Integer movieId,
+            @RequestBody String movieId,
             @AuthenticationPrincipal UserDetails userDetails) {
 
         if (userDetails == null) {
@@ -242,9 +251,10 @@ public class ListController {
                     .body(new MessageResponse("User does not have access to this list"));
         }
 
-        list.removeMovie(movieId);
+        list.removeMovie(Integer.parseInt(movieId));
         listRepository.save(list);
-        return ResponseEntity.status(HttpStatus.OK).body(list);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new MessageResponse("Movie removed successfully, ID: " + movieId));
     }
 
     @DeleteMapping("/{listname}/delete")
@@ -273,6 +283,7 @@ public class ListController {
         }
 
         listRepository.delete(list);
-        return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse("List deleted successfully"));
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new MessageResponse("List deleted successfully,  list: "+ list.getListName()));
     }
 }

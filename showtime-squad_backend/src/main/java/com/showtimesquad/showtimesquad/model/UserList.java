@@ -39,7 +39,6 @@ public class UserList {
     @Column(name = "list_name", nullable = false)
     private String listName;
 
-    @NotBlank
     @ManyToOne
     @JoinColumn(name = "user_name", nullable = false)
     private User username;
@@ -50,6 +49,9 @@ public class UserList {
 
     @Column(name = "movie_ids", columnDefinition = "integer[]")
     private List<Integer> movieIds;
+
+    UserList() {
+    }
 
     /**
      * 
@@ -63,18 +65,7 @@ public class UserList {
     public UserList(String listName, User user) {
         this.listName = listName;
         this.username = user;
-        this.movieIds = new ArrayList<>();
-    }
-
-    /**
-     * Constructor with list name and group.
-     * 
-     * @param listName  The name of the list.
-     * @param groupname The group associated with the list.
-     */
-    public UserList(String listName, Group groupname) {
-        this.listName = listName;
-        this.groupname = groupname;
+        this.groupname = null;
         this.movieIds = new ArrayList<>();
     }
 
