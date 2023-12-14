@@ -61,19 +61,22 @@ function SearchBar() {
   return (
     <search id="search-bar" className={`${isScrolled ? 'scrolled' : ''}`}>
       <form id='search-form' className='search-form' onSubmit={handleSubmit}>
+        <select className={`search-selector ${isScrolled ? 'scrolled' : ''}`} value={searchMode} onChange={handleModeChange}>
+          <option value="movies">Movies</option>
+          <option value="tv-series">TV Series</option>
+        </select>
+
         <input
           id='example-search'
+          className='search-input'
           name='param'
           type='text'
           placeholder='Search...'
           value={searchText}
           onChange={handleInputChange}
         />
-        <select id={`${isScrolled ? 'scrolled' : ''}`} value={searchMode} onChange={handleModeChange}>
-          <option value="movies">Movies</option>
-          <option value="tv-series">TV Series</option>
-        </select>
-        <button id={`${isScrolled ? 'scrolled' : ''}`} type='submit'>
+
+        <button className={`search-button ${isScrolled ? 'scrolled' : ''}`} type='submit'>
           <i className='fa fa-search'></i>
         </button>
       </form>
