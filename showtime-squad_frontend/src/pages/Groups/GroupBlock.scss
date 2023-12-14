@@ -21,6 +21,14 @@
 
     border-radius: 5px;
 
+    &.hide {
+        display: flex;
+
+        .group-card {
+            width: 100%;
+        }
+    }
+
     .group-card {
         display: flex;
         align-items: center;
