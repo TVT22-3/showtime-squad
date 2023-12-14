@@ -37,11 +37,9 @@ public class ReviewController {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
 
-            String username = userDetails.getUsername();
-
             // Validate the request if necessary
             if (movieReviewsRequest.getReviewStars() == null ||
-                !userDetails.getUsername().equals(username) ||
+               movieReviewsRequest.getUserId() == null ||
                     movieReviewsRequest.getMovieApi() == null ||
                     movieReviewsRequest.getReviewStars() < 0 ||
                     movieReviewsRequest.getReviewStars() > 5) {
@@ -49,7 +47,7 @@ public class ReviewController {
             }
 
             // Fetch the user from the repository
-            User user = userRepository.findById(movieReviewsRequest.getUserId())
+            User user = userRepository.findByUsername(userDetails.getUsername())
                     .orElseThrow(() -> new RuntimeException("User not found"));
 
             // Save the review to the database
