@@ -21,7 +21,7 @@ public class Group {
     @Column(name = "group_name", nullable = false)
     private String groupname;
 
-    @Size(max=128)
+    @Size(max = 128)
     @Column(name = "group_description")
     private String description;
 
