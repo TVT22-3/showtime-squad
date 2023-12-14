@@ -3,7 +3,10 @@ package com.showtimesquad.showtimesquad.controller;
 import com.showtimesquad.showtimesquad.model.MovieReviews;
 import com.showtimesquad.showtimesquad.model.User;
 import com.showtimesquad.showtimesquad.model.request.MovieReviewsRequest;
+import com.showtimesquad.showtimesquad.model.response.MessageResponse;
 import com.showtimesquad.showtimesquad.model.response.MovieReviewsResponse;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import com.showtimesquad.showtimesquad.repository.ReviewRepository;
 import com.showtimesquad.showtimesquad.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,11 +30,15 @@ public class ReviewController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<MovieReviewsResponse> createReview(@RequestBody MovieReviewsRequest movieReviewsRequest) {
+    public ResponseEntity<MovieReviewsResponse> createReview(@RequestBody MovieReviewsRequest movieReviewsRequest, @AuthenticationPrincipal UserDetails userDetails) {
         try {
+            
+            if (userDetails == null) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+
             // Validate the request if necessary
             if (movieReviewsRequest.getReviewStars() == null ||
-                    movieReviewsRequest.getUserId() == null ||
                     movieReviewsRequest.getMovieApi() == null ||
                     movieReviewsRequest.getReviewStars() < 0 ||
                     movieReviewsRequest.getReviewStars() > 5) {
@@ -39,7 +46,7 @@ public class ReviewController {
             }
 
             // Fetch the user from the repository
-            User user = userRepository.findById(movieReviewsRequest.getUserId())
+            User user = userRepository.findByUsername(userDetails.getUsername())
                     .orElseThrow(() -> new RuntimeException("User not found"));
 
             // Save the review to the database
