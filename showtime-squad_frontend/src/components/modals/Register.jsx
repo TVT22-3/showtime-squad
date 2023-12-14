@@ -100,8 +100,6 @@ function Register({ toggleForms }) {
                 },
                 body: JSON.stringify(registrationData),
             })
-
-            console.log('Sending Request data:', registrationData)
     
             if (response.ok) {
                 const responseMessage = await response.json()

@@ -60,8 +60,6 @@ function Login({ toggleForms }) {
         body: JSON.stringify(formData),
       })
 
-      console.log('Sending Request to server!', formData)
-
       if (response.ok) {
         const responseData = await response.json()
         const { username, id } = responseData
