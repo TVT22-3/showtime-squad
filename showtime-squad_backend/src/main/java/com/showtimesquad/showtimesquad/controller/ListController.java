@@ -19,15 +19,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.showtimesquad.showtimesquad.model.Group;
 import com.showtimesquad.showtimesquad.model.User;
 import com.showtimesquad.showtimesquad.model.UserList;
+import com.showtimesquad.showtimesquad.model.request.UserListRequest;
 import com.showtimesquad.showtimesquad.model.response.MessageResponse;
 import com.showtimesquad.showtimesquad.repository.GroupRepository;
 import com.showtimesquad.showtimesquad.repository.ListRepository;
 import com.showtimesquad.showtimesquad.repository.UserRepository;
+
+import jakarta.validation.Valid;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -63,7 +67,7 @@ public class ListController {
         }
 
         UserList list = listOptional.get();
-        User user = userRepository.findByUsername(userDetails.getUsername()).get();
+        User user = list.getUser();
         Group group = list.getGroup();
 
         if (!(list.getUser().equals(user) || group.getUsers().contains(user))) {
@@ -89,13 +93,13 @@ public class ListController {
         }
 
         User user = userOptional.get();
-        Optional<UserList> listOptional = listRepository.findByUser(user);
-        if (!listOptional.isPresent()) {
+        List<UserList> listByUser = listRepository.findByUser(user);
+        if (listByUser.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(new MessageResponse("User has no lists"));
         }
-        UserList lists = listOptional.get();
-        return ResponseEntity.status(HttpStatus.OK).body(lists.getMovieIds());
+
+        return ResponseEntity.status(HttpStatus.OK).body(listByUser);
     }
 
     @GetMapping("/group/{groupname}") // get all lists of a group
@@ -113,19 +117,18 @@ public class ListController {
         }
 
         Group group = groupOptional.get();
-        Optional<UserList> listOptional = listRepository.findByGroup(group);
-        if (!listOptional.isPresent()) {
+        List<UserList> listByGroup = listRepository.findByGroup(group);
+        if (listByGroup.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(new MessageResponse("Group has no lists"));
         }
-        UserList lists = listOptional.get();
-        return ResponseEntity.status(HttpStatus.OK).body(lists.getMovieIds());
+
+        return ResponseEntity.status(HttpStatus.OK).body(listByGroup);
     }
 
     @PostMapping("/create")
     public ResponseEntity<?> createUserList(
-            @RequestParam String listname,
-            String username,
+            @Valid @RequestBody UserListRequest listRequest,
             @AuthenticationPrincipal UserDetails userDetails) {
 
         if (userDetails == null) {
@@ -133,60 +136,21 @@ public class ListController {
                     .body(new MessageResponse("User not logged in"));
         }
 
-        Optional<User> userOptional = userRepository.findByUsername(username);
+        Optional<User> userOptional = userRepository.findByUsername(listRequest.getUsername());
         if (!userOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(new MessageResponse("User not found"));
         }
 
         User user = userOptional.get();
-        UserList list = new UserList(listname, user, null);
-        listRepository.save(list);
-        return ResponseEntity.status(HttpStatus.OK).body(list);
-    }
-
-    @PostMapping("/create/group")
-    public ResponseEntity<?> createGroupList(
-            @RequestParam String listname,
-            @RequestParam String groupname,
-            @AuthenticationPrincipal UserDetails userDetails) {
-
-        if (userDetails == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body(new MessageResponse("User not logged in"));
-        }
-
-        Optional<Group> groupOptional = groupRepository.findByGroupname(groupname);
+        Optional<Group> groupOptional = groupRepository.findByGroupname(listRequest.getGroupname());
         if (!groupOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(new MessageResponse("Group not found"));
         }
-
         Group group = groupOptional.get();
-        UserList list = new UserList(listname, null, group);
+        UserList list = new UserList(listRequest.getListname(), user, group);
         listRepository.save(list);
-        return ResponseEntity.status(HttpStatus.OK).body(list);
-    }
-
-    @PostMapping("/create/user/group")
-    public ResponseEntity<?> createUserList(
-            @RequestParam String listname,
-            @RequestParam String username,
-            @RequestParam String groupname,
-            @AuthenticationPrincipal UserDetails userDetails) {
-        if (userDetails == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body(new MessageResponse("User not logged in"));
-        }
-        if (!(groupRepository.existsByGroupname(groupname)
-                || userRepository.existsByUsername(username))) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(new MessageResponse("User or Group not found"));
-        }
-
-        User user = userRepository.findByUsername(username).get();
-        Group group = groupRepository.findByGroupname(groupname).get();
-        UserList list = new UserList(listname, user, group);
         return ResponseEntity.status(HttpStatus.OK).body(list);
     }
 

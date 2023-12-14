@@ -7,60 +7,80 @@ package com.showtimesquad.showtimesquad.model.response;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.showtimesquad.showtimesquad.model.User;
+import com.showtimesquad.showtimesquad.model.UserList;
+
 import jakarta.validation.constraints.NotBlank;
 
 /**
  * Represents a response containing a list of information.
  */
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ListInfoResponse {
-    private String name;
-    private List<String> items;
+    String listname;
+    String username;
+    String groupname;
+    List<Integer> movieIds;
 
-    /**
-     * Constructs a new ListInfoResponse object with the specified name and items.
-     *
-     * @param name  the name of the list
-     * @param items the items in the list
+    List<String> lists;
+
+    /*
+     * For GET all lists route
+     * 
+     * @param allLists
      */
-    public ListInfoResponse(String name, List<String> items) {
-        this.name = name;
-        this.items = items;
+    public ListInfoResponse(List<String> allLists) {
+        this.lists = allLists;
     }
 
-    /**
-     * Returns the name of the list.
-     *
-     * @return the name of the list
-     */
-    public String getName() {
-        return name;
+    public ListInfoResponse(UserList list) {
+        this.listname = list.getListName();
+        this.username = list.getUser().getUsername();
+        this.groupname = list.getGroup().getGroupname();
+        this.movieIds = list.getMovieIds();
     }
 
-    /**
-     * Sets the name of the list.
-     *
-     * @param name the name of the list
-     */
-    public void setName(String name) {
-        this.name = name;
+    // getters and setters
+
+    public List<Integer> getMovieIds() {
+        return this.movieIds;
     }
 
-    /**
-     * Returns the items in the list.
-     *
-     * @return the items in the list
-     */
-    public List<String> getItems() {
-        return items;
+    public void setMovieIds(List<Integer> movieIds) {
+        this.movieIds = movieIds;
     }
 
-    /**
-     * Sets the items in the list.
-     *
-     * @param items the items in the list
-     */
-    public void setItems(List<String> items) {
-        this.items = items;
+    public List<String> getLists() {
+        return this.lists;
+    }
+
+    public void setLists(List<String> lists) {
+        this.lists = lists;
+    }
+
+    public String getListname() {
+        return this.listname;
+    }
+
+    public void setListname(String listname) {
+        this.listname = listname;
+    }
+
+    public String getGroupname() {
+        return this.groupname;
+    }
+
+    public void setGroupname(String groupname) {
+        this.groupname = groupname;
+    }
+
+    public String getUsername() {
+        return this.username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
 }

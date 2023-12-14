@@ -20,23 +20,11 @@ public interface ListRepository extends JpaRepository<UserList, Long> {
 
     Boolean existsByListName(String listName);
 
-    /**
-     * Finds a UserList by its list name.
-     *
-     * @param listName the name of the list
-     * @return an Optional containing the UserList if found, otherwise empty
-     */
     Optional<UserList> findByListName(String listName);
 
-    /**
-     * Finds a UserList by its group name.
-     *
-     * @param groupname the name of the group
-     * @return an Optional containing the UserList if found, otherwise empty
-     */
-    @Query("SELECT u FROM UserList u WHERE u.groupname = ?1")
-    Optional<UserList> findByGroup(Group groupname);
-
     @Query("SELECT l FROM UserList l WHERE l.username = ?1")
-    Optional<UserList> findByUser(User username);
+    List<UserList> findByUser(User user);
+
+    @Query("SELECT l FROM UserList l WHERE l.groupname = ?1")
+    List<UserList> findByGroup(Group group);
 }

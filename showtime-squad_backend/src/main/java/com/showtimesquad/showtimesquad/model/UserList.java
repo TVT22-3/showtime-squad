@@ -39,8 +39,9 @@ public class UserList {
     @Column(name = "list_name", nullable = false)
     private String listName;
 
+    @NotBlank
     @ManyToOne
-    @JoinColumn(name = "user_name", nullable = true)
+    @JoinColumn(name = "user_name", nullable = false)
     private User username;
 
     @ManyToOne
