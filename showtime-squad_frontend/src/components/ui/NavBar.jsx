@@ -63,7 +63,7 @@ function NavBar() {
     //console.log(sitemapArray)
     
     return (
-        <nav className='nav-bar'>
+        <nav id='nav-bar' className='nav-bar'>
             <ul className='nav-items'>
                 {sitemapArray.map((key) => {
                     return (
