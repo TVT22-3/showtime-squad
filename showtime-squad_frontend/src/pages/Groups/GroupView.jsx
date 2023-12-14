@@ -16,8 +16,9 @@ function GroupView({ group, username, groupSignal }) {
             </div>
         )
     }
-    
+
     const groupMemberSig = signal([groupSignal.value.users, groupSignal.value.joinRequests])
+    const groupNewsSig = signal(groupSignal.value.news)
 
     return (
         <div className='group-view'>
@@ -28,7 +29,7 @@ function GroupView({ group, username, groupSignal }) {
 
             <GroupJoiners group={group} groupSignal={groupMemberSig} />
 
-            <GroupNews group={group} />
+            <GroupNews group={group} newsSignal={groupNewsSig} />
         </div>
     )
 }

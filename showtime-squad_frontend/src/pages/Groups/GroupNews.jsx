@@ -9,16 +9,10 @@ import './GroupNews.scss'
 
 const apiUrl = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL
 
-function GroupNews({ group }) {
+function GroupNews({ group, newsSignal }) {
 
-    let newsSig
-    if (!newsSig || !newsSig.value) {
-        newsSig = signal()
-        newsSig.value = group.news
-    }
-
-    function removeNewsAtIndex({ index }) { // TODO:
-        newsSig.value = newsSig.value.filter((_, i) => i !== index)
+    function removeNewsAtIndex({ index }) {
+        newsSignal.value = newsSignal.value.filter((_, i) => i !== index)
     }
     
     return (
@@ -40,10 +34,10 @@ function GroupNews({ group }) {
                 }
             </div>
             {
-                !newsSig.value || newsSig.value.length < 1 ? 'No news' :
+                !newsSignal.value || newsSignal.value.length < 1 ? 'No news' :
                     <ul className="group-news-grid">{
-                        newsSig.value.toReversed().map((news, index) => {
-                            const invertedIndex = newsSig.value.length - 1 - index;
+                        newsSignal.value.toReversed().map((news, index) => {
+                            const invertedIndex = newsSignal.value.length - 1 - index;
 
                             const newsInfo = signal('')
                             const removeNewsSig = signal('')
