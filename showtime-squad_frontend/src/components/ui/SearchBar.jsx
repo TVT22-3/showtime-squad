@@ -13,17 +13,28 @@ function SearchBar() {
   const navigate = useNavigate()
   const location = useLocation()
 
+  
+
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 675)
-    }
+      const navBar = document.getElementById('nav-bar');
+      const searchBar = document.getElementById('search-bar');
+     
+      if (navBar && searchBar) {
+        console.log(navBar.getBoundingClientRect().bottom, searchBar.getBoundingClientRect().top)
+        const navBarBottom = navBar.getBoundingClientRect().bottom;
+        const searchBarTop = searchBar.getBoundingClientRect().top;
 
-    window.addEventListener('scroll', handleScroll)
+        setIsScrolled(searchBarTop <= navBarBottom);
+      } 
+    };
+
+    window.addEventListener('scroll', handleScroll);
 
     return () => {
-      window.removeEventListener('scroll', handleScroll)
-    }
-  }, [])
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search)
@@ -59,9 +70,9 @@ function SearchBar() {
   }
 
   return (
-    <search id="search-bar" className={`${isScrolled ? 'scrolled' : ''}`}>
-      <form id='search-form' className='search-form' onSubmit={handleSubmit}>
-        <select className={`search-selector ${isScrolled ? 'scrolled' : ''}`} value={searchMode} onChange={handleModeChange}>
+    <search id="search-bar">
+      <form id='search-form' className={`search-form ${isScrolled ? 'scrolled' : ''}`} onSubmit={handleSubmit}>
+        <select className='search-selector' value={searchMode} onChange={handleModeChange}>
           <option value="movies">Movies</option>
           <option value="tv-series">TV Series</option>
         </select>
@@ -76,7 +87,7 @@ function SearchBar() {
           onChange={handleInputChange}
         />
 
-        <button className={`search-button ${isScrolled ? 'scrolled' : ''}`} type='submit'>
+        <button className='search-button' type='submit'>
           <i className='fa fa-search'></i>
         </button>
       </form>
