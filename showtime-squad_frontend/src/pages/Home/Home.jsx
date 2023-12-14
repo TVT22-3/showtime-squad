@@ -16,7 +16,7 @@ function Home() {
             <Routes>
                 <Route path="/login" element={<LoginRegisterHandler />} />
             </Routes>
-            <Footer sitemap={Sitemap} loggedIn={true} />
+            <Footer sitemap={Sitemap} />
         </>
     )
 }

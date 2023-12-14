@@ -1,6 +1,5 @@
 // path: showtime-squad_frontend/src/components/ui/NavBar.jsx
 import './FilterBar.scss';
-import React, { useState } from 'react';
 
 import { useFilterMoviesContext } from '../../context/FilterMoviesContext';
 
@@ -35,10 +34,6 @@ const FilterBar = () => {
 
   return (
     <div id="filter-bar">
-      <button onClick={() => switchMode('popular')}>popular</button>
-      <button onClick={() => switchMode('nowplaying')}>now playing</button>
-      <button onClick={() => switchMode('upcoming')}>upcoming</button>
-      <button onClick={() => switchMode('toprated')}>top rated</button>
 
       {/* Dropdown for genres */}
       <div className="dropdown">
@@ -51,6 +46,10 @@ const FilterBar = () => {
           ))}
         </div>
       </div>
+      <button onClick={() => switchMode('popular')}>popular</button>
+      <button onClick={() => switchMode('nowplaying')}>now playing</button>
+      <button onClick={() => switchMode('upcoming')}>upcoming</button>
+      <button onClick={() => switchMode('toprated')}>top rated</button>
     </div>
   );
 };

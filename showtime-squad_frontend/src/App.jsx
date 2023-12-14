@@ -15,6 +15,8 @@ import Profile from './pages/Profile/Profile.jsx'
 import { SearchProvider } from './context/SearchContext.jsx'
 import { FilterMoviesProvider } from './context/FilterMoviesContext.jsx'
 import { AuthProvider } from './context/AuthContext.jsx';
+import Groups from './pages/Groups/Groups.jsx'
+import TvSeriesPage from './pages/TvSeries/TvSeriesPage.jsx'
 
 function App() {
   return (
@@ -29,8 +31,13 @@ function App() {
         <Route path="/movies/*" element={<MoviesPage />} />
 
         <Route path="/profile/:username?" element={<Profile />} />
+
+        <Route path="/tv-series/*" element={<TvSeriesPage />} />
+
         {/* debug sandbox */}
-        <Route path="debug/*" element={<DebugSandbox />} />
+        <Route path="/debug/*" element={<DebugSandbox />} />
+
+        <Route path="/groups/*" element={<Groups />} />
 
         <Route path="/settings" element={<Settings />} />
 

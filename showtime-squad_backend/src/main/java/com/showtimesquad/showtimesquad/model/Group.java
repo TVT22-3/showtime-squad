@@ -21,6 +21,10 @@ public class Group {
     @Column(name = "group_name", nullable = false)
     private String groupname;
 
+    @Size(max = 128)
+    @Column(name = "group_description")
+    private String description;
+
     @ManyToOne
     @JoinColumn(name = "owner_id", nullable = false)
     private User owner;
@@ -43,8 +47,9 @@ public class Group {
     public Group() {
     }
 
-    public Group(String groupname, User owner) {
+    public Group(String groupname, String description, User owner) {
         this.groupname = groupname;
+        this.description = description;
         this.owner = owner;
         users.add(owner);
     }
@@ -79,7 +84,7 @@ public class Group {
             throw new IndexOutOfBoundsException();
         }
 
-        this.news.remove(indexToRemove);
+        this.news.remove(this.news.get(indexToRemove));
     }
 
     /**
@@ -115,6 +120,14 @@ public class Group {
     }
 
     // getters and setters
+
+    public String getDescription() {
+        return this.description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public List<Integer> getNews() {
         return this.news;

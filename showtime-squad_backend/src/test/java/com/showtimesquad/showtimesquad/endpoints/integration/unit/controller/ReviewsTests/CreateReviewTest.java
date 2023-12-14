@@ -14,6 +14,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -45,9 +46,10 @@ public class CreateReviewTest {
     }
 
     @Test
+    @WithMockUser(username = "username")
     public void createReview_ReturnsCreatedStatus() throws Exception {
         // Mocking user existence
-        when(userRepository.findById(any())).thenReturn(Optional.of(new User()));
+        when(userRepository.findByUsername(any())).thenReturn(Optional.of(new User()));
 
         // Mocking review creation
         when(reviewRepository.save(any())).thenReturn(new MovieReviews());

@@ -55,7 +55,7 @@ const Movies = () => {
           const genreId = currentPayload.id
           data = await fetchGenreMovies(genreId, page)
           break
-        case 'searchmovie':
+        case 'movies':
           data = await fetchSearchMovies(searchQuery, page)
           break
         default:

@@ -1,0 +1,72 @@
+@mixin groupStyle($styleNumber, $bgColor) {
+    &.group-style-#{$styleNumber} .group-card .function-button {
+        background-color: var(--_hash-style-#{$bgColor});
+    }
+}
+
+.group-block {
+    --_hash-style-0: #eb4141;
+    --_hash-style-1: #266ae0;
+    --_hash-style-2: #ff9602;
+    --_hash-style-3: #9d3bc0;
+    --_hash-style-4: #09c089;
+    --_hash-style-5: #39b310;
+
+    overflow: hidden;
+
+    padding: 20px;
+    text-align: center;
+
+    background-color: #ffffff11;
+
+    border-radius: 5px;
+
+    .group-card {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        min-height: 4rem;
+        margin: 0;
+
+        .group-heading {
+            overflow: hidden;
+            flex: auto;
+        }
+
+        .group-name {
+            margin: 0;
+
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            -webkit-line-clamp: 2;
+
+            overflow-wrap: break-word;
+        }
+
+        .group-description {
+            margin: 0;
+
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            -webkit-line-clamp: 2;
+
+            overflow-wrap: break-word;
+        }
+
+        .function-button {
+            width: 4rem;
+            height: 4rem;
+            border-radius: 50%;
+        }
+    }
+
+    @include groupStyle(0, 0);
+    @include groupStyle(1, 1);
+    @include groupStyle(2, 2);
+    @include groupStyle(3, 3);
+    @include groupStyle(4, 4);
+    @include groupStyle(5, 5);
+}

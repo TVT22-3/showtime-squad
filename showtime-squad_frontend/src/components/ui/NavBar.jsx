@@ -12,8 +12,8 @@ function NavElement(sitemapKey, loginStatus) {
     // Used to create a nav element for the NavBar component
     const show = sitemapKey.show;
     const subpages = hasKey(sitemapKey, "subpages")
-    console.log(subpages)
-    console.log("component partly implemented")
+    // console.log(subpages)
+    // console.log("component partly implemented")
 
     // guard clause to check if the user is logged in and if the element is for guests only
     if ((show=="user"&&loginStatus==false)||(show=="guest"&&loginStatus==true)){
@@ -33,10 +33,10 @@ function NavElement(sitemapKey, loginStatus) {
 }
 
 function SubElement(submapKey, loginStatus) {
-    console.log("in subelement")
-    console.log(submapKey)
+    // console.log("in subelement")
+    // console.log(submapKey)
     const show = submapKey.show;
-    console.log(show)
+    // console.log(show)
     
     // guard clause
     if ((show=="user"&&loginStatus==false)||(show=="guest"&&loginStatus==true)){
@@ -51,7 +51,7 @@ function SubElement(submapKey, loginStatus) {
 
 function hasKey(obj, key) {
     // Used to check if a key exists in an object
-    console.log("component might not be properly implemented yet")
+    // console.log("component might not be properly implemented yet")
     return Object.prototype.hasOwnProperty.call(obj, key)
 }
 
@@ -63,7 +63,7 @@ function NavBar() {
     //console.log(sitemapArray)
     
     return (
-        <nav className='nav-bar'>
+        <nav id='nav-bar' className='nav-bar'>
             <ul className='nav-items'>
                 {sitemapArray.map((key) => {
                     return (

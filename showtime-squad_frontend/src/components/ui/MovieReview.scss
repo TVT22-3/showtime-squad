@@ -1,16 +1,24 @@
 // MovieReview.scss
 
 .movieDetails {
-    margin: 20px;
+    margin: 20px auto;
     padding: 20px;
     border: 1px solid #ddd;
     background-color: #f9f9f9;
     font-family: 'Arial', sans-serif;
     font-size: 16px;
     font-weight: 400;
+    overflow-wrap: break-word;
+    display: flex;
+    flex-direction: column;
+    width: 70vw;
 
     .submit-ok {
         color: green;
+    }
+
+    .submit-fail {
+        color: red;
     }
 
     h2 {
