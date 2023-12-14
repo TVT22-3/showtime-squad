@@ -1,4 +1,6 @@
 import { signal } from '@preact/signals-react'
+import { createSignal, useSignal} from '@preact/signals-react'
+import { getRequest, postRequest, putRequest, deleteRequest} from "../../utils/GenericHTTPMethods"
 
 import './View.css'
 import ViewBlock from '../containers/ViewBlock.jsx'
@@ -19,22 +21,35 @@ const mockBlockInfoContainer = {
     ],
 }
 
+const apiUrl = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL
+
+
+const blockInfoContainerSignal = createSignal(getRequest(
+        apiUrl + "/api/lists/user/"+ sessionStorage.getItem(
+                "username"), true));
+
 function View() {
     //TODO: Implement
     console.log("component not properly implemented")
+    
+    // use signal to get blockInfoContainer from db
+    const [blockInfoContainer, send] = useSignal(blockInfoContainerSignal);
 
-    let blockInfoContainer = signal(mockBlockInfoContainer) // TODO: get from db
+
+        //let blockInfoContainer = signal(mockBlockInfoContainer) // TODO: get from db
 
     function handleAdder() {
         console.log("clicked adder!")
-        let modify = blockInfoContainer.value.blocks
+        let modify = blockInfoContainer.blocks;
         modify.push({ type: { category: "movies", option: "free pick" } })
-        blockInfoContainer.value = modify
+        // update signal
+        send({ ...blockInfoContainer, blocks: modify })
+
     }
 
     return (
         <section className='view' data-testid='view'>
-            {generateViewBlocks(blockInfoContainer.value)}
+            {generateViewBlocks(blockInfoContainer)}
 
             <OptionsButtonContextProvider key='adder' category='adder' type='adder'>
                 <Adder onClick={handleAdder} />
@@ -43,16 +58,16 @@ function View() {
     )
 }
 
-
-
 function generateViewBlocks({ blocks }) {
 
     return (
         <>
             {
                 blocks.map((block, index) => {
+                    const movieIds = block.movieIds;
+                    const listName = block.listname;
                     return (
-                        <OptionsButtonContextProvider key={index} category={block.category} type={block.type} >
+                        <OptionsButtonContextProvider key={index} category={"movies"} type={block.type} >
                             <ViewBlock key={index} />
                         </OptionsButtonContextProvider>)
                 })
