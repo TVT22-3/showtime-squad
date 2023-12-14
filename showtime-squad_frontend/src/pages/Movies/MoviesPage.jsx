@@ -1,7 +1,6 @@
 import { Routes, Route } from "react-router-dom"
 import Footer from "../../components/ui/Footer"
 import Header from "../../components/ui/Header"
-import Main from "../../components/ui/Main"
 import Sitemap from "../../data/sitemap.json"
 import LoginRegisterHandler from "../../components/ui/LoginRegisterHandler"
 import FilterBar from "../../components/ui/FilterBar"
@@ -19,7 +18,7 @@ function MoviesPage() {
             <Routes>
                 <Route path="/login" element={<LoginRegisterHandler />} />
             </Routes>
-            <Footer sitemap={Sitemap} loggedIn={false} />
+            <Footer sitemap={Sitemap} />
         </>
     )
 }

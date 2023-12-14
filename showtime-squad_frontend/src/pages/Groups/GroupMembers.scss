@@ -1,0 +1,14 @@
+.group-members {
+    .user {
+        position: relative;
+
+        .action-buttons {
+            --custom-button-size: 2rem;
+            
+            position: absolute;
+
+            top: calc(0rem - var(--custom-button-size) / 2);
+            right: calc(0rem - var(--custom-button-size) / 2);
+        }
+    }
+}

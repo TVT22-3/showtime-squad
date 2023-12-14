@@ -70,10 +70,13 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/").permitAll()
                         .requestMatchers("/movies/**").permitAll()
+                        .requestMatchers("/tv/**").permitAll()
                         .requestMatchers("/hel*").permitAll()
                         .requestMatchers("/api/auth/**", "/auth/**").permitAll()
                         .requestMatchers("/api/test/**").permitAll()
                         .requestMatchers("/api/profile", "/profile", "/users/**").permitAll()
+                        .requestMatchers("/api/review/*").permitAll()
+                        .requestMatchers("/api/group/**").permitAll()
                         .requestMatchers("/api/lists/**", "/list/**").permitAll()
                         .anyRequest().authenticated())
                 .cors(customizer -> {

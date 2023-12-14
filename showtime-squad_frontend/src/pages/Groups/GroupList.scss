@@ -1,0 +1,74 @@
+#group-list {
+    --_group-list-bg-primary: #333;
+    --_group-list-color-primary: #fff;
+
+    padding: 1rem;
+
+    background-color: var(--bg-primary, var(--_group-list-bg-primary));
+
+    .group-grid {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+
+        @media only screen and (max-width: 900px) {
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        @media only screen and (max-width: 600px) {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        gap: 30px;
+        padding-block: 1rem;
+
+        background-color: var(--primary-bg, var(--_group-list-bg-primary));
+        color: var(--primary-color, var(--_group-list-color-primary));
+
+        .group-block {
+            grid-column: span 2;
+
+            &.show {
+                grid-column: span 6;
+
+                @media only screen and (max-width: 900px) {
+                    grid-column: span 4;
+                }
+
+                @media only screen and (max-width: 600px) {
+                    grid-column: span 2;
+                }
+
+
+            }
+
+        }
+
+
+
+        @media only screen and (min-width: 900px) {
+
+            // select every 2,5,8... element, that has a direct next sibling with .show
+            .group-block.hide:nth-child(3n-1):has(+ .group-block.show),
+            // also select every element that has a direct next sibling with previous conditions fulfilled
+            .group-block.hide:has(+ .group-block.hide:nth-child(3n-1) +.group-block.show) {
+                grid-column: span 3;
+            }
+
+            .group-block.hide:nth-child(3n-2):has(+ .group-block.show) {
+                grid-column: span 6;
+            }
+        }
+
+        @media only screen and (max-width: 900px) {
+            .group-block.hide:nth-child(2n-1):has(+ .group-block.show) {
+                grid-column: span 4;
+            }
+        }
+
+        @media only screen and (max-width: 600px) {
+            .group-block.hide:nth-child(2n-1):has(+ .group-block.show) {
+                grid-column: span 2;
+            }
+        }
+    }
+}

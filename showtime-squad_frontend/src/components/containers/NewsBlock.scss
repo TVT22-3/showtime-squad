@@ -1,0 +1,40 @@
+.news-block {
+    padding-inline: 1rem;
+
+    background-color: #ffffff11;
+
+    border-radius: 20px 5px;
+
+    .news-title {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 3rem;
+        margin: 0;
+
+        h6 {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            -webkit-line-clamp: 2;
+
+            display: flex;
+            align-items: center;
+            margin: 0;
+    
+            font-size: 1rem;
+            text-wrap: balance;
+        }
+    }
+
+    .news-content {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        -webkit-line-clamp: 3;
+
+        min-height: 3.5rem;
+
+        font-size: 0.8rem;
+    }
+}

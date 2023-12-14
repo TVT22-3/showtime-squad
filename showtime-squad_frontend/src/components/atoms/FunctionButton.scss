@@ -1,8 +1,23 @@
 .function-button-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    
+    --_default-button-size: 2rem;
+    --_default-button-bg: #555;
+    --_default-button-color: #fff;
+
+    button {
+        width: var(--custom-button-size, unset);
+        height: var(--custom-button-size, var(--_default-button-size));
+
+        padding: 2px;
+
+        background-color: var(--custom-button-bg, var(--_default-button-bg));
+        color: var(--custom-button-color, var(--_default-button-color));
+
+        font-size: calc(var(--custom-button-size, var(--_default-button-size)) / 2);
+
+        filter: drop-shadow(2px 4px 6px #00000011);
+    }
+
+
     .error {
         position: absolute;
         transform: translateY(calc(-100% - 1rem));
@@ -11,4 +26,5 @@
     .transparent {
         opacity: 0;
     }
+
 }

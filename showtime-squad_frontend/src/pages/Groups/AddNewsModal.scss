@@ -1,0 +1,11 @@
+.add-news-modal {
+    z-index: 1;
+    
+    max-height: 50dvh;
+    overflow: scroll;
+
+    .inline {
+        display: flex;
+        align-items: center;
+    }
+}

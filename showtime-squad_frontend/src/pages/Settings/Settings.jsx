@@ -19,7 +19,7 @@ function Settings() {
 
     const apiUrl = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL
 
-    const { username } = useUser()
+    const { username, handleLogout } = useUser()
 
     const navigate = useNavigate()
     function moveToIndex() {
@@ -42,7 +42,7 @@ function Settings() {
                 displayErrorMessage.value = response.status
             } else {
                 // trigger logout and countdown for moving back to index
-                response = await logoutUser(`${apiUrl}/auth/logout`)
+                response = await logoutUser(`${apiUrl}/auth/logout` , handleLogout)
                 countDown()
             }
         } catch (error) {
@@ -75,12 +75,12 @@ function Settings() {
                 />
             </main>
 
-            <Footer sitemap={Sitemap} loggedIn={true} />
+            <Footer sitemap={Sitemap} />
         </>
     )
 }
 
-async function logoutUser(url) {
+async function logoutUser(url, handleLogoutCallback) {
     try {
         const response = await fetch(url, {
             method: 'POST',
@@ -92,6 +92,7 @@ async function logoutUser(url) {
 
         if (response.ok) {
             console.log("Logout successful")
+            handleLogoutCallback();
         } else {
             console.error("Logout failed with status:", response.status)
         }
