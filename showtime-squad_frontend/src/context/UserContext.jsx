@@ -50,7 +50,7 @@ const UserProvider = ({ children, test }) => {
       const path = window.location.pathname;
       if (path === "/logout") {
         try {
-          const response = await fetch(apiUrl, {
+          const response = await fetch(`${apiUrl}/auth/logout`, {
             method: 'POST',
             credentials: 'include',
             headers: {
