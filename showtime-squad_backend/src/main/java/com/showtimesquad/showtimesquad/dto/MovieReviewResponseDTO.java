@@ -2,15 +2,12 @@ package com.showtimesquad.showtimesquad.dto;
 
 import com.showtimesquad.showtimesquad.model.MovieReviews;
 
-import java.time.LocalDateTime;
-
 public class MovieReviewResponseDTO {
     private Long id;
     private String username; // Add any other fields you want to include
     private Integer movieApi;
     private Integer reviewStars;
     private String reviewText;
-    private LocalDateTime createdAt;
 
     // Constructors, getters, and setters
 
@@ -21,7 +18,6 @@ public class MovieReviewResponseDTO {
         this.movieApi = movieReviews.getMovieApi();
         this.reviewStars = movieReviews.getReviewStars();
         this.reviewText = movieReviews.getReviewText();
-        this.createdAt = movieReviews.getCreatedAt();
     }
 
     public Long getId() {
@@ -42,10 +38,6 @@ public class MovieReviewResponseDTO {
 
     public String getReviewText() {
         return reviewText;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
     }
 
 }

@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface ReviewRepository extends JpaRepository<MovieReviews, Long> {
     List<MovieReviews> findByMovieApi(Integer movieApi);
-    List<MovieReviews> findTop3ByUserOrderByCreatedAtDesc(User user);
+    List<MovieReviews> findByUserUsername(String username);
 }
 
 

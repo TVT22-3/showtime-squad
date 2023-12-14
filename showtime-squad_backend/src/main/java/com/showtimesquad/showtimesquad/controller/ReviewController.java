@@ -93,8 +93,11 @@ public class ReviewController {
     }
 
     @GetMapping("/user/{username}")
-    public ResponseEntity<List<MovieReviewResponseDTO>> getLastThreeReviewsByUser(@PathVariable String username) {
-        List<MovieReviewResponseDTO> reviews = reviewService.getLastThreeReviewsByUser(username);
-        return new ResponseEntity<>(reviews, HttpStatus.OK);
+    public ResponseEntity<List<MovieReviewResponseDTO>> getUserReviews(@PathVariable String username) {
+        List<MovieReviews> userReviews = reviewService.getUserReviews(username);
+        List<MovieReviewResponseDTO> responseDTOs = userReviews.stream()
+                .map(MovieReviewResponseDTO::new)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(responseDTOs);
     }
 }

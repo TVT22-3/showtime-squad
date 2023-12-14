@@ -11,12 +11,33 @@ export default function ProfilePage() {
   const [profilePicture, setProfilePicture] = useState("");
   const [loading, setLoading] = useState(true);
   const displayUsername = profileUsername || loggedInUsername;
+  const [recentReviews, setRecentReviews] = useState([]);
+  const [movieDetails, setMovieDetails] = useState({});
 
-  const useProfileData = (username) => {
-    const [userData, setUserData] = useState(null);
-    const [userExists, setUserExists] = useState(false);
-  }
+  // Fetch movie details for each movieApi in recentReviews
+  useEffect(() => {
+    const fetchMovieDetails = async (movieApi) => {
+      try {
+        const response = await fetch(`${apiUrl}/movies/id?id=${movieApi}`);
+        const data = await response.json();
+        setMovieDetails((prevDetails) => ({
+          ...prevDetails,
+          [movieApi]: {
+            posterPath: data.poster_path,
+            title: data.title,
+          },
+        }));
+      } catch (error) {
+        console.error("Error fetching movie details:", error);
+      }
+    };
 
+    recentReviews.forEach((review) => {
+      fetchMovieDetails(review.movieApi);
+    });
+  }, [recentReviews, apiUrl]);
+
+  // Fetch profile picture
   useEffect(() => {
     const fetchProfilePicture = async () => {
       try {
@@ -33,7 +54,17 @@ export default function ProfilePage() {
       }
     };
     fetchProfilePicture();
-  }, [profileUsername, loggedInUsername]);
+  }, [profileUsername, loggedInUsername, apiUrl]);
+
+  // Fetch recent reviews
+  useEffect(() => {
+    fetch(`${apiUrl}/api/review/user/${displayUsername}`, {
+      credentials: "include",
+    })
+      .then((response) => response.json())
+      .then((data) => setRecentReviews(data))
+      .catch((error) => console.error("Error fetching recent reviews:", error));
+  }, [displayUsername, apiUrl]);
 
   return (
     <div id="profile">
@@ -49,8 +80,9 @@ export default function ProfilePage() {
             <h2>{displayUsername}</h2>
             <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem
+              ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
+              tempor incididunt ut labore et dolore magna aliqua.
             </p>
           </div>
         </div>
@@ -62,78 +94,28 @@ export default function ProfilePage() {
         <div className="recent-reviews">
           <h1>Recent Reviews</h1>
           <div className="review-container">
-            <div className="review-item">
-              <img
-                src="https://via.placeholder.com/100x150"
-                alt="Movie Poster"
-              />
-              <div className="review-text">
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-                  bibendum sem diam, eget laoreet odio gravida sed. Etiam quis
-                  lorem eget orci molestie ultricies a ac nisi. Aliquam lobortis
-                  eros vehicula magna posuere, nec pellentesque ipsum interdum.
-                  In nec imperdiet quam, ut sollicitudin massa. Mauris elit
-                  nisl, tincidunt eget lobortis vitae, efficitur vel tortor. Ut
-                  tincidunt vestibulum metus vel condimentum. Class aptent
-                  taciti sociosqu ad litora torquent per conubia nostra, per
-                  inceptos himenaeos. Sed sed nibh mi. Suspendisse porttitor dui
-                  id nisi porttitor volutpat euismod eget lacus. Aliquam erat
-                  volutpat. Nam porta diam at porta varius. Nullam sapien leo,
-                  dignissim viverra aliquet faucibus, molestie id ligula. Class
-                  aptent taciti sociosqu ad litora torquent per conubia nostra,
-                  per inceptos himenaeos.
-                </p>
-              </div>
-            </div>
-            <div className="review-item">
-              <img
-                src="https://via.placeholder.com/100x150"
-                alt="Movie Poster"
-              />
-              <div className="review-text">
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-                  bibendum sem diam, eget laoreet odio gravida sed. Etiam quis
-                  lorem eget orci molestie ultricies a ac nisi. Aliquam lobortis
-                  eros vehicula magna posuere, nec pellentesque ipsum interdum.
-                  In nec imperdiet quam, ut sollicitudin massa. Mauris elit
-                  nisl, tincidunt eget lobortis vitae, efficitur vel tortor. Ut
-                  tincidunt vestibulum metus vel condimentum. Class aptent
-                  taciti sociosqu ad litora torquent per conubia nostra, per
-                  inceptos himenaeos. Sed sed nibh mi. Suspendisse porttitor dui
-                  id nisi porttitor volutpat euismod eget lacus. Aliquam erat
-                  volutpat. Nam porta diam at porta varius. Nullam sapien leo,
-                  dignissim viverra aliquet faucibus, molestie id ligula. Class
-                  aptent taciti sociosqu ad litora torquent per conubia nostra,
-                  per inceptos himenaeos.
-                </p>
-              </div>
-            </div>
-            <div className="review-item">
-              <img
-                src="https://via.placeholder.com/100x150"
-                alt="Movie Poster"
-              />
-              <div className="review-text">
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-                  bibendum sem diam, eget laoreet odio gravida sed. Etiam quis
-                  lorem eget orci molestie ultricies a ac nisi. Aliquam lobortis
-                  eros vehicula magna posuere, nec pellentesque ipsum interdum.
-                  In nec imperdiet quam, ut sollicitudin massa. Mauris elit
-                  nisl, tincidunt eget lobortis vitae, efficitur vel tortor. Ut
-                  tincidunt vestibulum metus vel condimentum. Class aptent
-                  taciti sociosqu ad litora torquent per conubia nostra, per
-                  inceptos himenaeos. Sed sed nibh mi. Suspendisse porttitor dui
-                  id nisi porttitor volutpat euismod eget lacus. Aliquam erat
-                  volutpat. Nam porta diam at porta varius. Nullam sapien leo,
-                  dignissim viverra aliquet faucibus, molestie id ligula. Class
-                  aptent taciti sociosqu ad litora torquent per conubia nostra,
-                  per inceptos himenaeos.
-                </p>
-              </div>
-            </div>
+            {recentReviews
+              .slice(-3)
+              .reverse()
+              .map((review) => (
+                <div className="review-item" key={review.id}>
+                  {movieDetails[review.movieApi] && (
+                    <img
+                      src={`https://image.tmdb.org/t/p/original/${
+                        movieDetails[review.movieApi].posterPath
+                      }`}
+                      alt="Movie Poster"
+                    />
+                  )}
+                  <div className="review-text">
+                    <h3>
+                      {movieDetails[review.movieApi] &&
+                        movieDetails[review.movieApi].title}
+                    </h3>
+                    <p>{review.reviewText}</p>
+                  </div>
+                </div>
+              ))}
           </div>
         </div>
       </div>
