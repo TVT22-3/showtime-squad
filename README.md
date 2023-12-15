@@ -64,6 +64,7 @@ all about.
     * Modular blocks for displaying fun stuff (backend integration unimplemented)
   - Other:
     * UI design for index and news
+    * Postman documentation
     * Deployment of frontend as static site to render.com
     * Deployment of backend as Docker container web service to render.com
     * Partial management of PostgreSQL database online on render.com
