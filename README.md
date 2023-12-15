@@ -31,11 +31,15 @@
 
 * Santtu Niskanen [@santtuniskanen](https://github.com/santtuniskanen)
   - Backend:
-    * ...
+    * Endpoints for Profile (username, images, reviews)
+    * Login/Registration Unit Tests
+    * Relevant Endpoints for User Profile
   - Frontend:
-    * ...
+    * Design and Implementation of Profile
   - Other:
-    * ...
+    * GitHub Actions Pipeline for Maven (Backend)
+    * UI Design for Profile
+    * Partial Database management on Render (PostgreSQL)
 
 * Miika Tiihonen [@Wh1teh](https://github.com/Wh1teh)
   - Backend:
