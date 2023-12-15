@@ -63,11 +63,10 @@ The application randomly generates a profile picture for the user.
 In order to get the correct profile pictures, you need to add a field
 into the `application.properties` file.
 ```
-PROFILE_PICTURES=https://images.unsplash.com/photo-1529665253569-
-       │ 6d01c0eaf7b6?,/{another_link_here{},/{...}
+PROFILE_PICTURES=https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?,/{another_link_here{},/{...}
 ```
 
-You will also need the URL for the location of your Front End 
+You will also need the URL for the location of the Front End 
 Application, for example
 ```
 FRONTEND_URL=http://localhost:5173
@@ -86,7 +85,9 @@ Vite requires Node.js 14.18 or higher
 `npm run dev`
 
 
-##### .env
+#### .env
+The .env file contains the location of the Backend Application and the 
+URL for the external fonts required by certain views.
 ```
 VITE_REACT_APP_BACKEND_BASE_URL="http://localhost:8080"
 VITE_REACT_APP_FONT_AWESOME_URL=https://kit.fontawesome.com/c3d2bb709a.js
