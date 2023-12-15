@@ -16,11 +16,18 @@
 
 * Mika Korkiakoski [@mikakorkiakoski](https://github.com/mikakorkiakoski)
   - Backend:
-    * ...
+    * Partial TMDB controller's implementation.
+    * Everything related to reviews.
   - Frontend:
-    * ...
+    * User related stuff: register, login and logout.
+    * Contexts to pass data sitewide (options button context excl.)
+    * Everything related to Movies page and TV series page.
+    * TMDB requests.
+    * Filters for movies and TV series (search bar's logic, filterbar etc.)
+    * Everything related to reviews.
   - Other:
-    * ...
+    * Postman documentation
+    * UI design for movies page, tv series page, logout modal and register modal.
 
 * Santtu Niskanen [@santtuniskanen](https://github.com/santtuniskanen)
   - Backend:
