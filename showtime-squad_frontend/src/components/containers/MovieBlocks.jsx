@@ -45,13 +45,13 @@ function generateBlocks(maxMovies, movies) {
 async function fetchMoviesBasedOnIds(movieIds) {
     let movies = []
 
-    for (let i = 0; i < movieIds.length; i++) {
+    for (let i = 0; i < Min(movieIds.length, maxAmount); i++) {
         const movie = await getRequest(apiUrl + "/api/movies/" + movieIds[i])
         if(movie) {
             movies.push({ 
                 imgUrl: movie.poster_path, 
                 title: movie.title,
-                rating: movie.rating,
+                rating: (movie.vote_average)/2,
                 linkUrl: movie.homepage })
         }
 
