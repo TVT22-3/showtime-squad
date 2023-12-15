@@ -8,11 +8,15 @@
 ### Creators
 * Antti Jylhä @[Jylant](https://github.com/Jylant)
   - Backend:
-    * ...
+    * Everything userLists
+    * First half of TMDB controller
+    * Abandoned unit test attempt 
   - Frontend:
-    * ...
+    * navbar
+    * (almost ready) lists connected to Miika's view/movie blocks
   - Other:
-    * ...
+    * Database ER Diagram
+    * Postman documentation
 
 * Mika Korkiakoski [@mikakorkiakoski](https://github.com/mikakorkiakoski)
   - Backend:
