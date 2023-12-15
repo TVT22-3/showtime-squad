@@ -5,12 +5,13 @@ import NestedOptionsMenu from '../atoms/NestedOptionsMenu.jsx'
 import viewEditOptions from "../../data/viewEditOptions.json"
 import viewRemoveOptions from "../../data/viewRemoveOptions.json"
 
-import React, { useEffect, useState } from 'react'
+import { listInfoContainerSignal } from '../../signals/blockInfoContainerSignal.jsx'
 import { useOptionsButtonContext } from '../../context/OptionsButtonContext.jsx'
 import MovieBlocks from './MovieBlocks.jsx'
+import { useSignal } from '@preact/signals-react'
 
 
-function ViewBlock({ movieIds, listName }) {
+function ViewBlock({ listName, movieIds, index }) {
     //TODO: Implement
 
     
@@ -44,12 +45,9 @@ function ViewBlock({ movieIds, listName }) {
             </div>
 
             <div className='content'>
-            <section className='movie-blocks' data-testid='movie-blocks'>
-                {movieIds => (
+                <section className='movie-blocks' data-testid='movie-blocks'>
                     <MovieBlocks key={index} ids={movieIds} />
-                )}
-            </section>
-
+                </section>
             </div>
         </article>
     )

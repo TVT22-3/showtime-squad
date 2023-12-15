@@ -10,7 +10,7 @@ function MovieBlock({
 
     return (
         <section className='movie-block' data-testid="movie-block">
-            <a href={linkUrl+'#'} className="image-container" data-title={title}>
+            <a href={linkUrl} className="image-container" data-title={title}>
                 {imgUrl ? <img src={imgUrl} alt={`${title}_poster`} /> : <></>}
             </a>
             <Stars rating={rating} />

@@ -1,18 +1,15 @@
-import { Signal, signal, useSignal} from '@preact/signals-react'
-import { getRequest, postRequest, putRequest, deleteRequest} from "../../utils/GenericHTTPMethods"
+import { Signal, useSignal} from '@preact/signals-react'
+import { postRequest, putRequest, deleteRequest} from "../../utils/GenericHTTPMethods"
 
 import './View.css'
 import ViewBlock from '../containers/ViewBlock.jsx'
 import Adder from '../atoms/Adder.jsx'
 
 import { OptionsButtonContextProvider } from '../../context/OptionsButtonContext.jsx';
+import { blockInfoContainerSignal } from '../../signals/blockInfoContainerSignal.jsx'
 
-const apiUrl = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL
+export const apiUrl = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL
 
-
-const blockInfoContainerSignal = signal(getRequest(
-        apiUrl + "/api/lists/user/"+ sessionStorage.getItem(
-                "username")));
 
 function View() {
     //TODO: Implement
@@ -30,7 +27,7 @@ function View() {
         }
 
         let modify = blockInfoContainer.value;
-        modify.push({ listname: newListName })
+        modify.push({ listname: newListName, username: sessionStorage.getItem("username"), movieIds: [] })
         // update signal
         send({ ...blockInfoContainer, blocks: modify })
 
@@ -56,11 +53,11 @@ function generateViewBlocks({ blocks }) {
         <>
             {
                 blocks.map((block, index) => {
-                    const movieIds = block.movieIds;
-                    const listName = block.listname;
+                    const listName = block.value.listname;
+                    const movieIds = block.value.movieIds;
                     return (
-                        <OptionsButtonContextProvider key={index} category={"movies"} type={block.type} >
-                            <ViewBlock key={index} />
+                        <OptionsButtonContextProvider key={index} category={"movies"} >
+                            <ViewBlock key={index} listName={listName} movieIds={movieIds} index={index}/>
                         </OptionsButtonContextProvider>)
                 })
             }
