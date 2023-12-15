@@ -5,10 +5,11 @@
 
 ## ABOUT
 
-Showtime Squad is a website for movie hobbyists. In Showtime Squad 
-you can browse movies, create an account, review movies and share
-your personal page to let others see what kind of media you are
-all about. 
+Showtime Squad is a website for movie hobbyists. In Showtime Squad you can browse movies, create an account, review movies and share your personal page to let others see what kind of media you are all about.
+
+This is a fullstack application running on Vite-React + Java Spring Boot + PostgreSQL combo.
+
+The goal of this project was to familiarize team members with close to real life applications of agile development, fullstack systems, authentication, interactive and dynamically updating frontend, unit testing, CI/CD pipelines and more.
 
 ### Creators
 * Antti Jylhä [@Jylant](https://github.com/Jylant)
@@ -94,6 +95,9 @@ Create the following file (relative to the root of the project)
 
 `/showtime-squad_backend/src/main/resources/application.properties`
 
+> [!IMPORTANT]
+> See more detailed explanations below
+
 ```bash
 # External services
 TMDB_API_KEY=${TMDB_API_KEY}
@@ -117,9 +121,6 @@ showtimesquad.app.jwtExpirationMs=${SHOWTIMESQUAD_APP_JWTEXPIRATIONMS}
 # CORS
 FRONTEND_URL=${FRONTEND_URL}
 ```
-
-> [!IMPORTANT]
-> See more detailed explanations below
 
 #### Running the application
 
