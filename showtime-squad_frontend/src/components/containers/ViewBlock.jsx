@@ -7,6 +7,7 @@ import viewRemoveOptions from "../../data/viewRemoveOptions.json"
 
 import React, { useEffect, useState } from 'react'
 import { useOptionsButtonContext } from '../../context/OptionsButtonContext.jsx'
+import MovieBlocks from './MovieBlocks.jsx'
 
 
 function ViewBlock({ movieIds, listName }) {
@@ -43,11 +44,10 @@ function ViewBlock({ movieIds, listName }) {
             </div>
 
             <div className='content'>
-                <section className='movie-blocks' data-testid='movie-blocks'>
-                    {movieIds.map((id, index) => (
-                    <MovieBlock key={index} id={id} />
-                    ))}
-                </section>
+                {movieIds => (
+                    <MovieBlocks key={index} ids={movieIds} />
+                )}
+            </section>
 
             </div>
         </article>

@@ -3,17 +3,19 @@ import React, { useState, useEffect } from 'react';
 import "./MovieBlocks.scss"
 import MovieBlock from "../atoms/MovieBlock.jsx"
 
-function MovieBlocks({ type, maxAmount = 5 }) {
+const apiUrl = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL
+
+function MovieBlocks({ ids, maxAmount = 5 }) {
     const [movies, setMovies] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
-            const result = await fetchMoviesBasedOnBlockType(type)
+            const result = await fetchMoviesBasedIds(ids)
             setMovies(result)
         }
 
         fetchData()
-    }, [type]);
+    }, [ids]);
 
     return (
         <section className='movie-blocks' data-testid='movie-blocks'>
@@ -40,27 +42,18 @@ function generateBlocks(maxMovies, movies) {
     return blocks
 }
 
-async function fetchMoviesBasedOnBlockType(type) {
+async function fetchMoviesBasedOnIds(movieIds) {
     let movies = []
 
-    switch (type) {
-        case "favorites":
-            // fetch favorite movies from db
-            console.log("Implement favorites fetch case")
-
-            movies = await fetchFavorites('https://yesno.wtf/api')
-            break;
-
-        case "top movies":
-            // fetch top movies from api
-            console.log("Implement top movies fetch case")
-
-            break;
-
-        default:
-            console.log("Implement DEFAULT movie fetch case")
-            break;
-    }
+    for (let i = 0; i < movieIds.length; i++) {
+        const movie = await getRequest(apiUrl + "/api/movies/" + movieIds[i])
+        if(movie) {
+            movies.push({ 
+                imgUrl: movie.poster_path, 
+                title: movie.title,
+                rating: movie.rating,
+                linkUrl: movie.homepage })
+        }
 
     return movies
 }
