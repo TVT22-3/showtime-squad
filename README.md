@@ -7,11 +7,29 @@
 
 ### Creators
 * Antti Jylhä @[Jylant](https://github.com/Jylant)
-  - ...
+  - Backend:
+    * ...
+  - Frontend:
+    * ...
+  - Other:
+    * ...
+
 * Mika Korkiakoski [@mikakorkiakoski](https://github.com/mikakorkiakoski)
-  - ...
+  - Backend:
+    * ...
+  - Frontend:
+    * ...
+  - Other:
+    * ...
+
 * Santtu Niskanen [@santtuniskanen](https://github.com/santtuniskanen)
-  - ...
+  - Backend:
+    * ...
+  - Frontend:
+    * ...
+  - Other:
+    * ...
+
 * Miika Tiihonen [@Wh1teh](https://github.com/Wh1teh)
   - Backend:
     * User related stuff: register, auth, and user deletion.
@@ -24,6 +42,11 @@
     * Footer
   - Other:
     * UI design for index and news
+    * Deployment of frontend as static site to render.com
+    * Deployment of backend as Docker container web service to render.com
+    * Partial managing PostgreSQL database online on render.com
+    * Partial GitHub Actions CI/CD pipeline management and setup
+    * Partial agile and repository etc. management
 
 ## SETUP
 
