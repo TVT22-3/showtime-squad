@@ -11,21 +11,9 @@
     "guests": true,
     "show": "both",
     "subpages": {
-      "top-rated": {
-        "title": "top rated",
-        "path": "/top-rated",
-        "guests": true,
-        "show": "both"
-      },
-      "popular": {
-        "title": "popular",
-        "path": "/popular",
-        "guests": true,
-        "show": "both"
-      },
       "favorites": {
         "title": "favorites",
-        "path": "/favorites",
+        "path": "/movies/favorites",
         "guests": false,
         "show": "user"
       }
@@ -39,7 +27,7 @@
     "subpages": {
       "favorites": {
         "title": "favorites",
-        "path": "/favorites",
+        "path": "/tv-series/favorites",
         "guests": false,
         "show": "user"
       }
@@ -53,13 +41,13 @@
     "subpages": {
       "current": {
         "title": "current",
-        "path": "/current",
+        "path": "/news/current",
         "guests": true,
         "show": "both"
       },
       "movies": {
         "title": "movies",
-        "path": "/movies",
+        "path": "/news/movies",
         "guests": true,
         "show": "both"
       }

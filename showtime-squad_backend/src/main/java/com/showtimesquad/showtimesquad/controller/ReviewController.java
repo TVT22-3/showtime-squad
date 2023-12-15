@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -68,7 +69,8 @@ public class ReviewController {
                     movieReviews.getUser().getId(),
                     movieReviews.getMovieApi(),
                     movieReviews.getReviewStars(),
-                    movieReviews.getReviewText());
+                    movieReviews.getReviewText(),
+                    userDetails.getUsername());
 
             return new ResponseEntity<>(finalMovieReviewsResponse, HttpStatus.CREATED);
         } catch (Exception e) {
@@ -90,7 +92,8 @@ public class ReviewController {
                             movieReviews.getUser().getId(),
                             movieReviews.getMovieApi(),
                             movieReviews.getReviewStars(),
-                            movieReviews.getReviewText()))
+                            movieReviews.getReviewText(),
+                            userRepository.findById(movieReviews.getUser().getId()).get().getUsername()))
                     .collect(Collectors.toList());
 
             return new ResponseEntity<>(responseList, HttpStatus.OK);

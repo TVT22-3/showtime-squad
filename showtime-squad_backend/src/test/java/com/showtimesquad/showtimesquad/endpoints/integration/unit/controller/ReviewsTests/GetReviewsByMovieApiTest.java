@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.showtimesquad.showtimesquad.model.MovieReviews;
 import com.showtimesquad.showtimesquad.model.User;
 import com.showtimesquad.showtimesquad.repository.ReviewRepository;
+import com.showtimesquad.showtimesquad.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
@@ -17,8 +18,10 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -32,6 +35,9 @@ public class GetReviewsByMovieApiTest {
     @MockBean
     private ReviewRepository reviewRepository;
 
+    @MockBean
+    private UserRepository userRepository;  // Mocking UserRepository
+
     private ObjectMapper objectMapper = new ObjectMapper();
 
     @BeforeEach
@@ -41,9 +47,14 @@ public class GetReviewsByMovieApiTest {
 
     @Test
     public void getReviewsByMovieApi_ReturnsOkStatus() throws Exception {
+        
         // Mock user
         User mockUser = new User();
         mockUser.setId(1L);
+        mockUser.setUsername("username");
+
+        // Mock UserRepository behavior
+        when(userRepository.findById(anyLong())).thenReturn(Optional.of(mockUser));
 
         // Mock movieReviews
         MovieReviews mockReview = new MovieReviews();
@@ -58,7 +69,7 @@ public class GetReviewsByMovieApiTest {
 
         // Perform the request with the correct parameter name
         mockMvc.perform(MockMvcRequestBuilders.get("/api/review/")
-                .param("movieId", "285"))
+                .param("movieId", "285"))  // Removed unnecessary "4" parameter
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.length()").value(1))
@@ -66,6 +77,8 @@ public class GetReviewsByMovieApiTest {
                 .andExpect(jsonPath("$[0].userId").value(1))
                 .andExpect(jsonPath("$[0].movieApi").value(285))
                 .andExpect(jsonPath("$[0].reviewStars").value(4))
-                .andExpect(jsonPath("$[0].reviewText").value("Great movie!"));
+                .andExpect(jsonPath("$[0].reviewText").value("Great movie!"))
+                .andExpect(jsonPath("$[0].username").value("username"));
     }
 }
+
