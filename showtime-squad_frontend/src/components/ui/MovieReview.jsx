@@ -89,6 +89,7 @@ const MovieReview = ({ movie, movieId }) => {
                 review.map((review, index) => (
                     <li key={index}>
                         < hr />
+                        <p>Username: {review.username}</p>
                         <p>Stars: {review.reviewStars}</p>
                         <p>Review Text: {review.reviewText}</p>
                         {/* Add more details as needed */}

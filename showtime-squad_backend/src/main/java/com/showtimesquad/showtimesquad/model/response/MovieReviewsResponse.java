@@ -6,19 +6,31 @@ public class MovieReviewsResponse {
     private Integer movieApi;
     private Integer reviewStars;
     private String reviewText;
+    private String username;
+
+   
 
     public MovieReviewsResponse() {
     }
 
-    public MovieReviewsResponse(Long id, Long userId, Integer movieApi, Integer reviewStars, String reviewText) {
+    public MovieReviewsResponse(Long id, Long userId, Integer movieApi, Integer reviewStars, String reviewText, String username) {
         this.id = id;
         this.userId = userId;
         this.movieApi = movieApi;
         this.reviewStars = reviewStars;
         this.reviewText = reviewText;
+        this.username = username;
     }
 
     // Getters and setters
+     public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+    
     public Long getId() {
         return id;
     }
