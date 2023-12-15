@@ -1,6 +1,7 @@
 # showtime-squad
 
 ![Maven Build](https://github.com/tvt22-3/showtime-squad/actions/workflows/backend-tests.yaml/badge.svg)
+![React Tests](https://github.com/tvt22-3/showtime-squad/actions/workflows/frontend-tests.yaml/badge.svg)
 
 ## SETUP
 
