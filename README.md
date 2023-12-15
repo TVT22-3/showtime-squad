@@ -1,4 +1,4 @@
-# showtime-squad
+# Showtime Squad - Fullstack Web Application for Movie Lovers
 
 ![Maven Build](https://github.com/tvt22-3/showtime-squad/actions/workflows/backend-tests.yaml/badge.svg)
 ![React Tests](https://github.com/tvt22-3/showtime-squad/actions/workflows/frontend-tests.yaml/badge.svg)
@@ -20,18 +20,48 @@ up using for the project.
 
 #### Setup and requirements
 
-Create file ```backend/src/main/resources/application.properties:```
+Create following file 
+```yaml
+backend/src/main/resources/application.properties
+```
 
+```bash
+# External services
+TMDB_API_KEY=${TMDB_API_KEY}
+PROFILE_PICTURES=${PROFILE_PICTURES}
+
+# Database credentials
+spring.datasource.url=${DATABASE_URL}
+spring.datasource.username=${SPRING_DATASOURCE_USERNAME}
+spring.datasource.password=${SPRING_DATASOURCE_PASSWORD}
+
+# JPA conf
+spring.jpa.hibernate.ddl-auto=${SPRING_JPA_HIBERNATE_DDL_AUTO}
+spring.jpa.properties.hibernate.dialect=${SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT}
+spring.datasource.driver-class-name=${SPRING_DATASOURCE_DRIVER_CLASS_NAME}
+
+# App Properties
+showtimesquad.app.jwtCookieName=${SHOWTIMESQUAD_APP_JWTCOOKIENAME}
+showtimesquad.app.jwtSecret=${SHOWTIMESQUAD_APP_JWTSECRET}
+showtimesquad.app.jwtExpirationMs=${SHOWTIMESQUAD_APP_JWTEXPIRATIONMS}
+
+# CORS
+FRONTEND_URL=${FRONTEND_URL}
 ```
-TMDB_API_KEY=<your the movie database api key>
-```
+
+> [!NOTE]
+> See more detailed explanations below
 
 #### Running the application
 
-``` java
+```bash
 mvn spring-boot:run
-        or
-./mvnw spring-boot:run)
+        
+```
+or
+
+```bash
+./mvnw spring-boot:run
 ```
 
 ### Database
@@ -42,16 +72,16 @@ mvn spring-boot:run
 
 ##### Configuring Database access for local Postgres instance
 
-```
+```yaml
 spring.datasource.url=jdbc:postgresql://localhost:5432/<database>
-spring.datasource.username=postgres (or other username)
+spring.datasource.username=<username>
 spring.datasource.password=<password> (empty if password hasn't been set)
 spring.datasource.driver-class-name=org.postgresql.Driver
 ```
 
 ##### Configuring Database access for external Postgres instance
 
-```
+```yaml
 spring.datasource.url=jdbc:postgresql://<hostname>.<location>-postgres.render.com/<database>
 spring.datasource.username=<username>
 spring.datasource.password=<password>
@@ -62,13 +92,13 @@ spring.datasource.driver-class-name=org.postgresql.Driver
 The application randomly generates a profile picture for the user.
 In order to get the correct profile pictures, you need to add a field
 into the `application.properties` file.
-```
-PROFILE_PICTURES=https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?,/{another_link_here{},/{...}
+```bash
+PROFILE_PICTURES=https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?,/{another_link_here},/{...}
 ```
 
 You will also need the URL for the location of the Front End 
 Application, for example
-```
+```bash
 FRONTEND_URL=http://localhost:5173
 ```
 
@@ -76,7 +106,7 @@ FRONTEND_URL=http://localhost:5173
 
 #### Setup and requirements
 
-Vite requires Node.js 14.18 or higher
+Node.js 16 or higher
 
 `npm install`
 
@@ -84,12 +114,19 @@ Vite requires Node.js 14.18 or higher
 
 `npm run dev`
 
+#### Run unit tests:
+
+`npm run test`
+
+#### Build app for deployment:
+
+`npm run build`
+
 
 #### .env
 The .env file contains the location of the Backend Application and the 
 URL for the external fonts required by certain views.
-```
-VITE_REACT_APP_BACKEND_BASE_URL="http://localhost:8080"
+```bash
+VITE_REACT_APP_BACKEND_BASE_URL=http://localhost:8080
 VITE_REACT_APP_FONT_AWESOME_URL=https://kit.fontawesome.com/c3d2bb709a.js
-
 ```
