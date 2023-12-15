@@ -72,9 +72,9 @@ all about.
 
 ### DOCUMENTATION
 
-Discover the functionalities of the *Showtime Squad* backend through this documentation. Dive into details about endpoints and interactions within the app.
+Discover how to interact with various endpoints of our backend.
 
-Link: [*Showtime Squad x Postman*](https://documenter.getpostman.com/view/26545619/2s9Ye8hFMi)
+Link: [Showtime Squad x Postman](https://documenter.getpostman.com/view/26545619/2s9Ye8hFMi)
 
 ## SETUP
 
