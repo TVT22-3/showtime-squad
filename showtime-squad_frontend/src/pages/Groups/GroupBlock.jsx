@@ -32,17 +32,15 @@ function GroupBlock({ name = "", description = "", showSignal, groupSignal, inde
     }
 
     async function handleListUpdate() {
-        const elementHeight = epicElementRef.current.clientHeight;
-        if (showSignal[index].value === false) {
-            window.scroll({
-                top: window.scrollY - elementHeight,
-                behavior: 'smooth',
-            });
-            return
-        }
-
         if (epicElementRef.current) {
-            epicElementRef.current.scrollIntoView({ behavior: 'smooth' });
+            let headerOffset = 128
+            let position = epicElementRef.current.getBoundingClientRect().top
+            let offsetPosition = position + window.scrollY - headerOffset
+
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: "smooth"
+            });
         }
 
         const group = await fetchGroupInfo(name, username)
@@ -61,10 +59,10 @@ function GroupBlock({ name = "", description = "", showSignal, groupSignal, inde
                 ` group-style-${hashToIndex(name, GROUP_STYLES_AMOUNT)}`}
                 ref={epicElementRef}>
                 <div className="group-card">
-                <hgroup className="group-heading">
-                    <h3 className="group-name">{name}</h3>
-                    <p className="group-description">{description}</p>
-                </hgroup>
+                    <hgroup className="group-heading">
+                        <h3 className="group-name">{name}</h3>
+                        <p className="group-description">{description}</p>
+                    </hgroup>
 
 
                     <FunctionButton onClick={async () => {
@@ -79,6 +77,7 @@ function GroupBlock({ name = "", description = "", showSignal, groupSignal, inde
                             groupSignal.value ? groupSignal.value : { groupname: name }
                         }
                         username={username}
+                        groupSignal={groupSignal}
                     />
                     : <></>}
             </section>

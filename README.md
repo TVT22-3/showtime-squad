@@ -1,11 +1,22 @@
 # showtime-squad
 
+![Maven Build](https://github.com/tvt22-3/showtime-squad/actions/workflows/backend-tests.yaml/badge.svg)
+![React Tests](https://github.com/tvt22-3/showtime-squad/actions/workflows/frontend-tests.yaml/badge.svg)
+
 ## SETUP
+
+Showtime Squad is a website for movie hobbyists. In Showtime Squad 
+you can browse movies, create an account, review movies and share
+your personal page to let others see what kind of media you are
+all about. 
+
 
 ### Backend
 
 The Backend is powered by Spring Boot. <br>
-Our Spring application requires Java 17 or later.
+Spring recommends [BellSoft Liberica JDK 17](https://bell-sw.com/pages/downloads/#jdk-17-lts)
+for the Java™ Development Kit (JDK), which is also what we ended
+up using for the project.
 
 #### Setup and requirements
 

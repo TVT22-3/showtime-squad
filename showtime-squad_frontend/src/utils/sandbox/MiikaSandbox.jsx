@@ -23,7 +23,7 @@ function MiikaSandbox() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        postRequest({ url: `${apiUrl}/api/auth/signin`, body: JSON.stringify(formData) })
+        console.log(await postRequest({ url: `${apiUrl}/api/auth/signin`, body: formData }))
 
         // try {
         //     console.log(`${apiUrl}/api/auth/signin`)

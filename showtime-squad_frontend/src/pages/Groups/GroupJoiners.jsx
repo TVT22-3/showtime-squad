@@ -6,7 +6,7 @@ import './GroupJoiners.scss'
 
 const apiUrl = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL
 
-function GroupJoiners({ group }) {
+function GroupJoiners({ group, groupSignal }) {
 
     if (!group.joinRequests) {
         // user is not the owner
@@ -14,13 +14,6 @@ function GroupJoiners({ group }) {
             <></>
         )
     }
-
-    let joinerSig
-    if (!joinerSig || !joinerSig.value) {
-        joinerSig = signal()
-        joinerSig.value = group.joinRequests
-    }
-
 
     async function acceptJoin({ joiner, groupname }) {
         if (confirm(`Do you wish to accept user '${joiner}' into the group?`)) {
@@ -31,7 +24,9 @@ function GroupJoiners({ group }) {
 
             if(response.status < 400) {
                 //update signal
-                joinerSig.value = joinerSig.value.filter(item => item !== joiner)
+                groupSignal.value[0].push(joiner)
+                groupSignal.value[1] = groupSignal.value[1].filter(item => item !== joiner)
+                groupSignal.value = [...groupSignal.value]
             }
 
             return response
@@ -45,9 +40,9 @@ function GroupJoiners({ group }) {
     return (
         <section className='group-joiners'>
             <h4>Join requests:</h4>
-            {joinerSig.value.length < 1 ? <>No requests</> :
+            {groupSignal.value[1].length < 1 ? <>No requests</> :
                 <ul className="grid-user-list">{
-                    joinerSig.value.map((joiner, index) => {
+                    groupSignal.value[1].map((joiner, index) => {
                         const acceptSig = signal("")
                         const declineSig = signal("")
                         return (
