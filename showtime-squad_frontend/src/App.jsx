@@ -30,9 +30,10 @@ function App() {
         
         <Route path="/movies/*" element={<MoviesPage />} />
 
+        <Route path="/profile/:username?" element={<Profile />} />
+
         <Route path="/tv-series/*" element={<TvSeriesPage />} />
 
-        <Route path="/profile" element={<Profile />} />
         {/* debug sandbox */}
         <Route path="/debug/*" element={<DebugSandbox />} />
 
