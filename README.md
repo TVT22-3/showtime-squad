@@ -55,6 +55,12 @@
     * Partial GitHub Actions CI/CD pipeline management and setup
     * Partial agile and repository etc. management
 
+### DOCUMENTATION
+
+Discover the functionalities of the *Showtime Squad* through this documentation. Dive into details about endpoints and interactions within the app. Whether you're a developer looking to integrate or customize the app, or a user seeking insights into its features, this documentation provides a valuable resource.
+
+Link: [*Showtime Squad x Postman*](https://documenter.getpostman.com/view/26545619/2s9Ye8hFMi)
+
 ## SETUP
 
 Showtime Squad is a website for movie hobbyists. In Showtime Squad 
