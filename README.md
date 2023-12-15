@@ -24,7 +24,7 @@
     * Everything related to Movies page and TV series page.
     * TMDB requests.
     * Filters for movies and TV series (search bar's logic, filterbar etc.)
-    * Everything related to reviews.
+    * Everything related to reviews (profile page's reviews fetch excl.)
   - Other:
     * Postman documentation
     * UI design for movies page, tv series page, logout modal and register modal.
