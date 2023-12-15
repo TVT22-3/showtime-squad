@@ -3,6 +3,14 @@
 ![Maven Build](https://github.com/tvt22-3/showtime-squad/actions/workflows/backend-tests.yaml/badge.svg)
 ![React Tests](https://github.com/tvt22-3/showtime-squad/actions/workflows/frontend-tests.yaml/badge.svg)
 
+## ABOUT
+
+### Creators
+* Antti Jylhä @Jylant
+* Mika Korkiakoski @mikakorkiakoski
+* Santtu Niskanen @santtuniskanen
+* Miika Tiihonen @Wh1teh
+
 ## SETUP
 
 Showtime Squad is a website for movie hobbyists. In Showtime Squad 
@@ -20,9 +28,9 @@ up using for the project.
 
 #### Setup and requirements
 
-Create following file 
+Create the following file (relative to the root of the project)
 ```yaml
-backend/src/main/resources/application.properties
+/showtime-squad_backend/src/main/resources/application.properties
 ```
 
 ```bash
@@ -56,7 +64,6 @@ FRONTEND_URL=${FRONTEND_URL}
 
 ```bash
 mvn spring-boot:run
-        
 ```
 or
 
