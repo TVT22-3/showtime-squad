@@ -25,12 +25,15 @@ function CreateGroupModal({ open }) {
     return (
         <dialog id="create-group-modal" className="create-group-modal modal" open={open.value}>
             <div className='flex-wrapper'>
+                <FunctionButton className='close-button' onClick={()=>{open.value = false}}
+                text={'❌'}/>
+
                 <label htmlFor="">Group Name:</label>
                 <input type="text" value={nameField.value} onInput={(event) => { handleInput(nameField, event) }} />
 
                 <label htmlFor="">Description:</label>
                 <textarea rows="3" type="text" value={descriptionField.value} onInput={(event) => { handleInput(descriptionField, event) }} />
-                <FunctionButton
+                <FunctionButton className='submit-button'
                     onClick={async () => {
                         if (await createGroup({ groupname: nameField.value, description: descriptionField.value })) {
                             modalShutdown()

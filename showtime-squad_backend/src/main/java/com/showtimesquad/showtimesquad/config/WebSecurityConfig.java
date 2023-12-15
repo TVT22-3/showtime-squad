@@ -77,6 +77,7 @@ public class WebSecurityConfig {
                         .requestMatchers("/api/profile", "/profile", "/users/**").permitAll()
                         .requestMatchers("/api/review/*").permitAll()
                         .requestMatchers("/api/group/**").permitAll()
+                        .requestMatchers("/api/lists/**", "/list/**").permitAll()
                         .anyRequest().authenticated())
                 .cors(customizer -> {
                     CorsConfiguration corsConfiguration = new CorsConfiguration();

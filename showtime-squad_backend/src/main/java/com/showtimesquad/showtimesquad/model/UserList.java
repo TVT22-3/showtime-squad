@@ -40,8 +40,8 @@ public class UserList {
     private String listName;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = true)
-    private User user;
+    @JoinColumn(name = "user_name", nullable = false)
+    private User username;
 
     @ManyToOne
     @JoinColumn(name = "group_name", nullable = true)
@@ -50,6 +50,9 @@ public class UserList {
     @Column(name = "movie_ids", columnDefinition = "integer[]")
     private List<Integer> movieIds;
 
+    UserList() {
+    }
+
     /**
      * 
      * Constructor with list name and user.
@@ -57,23 +60,12 @@ public class UserList {
      * Constructor with list name and user.
      * 
      * @param listName The name of the list.
-     * @param user     The user associated with the list.
+     * @param username The user associated with the list.
      */
     public UserList(String listName, User user) {
         this.listName = listName;
-        this.user = user;
-        this.movieIds = new ArrayList<>();
-    }
-
-    /**
-     * Constructor with list name and group.
-     * 
-     * @param listName  The name of the list.
-     * @param groupname The group associated with the list.
-     */
-    public UserList(String listName, Group groupname) {
-        this.listName = listName;
-        this.groupname = groupname;
+        this.username = user;
+        this.groupname = null;
         this.movieIds = new ArrayList<>();
     }
 
@@ -86,7 +78,7 @@ public class UserList {
      */
     public UserList(String listName, User user, Group groupname) {
         this.listName = listName;
-        this.user = user;
+        this.username = user;
         this.groupname = groupname;
         this.movieIds = new ArrayList<>();
     }
@@ -146,12 +138,16 @@ public class UserList {
     }
 
     /**
-     * Returns the name of the group associated with the list.
+     * Returns the group associated with the list.
      * 
      * @return groupname The name of the group associated with the list.
      */
-    public String getGroupname() {
-        return this.groupname.getGroupname();
+    public Group getGroup() {
+        return this.groupname;
+    }
+
+    public User getUser() {
+        return this.username;
     }
 
 }

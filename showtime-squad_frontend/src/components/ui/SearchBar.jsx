@@ -15,15 +15,23 @@ function SearchBar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 675)
-    }
+      const navBar = document.getElementById('nav-bar');
+      const searchBar = document.getElementById('search-bar');
+     
+      if (navBar && searchBar) {
+        const navBarBottom = navBar.getBoundingClientRect().bottom;
+        const searchBarTop = searchBar.getBoundingClientRect().top;
 
-    window.addEventListener('scroll', handleScroll)
+        setIsScrolled(searchBarTop <= navBarBottom);
+      } 
+    };
+
+    window.addEventListener('scroll', handleScroll);
 
     return () => {
-      window.removeEventListener('scroll', handleScroll)
-    }
-  }, [])
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search)
@@ -59,21 +67,24 @@ function SearchBar() {
   }
 
   return (
-    <search id="search-bar" className={`${isScrolled ? 'scrolled' : ''}`}>
-      <form id='search-form' className='search-form' onSubmit={handleSubmit}>
+    <search id="search-bar">
+      <form id='search-form' className={`search-form ${isScrolled ? 'scrolled' : ''}`} onSubmit={handleSubmit}>
+        <select className='search-selector' value={searchMode} onChange={handleModeChange}>
+          <option value="movies">Movies</option>
+          <option value="tv-series">TV Series</option>
+        </select>
+
         <input
           id='example-search'
+          className='search-input'
           name='param'
           type='text'
           placeholder='Search...'
           value={searchText}
           onChange={handleInputChange}
         />
-        <select id={`${isScrolled ? 'scrolled' : ''}`} value={searchMode} onChange={handleModeChange}>
-          <option value="movies">Movies</option>
-          <option value="tv-series">TV Series</option>
-        </select>
-        <button id={`${isScrolled ? 'scrolled' : ''}`} type='submit'>
+
+        <button className='search-button' type='submit'>
           <i className='fa fa-search'></i>
         </button>
       </form>

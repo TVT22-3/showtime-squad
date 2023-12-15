@@ -19,6 +19,9 @@ function AddNewsModal({ open, newsInfo, groupname }) {
     return (
         <dialog id="add-news-modal" className="add-news-modal modal" open={open.value}>
             <div className='flex-wrapper'>
+                <FunctionButton className='close-button' onClick={() => { open.value = false }}
+                    text={'❌'} />
+
                 <h6>Choose news to add: {newsInfo.value && newsInfo.value.length ? newsInfo.value.length : 'Loading...'}</h6>
 
                 <ul>

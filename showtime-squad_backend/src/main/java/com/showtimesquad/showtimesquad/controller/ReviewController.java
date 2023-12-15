@@ -1,16 +1,22 @@
 package com.showtimesquad.showtimesquad.controller;
 
+import com.showtimesquad.showtimesquad.dto.MovieReviewResponseDTO;
 import com.showtimesquad.showtimesquad.model.MovieReviews;
 import com.showtimesquad.showtimesquad.model.User;
 import com.showtimesquad.showtimesquad.model.request.MovieReviewsRequest;
+import com.showtimesquad.showtimesquad.model.response.MessageResponse;
 import com.showtimesquad.showtimesquad.model.response.MovieReviewsResponse;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import com.showtimesquad.showtimesquad.repository.ReviewRepository;
 import com.showtimesquad.showtimesquad.repository.UserRepository;
+import com.showtimesquad.showtimesquad.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -19,19 +25,25 @@ public class ReviewController {
 
     private final ReviewRepository reviewRepository;
     private final UserRepository userRepository;
+    private final ReviewService reviewService;
 
     @Autowired
-    public ReviewController(ReviewRepository reviewRepository, UserRepository userRepository) {
+    public ReviewController(ReviewRepository reviewRepository, UserRepository userRepository, ReviewService reviewService) {
         this.reviewRepository = reviewRepository;
         this.userRepository = userRepository;
+        this.reviewService = reviewService;
     }
 
     @PostMapping("/")
-    public ResponseEntity<MovieReviewsResponse> createReview(@RequestBody MovieReviewsRequest movieReviewsRequest) {
+    public ResponseEntity<MovieReviewsResponse> createReview(@RequestBody MovieReviewsRequest movieReviewsRequest, @AuthenticationPrincipal UserDetails userDetails) {
         try {
+            
+            if (userDetails == null) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+
             // Validate the request if necessary
             if (movieReviewsRequest.getReviewStars() == null ||
-                    movieReviewsRequest.getUserId() == null ||
                     movieReviewsRequest.getMovieApi() == null ||
                     movieReviewsRequest.getReviewStars() < 0 ||
                     movieReviewsRequest.getReviewStars() > 5) {
@@ -39,7 +51,7 @@ public class ReviewController {
             }
 
             // Fetch the user from the repository
-            User user = userRepository.findById(movieReviewsRequest.getUserId())
+            User user = userRepository.findByUsername(userDetails.getUsername())
                     .orElseThrow(() -> new RuntimeException("User not found"));
 
             // Save the review to the database
@@ -57,7 +69,8 @@ public class ReviewController {
                     movieReviews.getUser().getId(),
                     movieReviews.getMovieApi(),
                     movieReviews.getReviewStars(),
-                    movieReviews.getReviewText());
+                    movieReviews.getReviewText(),
+                    userDetails.getUsername());
 
             return new ResponseEntity<>(finalMovieReviewsResponse, HttpStatus.CREATED);
         } catch (Exception e) {
@@ -79,12 +92,22 @@ public class ReviewController {
                             movieReviews.getUser().getId(),
                             movieReviews.getMovieApi(),
                             movieReviews.getReviewStars(),
-                            movieReviews.getReviewText()))
+                            movieReviews.getReviewText(),
+                            userRepository.findById(movieReviews.getUser().getId()).get().getUsername()))
                     .collect(Collectors.toList());
 
             return new ResponseEntity<>(responseList, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @GetMapping("/user/{username}")
+    public ResponseEntity<List<MovieReviewResponseDTO>> getUserReviews(@PathVariable String username) {
+        List<MovieReviews> userReviews = reviewService.getUserReviews(username);
+        List<MovieReviewResponseDTO> responseDTOs = userReviews.stream()
+                .map(MovieReviewResponseDTO::new)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(responseDTOs);
     }
 }

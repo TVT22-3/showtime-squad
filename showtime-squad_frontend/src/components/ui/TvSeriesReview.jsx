@@ -3,7 +3,6 @@ import { useAuth } from '../../context/AuthContext'
 import "./MovieReview.scss"
 
 const TvSeriesReview = ({ tvSeries, tvSeriesId }) => {
-    const { userId } = useAuth()
     const apiUrl = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL
 
     const [review, setReview] = useState([])
@@ -18,8 +17,6 @@ const TvSeriesReview = ({ tvSeries, tvSeriesId }) => {
             if (response.ok) {
                 const data = await response.json()
                 setReview(data)
-                console.log("data info:" + data)
-                console.log("review info:" + review)
             } else {
                 console.error('Error fetching review:', response.statusText)
             }
@@ -39,11 +36,11 @@ const TvSeriesReview = ({ tvSeries, tvSeriesId }) => {
         try {
             const response = await fetch(`${apiUrl}/api/review/`, {
                 method: 'POST',
+                credentials: 'include',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    userId: userId,
                     movieApi: tvSeriesId,
                     reviewStars: parseInt(newReviewStars, 10),
                     reviewText: newReviewText,
@@ -92,6 +89,7 @@ const TvSeriesReview = ({ tvSeries, tvSeriesId }) => {
                 review.map((review, index) => (
                     <li key={index}>
                         < hr />
+                        <p>Username: {review.username}</p>
                         <p>Stars: {review.reviewStars}</p>
                         <p>Review Text: {review.reviewText}</p>
                         {/* Add more details as needed */}

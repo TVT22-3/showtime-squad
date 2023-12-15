@@ -4,15 +4,10 @@ import { postRequest } from '../../utils/GenericHTTPMethods'
 import FunctionButton from "../../components/atoms/FunctionButton"
 
 import './GroupMembers.scss'
-const usersSig = signal()
 
 const apiUrl = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL
 
-function GroupMembers({ group, username }) {
-
-    if (!usersSig.value) {
-        usersSig.value = group.users
-    }
+function GroupMembers({ group, username, groupSignal }) {
 
     async function removeMember({ toRemove, groupname }) {
         if (confirm(`Do you wish to remove user '${toRemove}'?`)) {
@@ -23,7 +18,8 @@ function GroupMembers({ group, username }) {
 
             if(response.status < 400) {
                 //update signal
-                usersSig.value = usersSig.value.filter(item => item !== toRemove)
+                groupSignal.value[0] = groupSignal.value[0].filter(item => item !== toRemove)
+                groupSignal.value = [...groupSignal.value]
             }
 
             return response;
@@ -37,9 +33,9 @@ function GroupMembers({ group, username }) {
         <section className="group-members">
             <h4>Members:</h4>
             <ul className="grid-user-list">
-                {!usersSig.value ? 'Error' : (
+                {!groupSignal.value ? 'Error' : (
                     <>
-                        {usersSig.value.map((user, index) => {
+                        {groupSignal.value[0].map((user, index) => {
                             const removeSig = signal("")
                             return (
                                 <li key={index} className='user member inline'>

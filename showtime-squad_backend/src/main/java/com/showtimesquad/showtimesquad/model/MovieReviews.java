@@ -1,6 +1,9 @@
 package com.showtimesquad.showtimesquad.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "movie_reviews",
@@ -65,5 +68,6 @@ public String getReviewText() {
 public void setReviewText(String reviewText) {
         this.reviewText = reviewText;
 }
-
 }
+
+
