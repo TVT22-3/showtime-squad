@@ -1,66 +1,52 @@
-/**
- * This file contains the definition of the ListInfoResponse class.
- * The ListInfoResponse class is responsible for representing the response data
- * for the list information in the Showtime Squad application.
- */
 package com.showtimesquad.showtimesquad.model.response;
 
 import java.util.List;
 
-import jakarta.validation.constraints.NotBlank;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
-/**
- * Represents a response containing a list of information.
- */
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ListInfoResponse {
-    private String name;
-    private List<String> items;
+    private String listname;
+    private String username;
+    private String groupname;
+    private List<Integer> movieIds;
 
-    /**
-     * Constructs a new ListInfoResponse object with the specified name and items.
-     *
-     * @param name  the name of the list
-     * @param items the items in the list
-     */
-    public ListInfoResponse(String name, List<String> items) {
-        this.name = name;
-        this.items = items;
+    public ListInfoResponse(String listname, String username, String groupname, List<Integer> movieIds) {
+        this.listname = listname;
+        this.username = username;
+        this.groupname = groupname;
+        this.movieIds = movieIds;
     }
 
-    /**
-     * Returns the name of the list.
-     *
-     * @return the name of the list
-     */
-    public String getName() {
-        return name;
+    public String getListname() {
+        return listname;
     }
 
-    /**
-     * Sets the name of the list.
-     *
-     * @param name the name of the list
-     */
-    public void setName(String name) {
-        this.name = name;
+    public void setListname(String listname) {
+        this.listname = listname;
     }
 
-    /**
-     * Returns the items in the list.
-     *
-     * @return the items in the list
-     */
-    public List<String> getItems() {
-        return items;
+    public String getUsername() {
+        return username;
     }
 
-    /**
-     * Sets the items in the list.
-     *
-     * @param items the items in the list
-     */
-    public void setItems(List<String> items) {
-        this.items = items;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
+    public String getGroupname() {
+        return groupname;
+    }
+
+    public void setGroupname(String groupname) {
+        this.groupname = groupname;
+    }
+
+    public List<Integer> getMovieIds() {
+        return movieIds;
+    }
+
+    public void setMovieIds(List<Integer> movieIds) {
+        this.movieIds = movieIds;
+    }
 }

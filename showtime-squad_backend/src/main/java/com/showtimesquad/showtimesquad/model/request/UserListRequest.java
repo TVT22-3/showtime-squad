@@ -1,7 +1,6 @@
 package com.showtimesquad.showtimesquad.model.request;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 
 import java.util.List;
 
@@ -11,123 +10,65 @@ import java.util.List;
 public class UserListRequest {
 
     @NotBlank
-    @Size(max = 45)
-    private String listName;
-
-    private Long userId;
-
+    private String listname;
     private String groupname;
-
+    @NotBlank
+    private String username;
     private List<Integer> movieIds;
 
-    /**
-     * Default constructor for UserListRequest.
-     */
-    public UserListRequest() {
-    }
-
-    /**
-     * Constructor for UserListRequest with parameters.
-     *
-     * @param listName  the name of the list
-     * @param userId    the ID of the user
-     * @param groupname the name of the group
-     * @param movieIds  the list of movie IDs
-     */
-    public UserListRequest(String listName, Long userId, String groupname, List<Integer> movieIds) {
-        this.listName = listName;
-        this.userId = userId;
+    public UserListRequest(String listname, String groupname, String username, List<Integer> movieIds) {
+        this.listname = listname;
         this.groupname = groupname;
+        this.username = username;
         this.movieIds = movieIds;
     }
 
-    /**
-     * Adds a movie ID to the list of movie IDs.
-     *
-     * @param movieId the ID of the movie to add
-     */
-    public void addMovieId(Integer movieId) {
-        this.movieIds.add(movieId);
+    public UserListRequest() {
     }
 
-    /**
-     * Removes a movie ID from the list of movie IDs.
-     *
-     * @param movieId the ID of the movie to remove
-     */
-    public void removeMovieId(Integer movieId) {
-        this.movieIds.remove(movieId);
+    public UserListRequest(String listname, String username, List<Integer> movieIds) {
+        this.listname = listname;
+        this.username = username;
+        this.groupname = null;
+        this.movieIds = movieIds;
     }
 
-    /**
-     * Returns the name of the list.
-     *
-     * @return the name of the list
-     */
-    public String getListName() {
-        return listName;
+    public UserListRequest(String listname, String username) {
+        this.listname = listname;
+        this.username = username;
+        this.groupname = null;
+        this.movieIds = null;
     }
 
-    /**
-     * Sets the name of the list.
-     *
-     * @param listName the name of the list
-     */
-    public void setListName(String listName) {
-        this.listName = listName;
-    }
-
-    /**
-     * Returns the ID of the user.
-     *
-     * @return the ID of the user
-     */
-    public Long getUserId() {
-        return userId;
-    }
-
-    /**
-     * Sets the ID of the user.
-     *
-     * @param userId the ID of the user
-     */
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    /**
-     * Returns the name of the group.
-     *
-     * @return the name of the group
-     */
-    public String getGroupName() {
-        return groupname;
-    }
-
-    /**
-     * Sets the name of the group.
-     *
-     * @param groupName the name of the group
-     */
-    public void setGroupName(String groupName) {
-        this.groupname = groupName;
-    }
-
-    /**
-     * Returns the list of movie IDs.
-     *
-     * @return the list of movie IDs
-     */
     public List<Integer> getMovieIds() {
         return movieIds;
     }
 
-    /**
-     * Sets the list of movie IDs.
-     *
-     * @param movieIds the list of movie IDs
-     */
     public void setMovieIds(List<Integer> movieIds) {
         this.movieIds = movieIds;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getGroupname() {
+        return groupname;
+    }
+
+    public void setGroupname(String groupname) {
+        this.groupname = groupname;
+    }
+
+    public String getListname() {
+        return this.listname;
+    }
+
+    public void setListname(String listname) {
+        this.listname = listname;
     }
 }

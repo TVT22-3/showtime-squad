@@ -6,8 +6,10 @@ import viewRemoveOptions from "../../data/viewRemoveOptions.json"
 
 import { useOptionsButtonContext } from '../../context/OptionsButtonContext.jsx'
 
+
 function ViewBlock() {
     //TODO: Implement
+
     console.log("component not properly implemented")
 
     const { clickedButton, clickedCategory, clickedOption } = useOptionsButtonContext()
