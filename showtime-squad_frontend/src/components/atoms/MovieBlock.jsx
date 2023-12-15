@@ -6,7 +6,7 @@ import { setMovieData } from "../../utils/movieData.js"
 
 const apiUrl = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL
 
-function MovieBlock({ id, index }) {
+function MovieBlock({ id, index, maxAmount = 5 }) {
 
     // fetch movie data from api based on id
     const [movieData, setMovieData] = useState(null)
@@ -14,6 +14,12 @@ function MovieBlock({ id, index }) {
     useEffect(() => {
         const fetchMovieData = async () => {
             const data = await getRequest(apiUrl + "/api/movies/3/" + id)
+            setMovieData(data)
+        }
+        fetchMovieData()
+    }
+    , [id])
+    
     return (
         <section className='movie-block' data-testid="movie-block">
             <a href={linkUrl} className="image-container" data-title={title}>
