@@ -1,19 +1,22 @@
-import { Signal, useSignal} from '@preact/signals-react'
-import { postRequest, putRequest, deleteRequest} from "../../utils/GenericHTTPMethods"
+import { signal, useSignal} from '@preact/signals-react'
+import { postRequest, putRequest, deleteRequest, getRequest} from "../../utils/GenericHTTPMethods"
 
 import './View.css'
+import { useUser } from '../../context/UserContext.jsx'
 import ViewBlock from '../containers/ViewBlock.jsx'
 import Adder from '../atoms/Adder.jsx'
 
 import { OptionsButtonContextProvider } from '../../context/OptionsButtonContext.jsx';
-import { blockInfoContainerSignal } from '../../signals/blockInfoContainerSignal.jsx'
 
-export const apiUrl = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL
+const apiUrl = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL
+
 
 
 function View() {
     //TODO: Implement
     console.log("component not properly implemented")
+    const blockInfoContainerSignal = signal(getRequest(apiUrl + "/api/lists/user/"+useUser().username))
+    console.log(blockInfoContainerSignal)
     
     // use signal to get blockInfoContainer from db
     const [blockInfoContainer, send] = useSignal(blockInfoContainerSignal);
