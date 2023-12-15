@@ -6,10 +6,24 @@
 ## ABOUT
 
 ### Creators
-* Antti Jylhä @Jylant
-* Mika Korkiakoski @mikakorkiakoski
-* Santtu Niskanen @santtuniskanen
-* Miika Tiihonen @Wh1teh
+* Antti Jylhä @[Jylant](https://github.com/Jylant)
+  - ...
+* Mika Korkiakoski [@mikakorkiakoski](https://github.com/mikakorkiakoski)
+  - ...
+* Santtu Niskanen [@santtuniskanen](https://github.com/santtuniskanen)
+  - ...
+* Miika Tiihonen [@Wh1teh](https://github.com/Wh1teh)
+  - Backend:
+    * User related stuff: register, auth, and user deletion.
+    * Everything groups related.
+    * Unit tests for user deletion.
+  - Frontend:
+    * General layout
+    * Groups
+    * User deletion
+    * Footer
+  - Other:
+    * UI design for index and news
 
 ## SETUP
 
