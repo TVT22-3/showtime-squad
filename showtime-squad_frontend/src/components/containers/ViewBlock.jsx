@@ -44,6 +44,7 @@ function ViewBlock({ movieIds, listName }) {
             </div>
 
             <div className='content'>
+            <section className='movie-blocks' data-testid='movie-blocks'>
                 {movieIds => (
                     <MovieBlocks key={index} ids={movieIds} />
                 )}

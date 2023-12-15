@@ -10,7 +10,7 @@ function MovieBlocks({ ids, maxAmount = 5 }) {
 
     useEffect(() => {
         const fetchData = async () => {
-            const result = await fetchMoviesBasedIds(ids)
+            const result = await fetchMoviesBasedOnIds(ids)
             setMovies(result)
         }
 
@@ -51,10 +51,10 @@ async function fetchMoviesBasedOnIds(movieIds) {
             movies.push({ 
                 imgUrl: movie.poster_path, 
                 title: movie.title,
-                rating: (movie.vote_average)/2,
+                rating: (movie.vote_average)/2.0,
                 linkUrl: movie.homepage })
         }
-
+    }
     return movies
 }
 
