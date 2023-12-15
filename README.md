@@ -72,9 +72,11 @@ all about.
 
 ### DOCUMENTATION
 
-Discover how to interact with various endpoints of our backend.
+[Postman documentation](https://documenter.getpostman.com/view/26545619/2s9Ye8hFMi)
 
-Link: [Showtime Squad x Postman](https://documenter.getpostman.com/view/26545619/2s9Ye8hFMi)
+[ER-Diagram](documentation/database/ER-diagram-pic.png)
+
+[UI mockups and examples](documentation/frontend)
 
 ## SETUP
 
