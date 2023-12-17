@@ -140,7 +140,10 @@ PROFILE_PICTURES=https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?,/
 
 ##### JWT
 
-This is an example JWT config, you should always generate your own JWT secret key. 
+This is an example config for a JWT that expires in 24 hours.
+
+> [!CAUTION]
+> You should  <ins>**always**</ins> generate your own JWT secret key, do not use this example key for any real life application. 
 ```yaml
 showtimesquad.app.jwtCookieName=showtimesquad
 showtimesquad.app.jwtSecret=r9kxRZ9kAUNgmllnkaaWN3s1DD5oluVsEfjK96HSwsTKTWnaO0HviwNNauMrP1X95YICDJ01L6Zmiv3wpZX/7Q==
@@ -196,7 +199,7 @@ spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
 spring.datasource.driver-class-name=org.postgresql.Driver
 ```
 
-> [!CAUTION]
+> [!WARNING]
 > The Spring Boot application and Hibernate takes care of initializing required tables and rows. You should run this app on fresh database only to avoid problems with constraint mismatches etc.
 
 ### Frontend
