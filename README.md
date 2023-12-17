@@ -123,7 +123,7 @@ FRONTEND_URL=${FRONTEND_URL}
 > See more detailed explanations below and in the database section.
 
 > [!TIP]
-> You can create a .env-file and pass it to a Docker container like `docker run --env-file=./.env -p 8080:8080 showtime-squad-app` or inject them into the program during launch like `-Dtmdb.api.key=$TMDB_API_KEY` etc.
+> You can also create a .env-file and pass it to a Docker container like `docker run --env-file=./.env -p 8080:8080 showtime-squad-app` or inject them into the program during launch like `-Dtmdb.api.key=$TMDB_API_KEY` etc.
 
 ##### TMDB API Key
 
