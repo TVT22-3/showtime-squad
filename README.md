@@ -95,9 +95,6 @@ Create the following file (relative to the root of the project)
 
 `/showtime-squad_backend/src/main/resources/application.properties`
 
-> [!IMPORTANT]
-> See more detailed explanations below
-
 ```bash
 # External services
 TMDB_API_KEY=${TMDB_API_KEY}
@@ -108,18 +105,54 @@ spring.datasource.url=${DATABASE_URL}
 spring.datasource.username=${SPRING_DATASOURCE_USERNAME}
 spring.datasource.password=${SPRING_DATASOURCE_PASSWORD}
 
-# JPA conf
+# JPA
 spring.jpa.hibernate.ddl-auto=${SPRING_JPA_HIBERNATE_DDL_AUTO}
 spring.jpa.properties.hibernate.dialect=${SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT}
 spring.datasource.driver-class-name=${SPRING_DATASOURCE_DRIVER_CLASS_NAME}
 
-# App Properties
+# JWT
 showtimesquad.app.jwtCookieName=${SHOWTIMESQUAD_APP_JWTCOOKIENAME}
 showtimesquad.app.jwtSecret=${SHOWTIMESQUAD_APP_JWTSECRET}
 showtimesquad.app.jwtExpirationMs=${SHOWTIMESQUAD_APP_JWTEXPIRATIONMS}
 
 # CORS
 FRONTEND_URL=${FRONTEND_URL}
+```
+
+> [!IMPORTANT]
+> See more detailed explanations below and in the database section.
+
+> [!TIP]
+> You can create a .env-file and pass it to a Docker container like `docker run --env-file=./.env -p 8080:8080 showtime-squad-app` or inject them into the program during launch like `-Dtmdb.api.key=$TMDB_API_KEY` etc.
+
+##### TMDB API Key
+
+You should head over to [https://developer.themoviedb.org/reference/intro/getting-started](https://developer.themoviedb.org/reference/intro/getting-started) and create an account to get access to their movie database.
+
+##### Profile pictures
+
+The application randomly generates a profile picture for the user.
+In order to get the correct profile pictures, you need to add a field
+into the `application.properties` file.
+```bash
+PROFILE_PICTURES=https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?,/{another_link_here},/{...}
+```
+
+##### JWT
+
+This is an example JWT config, you should always generate your own JWT secret key. 
+```yaml
+showtimesquad.app.jwtCookieName=showtimesquad
+showtimesquad.app.jwtSecret=r9kxRZ9kAUNgmllnkaaWN3s1DD5oluVsEfjK96HSwsTKTWnaO0HviwNNauMrP1X95YICDJ01L6Zmiv3wpZX/7Q==
+showtimesquad.app.jwtExpirationMs=86400000
+```
+
+##### CORS
+
+You will also need the URL for the location of the Front End 
+Application, for example
+```bash
+FRONTEND_URL=http://localhost:5173
 ```
 
 #### Running the application
@@ -145,7 +178,6 @@ or
 spring.datasource.url=jdbc:postgresql://localhost:5432/<database>
 spring.datasource.username=<username>
 spring.datasource.password=<password> (empty if password hasn't been set)
-spring.datasource.driver-class-name=org.postgresql.Driver
 ```
 
 ##### Configuring Database access for external Postgres instance
@@ -154,21 +186,14 @@ spring.datasource.driver-class-name=org.postgresql.Driver
 spring.datasource.url=jdbc:postgresql://<hostname>.<location>-postgres.render.com/<database>
 spring.datasource.username=<username>
 spring.datasource.password=<password>
+```
+
+##### General JPA and Hibernate config
+
+```yaml
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
 spring.datasource.driver-class-name=org.postgresql.Driver
-```
-
-##### Other requirements
-The application randomly generates a profile picture for the user.
-In order to get the correct profile pictures, you need to add a field
-into the `application.properties` file.
-```bash
-PROFILE_PICTURES=https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?,/{another_link_here},/{...}
-```
-
-You will also need the URL for the location of the Front End 
-Application, for example
-```bash
-FRONTEND_URL=http://localhost:5173
 ```
 
 > [!CAUTION]
