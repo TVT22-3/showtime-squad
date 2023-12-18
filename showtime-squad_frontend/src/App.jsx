@@ -17,11 +17,13 @@ import { FilterMoviesProvider } from './context/FilterMoviesContext.jsx'
 import { AuthProvider } from './context/AuthContext.jsx';
 import Groups from './pages/Groups/Groups.jsx'
 import TvSeriesPage from './pages/TvSeries/TvSeriesPage.jsx'
+import { MovieListProvider } from './context/MovieListContext.jsx'
 
 function App() {
   return (
     <AuthProvider>
     <FilterMoviesProvider>
+    <MovieListProvider>
     <SearchProvider>
     <UserProvider>
     <BrowserRouter>
@@ -45,6 +47,7 @@ function App() {
     </BrowserRouter>
     </UserProvider>
     </SearchProvider>
+    </MovieListProvider>
     </FilterMoviesProvider>
     </AuthProvider>
   )

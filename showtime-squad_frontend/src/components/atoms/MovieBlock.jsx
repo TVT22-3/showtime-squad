@@ -2,10 +2,10 @@ import "./MovieBlock.scss"
 import Stars from "./Stars.jsx"
 
 function MovieBlock({
-    imgUrl = "",
-    linkUrl = "#",
-    title = "",
-    rating = -1
+    imgUrl,
+    linkUrl,
+    title,
+    rating = -1.0
 }) {
 
     return (

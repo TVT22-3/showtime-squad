@@ -1,40 +1,47 @@
-import { signal } from '@preact/signals-react'
+import { signal, useSignal} from '@preact/signals-react'
+import { postRequest, putRequest, deleteRequest, getRequest} from "../../utils/GenericHTTPMethods"
 
 import './View.css'
+import { useUser } from '../../context/UserContext.jsx'
 import ViewBlock from '../containers/ViewBlock.jsx'
 import Adder from '../atoms/Adder.jsx'
 
 import { OptionsButtonContextProvider } from '../../context/OptionsButtonContext.jsx';
 
-// Mock data to hold information on what ViewBlocks to render for the user.
-// Real info will be loaded from db.
-// 'blocks' will contain an array of (block) objects, that all contain its type,
-// using objects since these might be expanded to include size and other info.
-// Root object may be expanded to include other meta info like order.
-const mockBlockInfoContainer = {
-    blocks: [
-        { type: { category: "movies", option: "top movies" } },
-        { type: { category: "text", option: "news" } },
-        { type: { category: "movies", option: "favorites" } }
-    ],
-}
+const apiUrl = import.meta.env.VITE_REACT_APP_BACKEND_BASE_URL
+
+
 
 function View() {
     //TODO: Implement
     console.log("component not properly implemented")
-
-    let blockInfoContainer = signal(mockBlockInfoContainer) // TODO: get from db
+    const blockInfoContainerSignal = signal(getRequest(apiUrl + "/api/lists/user/"+useUser().username))
+    console.log(blockInfoContainerSignal)
+    
+    // use signal to get blockInfoContainer from db
+    const [blockInfoContainer, send] = useSignal(blockInfoContainerSignal);
 
     function handleAdder() {
         console.log("clicked adder!")
-        let modify = blockInfoContainer.value.blocks
-        modify.push({ type: { category: "movies", option: "free pick" } })
-        blockInfoContainer.value = modify
+        const newListName = prompt("Please enter a name for your new list", "My List");
+        if (newListName === null || newListName === "") { 
+            alert("Please enter a valid name for your new list");
+            return;
+        }
+
+        let modify = blockInfoContainer.value;
+        modify.push({ listname: newListName, username: sessionStorage.getItem("username"), movieIds: [] })
+        // update signal
+        send({ ...blockInfoContainer, blocks: modify })
+
+        // update db
+        postRequest(apiUrl + "/api/lists/create", { listname: newListName, movieIds: [] })
+
     }
 
     return (
         <section className='view' data-testid='view'>
-            {generateViewBlocks(blockInfoContainer.value)}
+            {generateViewBlocks(blockInfoContainer)}
 
             <OptionsButtonContextProvider key='adder' category='adder' type='adder'>
                 <Adder onClick={handleAdder} />
@@ -43,17 +50,17 @@ function View() {
     )
 }
 
-
-
 function generateViewBlocks({ blocks }) {
 
     return (
         <>
             {
                 blocks.map((block, index) => {
+                    const listName = block.value.listname;
+                    const movieIds = block.value.movieIds;
                     return (
-                        <OptionsButtonContextProvider key={index} category={block.category} type={block.type} >
-                            <ViewBlock key={index} />
+                        <OptionsButtonContextProvider key={index} category={"movies"} >
+                            <ViewBlock key={index} listName={listName} movieIds={movieIds} index={index}/>
                         </OptionsButtonContextProvider>)
                 })
             }

@@ -1,18 +1,23 @@
 import './ViewBlock.scss'
-import MovieBlocks from './MovieBlocks.jsx'
+import './MovieBlocks.scss'
+import MovieBlock from '../atoms/MovieBlock.jsx'
 import NestedOptionsMenu from '../atoms/NestedOptionsMenu.jsx'
 import viewEditOptions from "../../data/viewEditOptions.json"
 import viewRemoveOptions from "../../data/viewRemoveOptions.json"
 
+import { listInfoContainerSignal } from '../../signals/blockInfoContainerSignal.jsx'
 import { useOptionsButtonContext } from '../../context/OptionsButtonContext.jsx'
+import MovieBlocks from './MovieBlocks.jsx'
+import { useSignal } from '@preact/signals-react'
 
 
-function ViewBlock() {
+function ViewBlock({ listName, movieIds, index }) {
     //TODO: Implement
 
+    
     console.log("component not properly implemented")
-
-    const { clickedButton, clickedCategory, clickedOption } = useOptionsButtonContext()
+    
+    const { clickedCategory, clickedOption } = useOptionsButtonContext()
 
     if (clickedCategory === 'remove') {
         switch (clickedOption) {
@@ -29,7 +34,7 @@ function ViewBlock() {
         <article className='view-block' data-testid='view-block'>
             <div className='action-row'>
                 <div className='title'>
-                    <h6>{clickedOption ? clickedOption : 'title'}</h6>
+                    <h6>{listName}</h6>
                 </div>
 
                 <div className='options'>
@@ -40,7 +45,9 @@ function ViewBlock() {
             </div>
 
             <div className='content'>
-                <MovieBlocks type={clickedOption} />
+                <section className='movie-blocks' data-testid='movie-blocks'>
+                    <MovieBlocks key={index} ids={movieIds} />
+                </section>
             </div>
         </article>
     )
