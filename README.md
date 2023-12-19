@@ -37,7 +37,7 @@ The goal of this project was to familiarize team members with close to real life
     * Everything related to reviews (profile page's reviews fetch excl.)
   - Other:
     * Postman documentation
-    * UI design for movies page, tv series page, logout modal and register modal.
+    * UI design for movies page, tv series page, login modal and register modal.
 
 * Santtu Niskanen [@santtuniskanen](https://github.com/santtuniskanen)
   - Backend:
